@@ -2,4 +2,3 @@
 
 Full stack project for Phase 2 of TKH Web Development Program. Collaborators are Gracelyn, Jacky, Joselyn.
 
-testing
