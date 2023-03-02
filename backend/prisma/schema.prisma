@@ -15,13 +15,12 @@ model User {
   id Int @unique @default(autoincrement())
   username String @unique @db.VarChar(255)
   password String @db.VarChar(30)
-  post Post[]
+  pet Pet[]
 }
 
-model Post {
+model Pet {
   id Int @unique @default(autoincrement())
   name String @db.VarChar(255)
-  description String
   species String
   userId Int @unique
   user User @relation(fields: [userId], references: [id])
