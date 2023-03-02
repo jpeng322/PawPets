@@ -17,4 +17,4 @@ router.post("/pics", (request, response) => {
 }); 
 
 
-export default router
+export default router;

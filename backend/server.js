@@ -1,5 +1,5 @@
 import express from "express";
-// import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import jwtStrategy from "./auth/index.js";
 import passport from "passport";
 import * as dotenv from 'dotenv';
@@ -27,5 +27,5 @@ app.use("/auth", authRouter)
 // app.use("/upload", picsRouter)
 
 app.listen(process.env.PORT, function () {
-    console.log("Server listening on PORT 3001")
+    console.log("Server listening on PORT 8080")
 })
