@@ -14,16 +14,15 @@ datasource db {
 model User {
   id Int @unique @default(autoincrement())
   username String @unique @db.VarChar(255)
-  password String @db.VarChar(30)
-  post Post[]
+  password String 
+  pet Pet[]
 }
 
-model Post {
+model Pet {
   id Int @unique @default(autoincrement())
   name String @db.VarChar(255)
-  description String
   species String
-  userId Int @unique
+  userId Int 
   user User @relation(fields: [userId], references: [id])
 
   @@index([userId])
