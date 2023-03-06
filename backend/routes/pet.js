@@ -99,7 +99,7 @@ router.post("/", async (request, response) => {
     }
 })
 
-router.put("/:petId", async (request, response) => {
+router.put("/:petId", passport.authenticate("jwt", { session: false, }), async (request, response) => {
     // console.log(request.params.id, typeof request.params.id, request.user.id, typeof request.user.id)
     try {
         const updatePet = await prisma.pet.updateMany({
@@ -131,6 +131,107 @@ router.put("/:petId", async (request, response) => {
             message: "Something went wrong"
         })
     }
+
+
+    router.post("/", async (request, response) => {
+        try {
+          const newPet = await prisma.pet.create({
+            data: {
+              name: request.body.name,
+              species: request.body.species,
+              userId: 1,
+            },
+          });
+      
+          if (newPet) {
+            response.status(201).json({
+              success: true,
+              message: "Pet created",
+              pet: newPet,
+            });
+          } else {
+            response.status(400).json({
+              success: false,
+              message: "Pet was not created",
+            });
+          }
+        } catch (e) {
+          console.log(e);
+          response.status(400).json({
+            success: false,
+            message: "Something went wrong",
+          });
+        }
+      });
+      
+      
+      // Get pets by an owner
+      router.get("/user/:userId", async function (request, response) {
+        const userId = parseInt(request.params.userId);
+      
+        try {
+          const getPet = await prisma.pet.findMany({
+            where: {
+              userId: userId,
+            },
+            // include: {
+            //     pets:true
+            // }
+          });
+      
+          response.status(200).json({
+            sucess: true,
+            getPet,
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      });
+      
+      
+      // Get pets that belong to a specific species
+      router.get("/species/:species", async (request, response) => {
+        try {
+          const pets = await prisma.pet.findMany({
+            where: {
+              species: request.params.species,
+            },
+          });
+      
+          response.status(200).json({
+            sucess: true,
+            data: pets,
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      });
+      
+      
+      // User can get their own pets
+      router.get("/:petId", passport.authenticate("jwt", { session: false, }), async (request, response) => {
+        const petId = parseInt(request.params.petId);
+        console.log(request.user);
+      
+        const getPetbyOwner = await prisma.pet.findMany({
+          where: {
+            AND: [{ userId: request.user.id }, { id: petId }],
+          },
+        });
+        console.log(getPetbyOwner.length);
+        
+        if (getPetbyOwner.length == 0) {
+          response.status(404).json({
+            success: false,
+            message: "pet not found for user",
+          });
+        } else {
+          response.status(200).json({
+            sucess: true,
+            data: getPetbyOwner,
+          });
+        }
+      });
 })
 
 export default router
