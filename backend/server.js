@@ -19,10 +19,12 @@ app.use(cors())
 
 jwtStrategy(passport)
 
-app.use("/pet", passport.authenticate("jwt", { session: false }), petRouter)
-// app.use("/pet", petRouter)
+// app.use("/pet", passport.authenticate("jwt", { session: false }), petRouter)
+app.use("/pet", petRouter)
 
 app.use("/auth", authRouter)
+
+
 
 // app.use("/upload", picsRouter)
 
