@@ -19,13 +19,16 @@ app.use(cors())
 
 jwtStrategy(passport)
 
-app.use("/pet", petRouter)
+app.use("/pet", passport.authenticate("jwt", { session: false }), petRouter)
+// app.use("/pet", petRouter)
 
 app.use("/auth", authRouter)
+
+// app.use("/upload", picsRouter)
 
 // app.use("/upload", passport.authenticate("jwt", { session: false }), picsRouter)
 // app.use("/upload", picsRouter)
 
 app.listen(process.env.PORT, function () {
-    console.log("Server listening on PORT 8080")
+    console.log(`Server listening on ${process.env.PORT}`)
 })

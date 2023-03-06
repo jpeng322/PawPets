@@ -13,7 +13,7 @@ router.get("/", async (request, response) => {
             // }
         })
 
-        if(allPets){
+        if (allPets) {
             response.status(200).json({
                 success: true,
                 message: "all pets fetched!",
@@ -25,7 +25,7 @@ router.get("/", async (request, response) => {
                 message: "Something went wrong!"
             })
         }
-    } catch(error){
+    } catch (error) {
         console.log(error)
         response.status(400).json({
             success: false,
@@ -37,14 +37,14 @@ router.get("/", async (request, response) => {
 //getting pets by id
 router.get("/:petId", async (request, response) => {
     console.log(request.params.petId);
-    try{
+    try {
         const getPetsbyId = await prisma.pet.findFirst({
             where: {
                 id: parseInt(request.params.petId)
             }
         })
 
-        if(getPetsbyId) {
+        if (getPetsbyId) {
             response.status(200).json({
                 success: true,
                 message: "successfully fetched pet by id!",
@@ -56,7 +56,7 @@ router.get("/:petId", async (request, response) => {
                 message: "something went wrong, could not fetch data"
             })
         }
-    } catch(error){
+    } catch (error) {
         console.log(error)
         response.status(400).json({
             success: false,
@@ -67,12 +67,14 @@ router.get("/:petId", async (request, response) => {
 
 
 router.post("/", async (request, response) => {
+    // console.log(request.user)
+    // console.log(typeof request.user.id)
     try {
         const newPet = await prisma.pet.create({
             data: {
                 name: request.body.name,
                 species: request.body.species,
-                userId: 1
+                userId: request.user.id
             }
         })
 
@@ -90,6 +92,40 @@ router.post("/", async (request, response) => {
         }
     } catch (e) {
         console.log(e)
+        response.status(400).json({
+            success: false,
+            message: "Something went wrong"
+        })
+    }
+})
+
+router.put("/:petId", async (request, response) => {
+    // console.log(request.params.id, typeof request.params.id, request.user.id, typeof request.user.id)
+    try {
+        const updatePet = await prisma.pet.updateMany({
+            where: {
+                userId: request.user.id,
+                id: parseInt(request.params.petId)
+            },
+            data: {
+                name: request.body.name,
+                species: request.body.species
+            },
+        })
+
+        if (updatePet) {
+            response.status(200).json({
+                success: true,
+                message: "Pet information was updated",
+            })
+        } else {
+            response.status(400).json({
+                success:false,
+                message: "Pet not updated. Something failed."
+            })
+        }
+    } catch (err) {
+        console.log(err)
         response.status(400).json({
             success: false,
             message: "Something went wrong"
