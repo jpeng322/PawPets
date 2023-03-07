@@ -1,6 +1,6 @@
 
 import { useState, useContext } from 'react'
-import { NavLink } from "react-router-dom";
+import {  NavLink } from "react-router-dom";
 import PawImg from "../src/assets/paw-solid.svg"
 import { Container, Nav, Navbar } from 'react-bootstrap'
 
@@ -10,12 +10,13 @@ import "../CSS/NavComp.css"
 import { AuthContext } from '../contexts/authContext';
 const NavComp = () => {
 
-  const { hasToken, setHasToken, loggedUsername, setLoggedUsername } = useContext(AuthContext)
+  const { hasToken, setHasToken, loggedUsername, setLoggedUsername, userId } = useContext(AuthContext)
 
   function Logout() {
     localStorage.removeItem("token")
     setHasToken("")
     setLoggedUsername("")
+    // navigate("/")
   }
   return (
     <Navbar className="">
@@ -32,7 +33,11 @@ const NavComp = () => {
         <span>{loggedUsername}</span>
         <NavLink to="/pets"
           aria-label="bring to pet page">
-          <span>Home</span>
+          <span>Pets</span>
+        </NavLink>
+        <NavLink to={`/dashboard/${userId}`}
+          aria-label="bring to user pet page">
+          <span>My Pets</span>
         </NavLink>
         {hasToken ?
           (<button onClick={Logout}>

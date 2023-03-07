@@ -1,17 +1,28 @@
 import React from 'react'
 import { Form, NavLink, useNavigate } from "react-router-dom";
-import { redirect } from 'react-router-dom';
-import { useState, useContext } from 'react';
+import { Navigate } from 'react-router-dom';
+import { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../contexts/authContext';
 
 const Login = () => {
 
+
+
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    // const [userId, setUserId] = useContext("")
 
-    const { hasToken, setHasToken, setLoggedUsername, loggedUsername } = useContext(AuthContext)
+    const { hasToken, setHasToken, setLoggedUsername, loggedUsername, userId, setUserId } = useContext(AuthContext)
+
     const navigate = useNavigate()
+    useEffect(() => {
+        if (hasToken) {
+            // fake.logout();
+            navigate(`/dashboard/${userId}`);
+        }
+    }, [hasToken]);
+
     async function submitLogin(e) {
         e.preventDefault()
         console.log(username, password)
@@ -27,11 +38,13 @@ const Login = () => {
 
             if (response) {
                 const data = await response.data
-                console.log(data)
+                // console.log(data)
                 localStorage.setItem(`${username}`, `${data.token}`)
                 setHasToken(data.token)
                 setLoggedUsername(data.username)
-                navigate("/dashboard")
+                setUserId(data.userId)
+                // return <Navigate to="(`/dashboard/${data.userId}`" replace={true} />
+                // navigate(`/dashboard/${data.userId}`)
             } else {
                 throw Error("No response")
             }
