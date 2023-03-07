@@ -30,8 +30,6 @@ import Pets from '../pages/Pets'
 
 function App() {
   const { hasToken } = useContext(AuthContext)
-  
-  console.log(AuthContext)
   console.log(hasToken)
   const [pets, setPets] = useState();
   const router = createBrowserRouter([
@@ -56,6 +54,10 @@ function App() {
         path: "signup",
         element: <Signup />
       },
+      {
+        path: "dashboard",
+        element: <Dashboard />
+      }
       ]
     },
   ]);
@@ -75,34 +77,34 @@ function App() {
 
 
   // when the page loads show pets 
-  useEffect(() => {
-    const loadPets = async () => {
-      const petData = await axios.get("http://localhost:8080/pet");
+  // useEffect(() => {
+  //   const loadPets = async () => {
+  //     const petData = await axios.get("http://localhost:8080/pet");
 
-      console.log(petData);
+  //     console.log(petData);
 
-      if (petData.status == 200 && petData.data.success == true) {
-        setPets(petData.data.pets);
-      }
-    };
+  //     if (petData.status == 200 && petData.data.success == true) {
+  //       setPets(petData.data.pets);
+  //     }
+  //   };
 
-    loadPets();
+  //   loadPets();
 
-  }, [])
+  // }, [])
   return (
 
     <>
       {/* <AuthContextProvider> */}
-        <RouterProvider router={router} />
-        <div className="App">
-          {/* <button onClick={() => loadPets()} >Click here to load pets </button> */}
-          {
+      <RouterProvider router={router} />
+      {/* <div className="App"> */}
+      {/* <button onClick={() => loadPets()} >Click here to load pets </button> */}
+      {/* {
             pets &&
             pets.length >= 1 &&
             pets.map((pets) => <div>{pets.name}
-            </div>)}
+            </div>)} */}
 
-        </div>
+      {/* </div> */}
       {/* </AuthContextProvider> */}
     </>
   )

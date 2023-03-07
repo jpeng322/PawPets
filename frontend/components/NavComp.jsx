@@ -10,11 +10,12 @@ import "../CSS/NavComp.css"
 import { AuthContext } from '../contexts/authContext';
 const NavComp = () => {
 
-  const { hasToken, setHasToken } = useContext(AuthContext)
+  const { hasToken, setHasToken, loggedUsername, setLoggedUsername } = useContext(AuthContext)
 
   function Logout() {
     localStorage.removeItem("token")
     setHasToken("")
+    setLoggedUsername("")
   }
   return (
     <Navbar className="">
@@ -28,7 +29,7 @@ const NavComp = () => {
       </div>
 
       <div>
-        <span>{hasToken}</span>
+        <span>{loggedUsername}</span>
         <NavLink to="/pets"
           aria-label="bring to pet page">
           <span>Home</span>

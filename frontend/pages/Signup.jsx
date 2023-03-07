@@ -1,7 +1,7 @@
 import React from 'react'
 import { Form, NavLink } from "react-router-dom";
 import { useState } from 'react';
-
+import axios from 'axios';
 
 const Signup = () => {
     const [username, setUsername] = useState("")
@@ -10,6 +10,14 @@ const Signup = () => {
     function submitLogin(e) {
         e.preventDefault()
         console.log(username, password)
+        axios({
+            method: 'post',
+            url: "http://localhost:3001/auth/signup",
+            data: {
+                username: username,
+                password: password
+            }
+        });
     }
     return (
         <>
