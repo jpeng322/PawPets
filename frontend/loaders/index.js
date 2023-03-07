@@ -24,7 +24,7 @@ export const getPets = async () => {
 
 export const getUserPets = async (userId) => {
     try {
-        const response = await axios.get(`http://localhost:3001/pet/user/3`);
+        const response = await axios.get(`http://localhost:3001/pet/user/${userId}`);
         const userPets = response.data.getPet
         return userPets
         // };
