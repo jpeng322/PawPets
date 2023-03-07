@@ -11,9 +11,9 @@ const Login = () => {
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    // const [userId, setUserId] = useContext("")
 
-    const { hasToken, setHasToken, setLoggedUsername, loggedUsername, userId, setUserId } = useContext(AuthContext)
+
+    const { hasToken, setHasToken, setLoggedUsername, loggedUsername, userId, setUserId, token, setToken } = useContext(AuthContext)
 
     const navigate = useNavigate()
     useEffect(() => {
@@ -39,8 +39,9 @@ const Login = () => {
             if (response) {
                 const data = await response.data
                 // console.log(data)
-                localStorage.setItem(`${username}`, `${data.token}`)
-                setHasToken(data.token)
+                localStorage.setItem("token", `${data.token}`)
+                setToken(data.token)
+                setHasToken("token")
                 setLoggedUsername(data.username)
                 setUserId(data.userId)
                 // return <Navigate to="(`/dashboard/${data.userId}`" replace={true} />

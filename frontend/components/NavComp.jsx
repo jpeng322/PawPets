@@ -18,6 +18,8 @@ const NavComp = () => {
     setLoggedUsername("")
     // navigate("/")
   }
+
+  console.log(hasToken)
   return (
     <Navbar className="">
       <div>
@@ -40,10 +42,8 @@ const NavComp = () => {
           <span>My Pets</span>
         </NavLink>
         {hasToken ?
-          (<button onClick={Logout}>
-            <NavLink to="/" aria-label="bring to home page"> <span>Logout</span> </NavLink> </button>) :
-          (
-            <NavLink to="/login" aria-label="bring to login page"> <span>Login</span> </NavLink>)}
+          (<button onClick={Logout}> <NavLink to="/home" aria-label="bring to home page"> <span>Logout</span> </NavLink> </button>) :
+          (<NavLink to="/login" aria-label="bring to login page"> <span>Login</span> </NavLink>)}
       </div>
     </Navbar >
   )

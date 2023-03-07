@@ -1,14 +1,20 @@
-import { createContext, useContext } from 'react';
+import { createContext, useEffect } from 'react';
 import { useState } from 'react';
 export const AuthContext = createContext();
 
 const AuthContextProvider = (props) => {
-    const [hasToken, setHasToken] = useState(localStorage.getItem("token"))
+
+    useEffect(() => {
+        setHasToken(localStorage.getItem("token"))
+
+    }, [])
     const [loggedUsername, setLoggedUsername] = useState()
     const [userId, setUserId] = useState("")
-
+    const [hasToken, setHasToken] = useState(localStorage.getItem("token"))
+    console.log(hasToken)
+    const [token, setToken] = useState("")
     return (
-        <AuthContext.Provider value={{ hasToken, setHasToken, loggedUsername, setLoggedUsername, userId, setUserId }}>
+        <AuthContext.Provider value={{ hasToken, setHasToken, loggedUsername, setLoggedUsername, userId, setUserId, token, setToken }}>
 
             {props.children}
         </AuthContext.Provider>

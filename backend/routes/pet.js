@@ -173,7 +173,7 @@ router.post("/", async (request, response) => {
 router.get("/user/:userId", async function (request, response) {
   const userId = parseInt(request.params.userId);
   try {
-    
+
     const getPet = await prisma.pet.findMany({
       where: {
         userId: userId,
@@ -244,13 +244,18 @@ router.delete("/:petId", passport.authenticate("jwt", { session: false }), async
       where: {
         userId: request.user.id,
         id: parseInt(request.params.petId),
-
       },
     })
     if (deletePet) {
+      const newPets = await prisma.pet.findMany({
+        where: {
+          userId: request.user.id,
+        },
+      })
       response.status(200).json({
         success: true,
-        message: "Pet was successfully deleted!"
+        message: "Pet was successfully deleted!",
+        petsList: newPets
       })
     } else {
       response.status(400), json({
