@@ -81,10 +81,16 @@ router.post("/", passport.authenticate("jwt", { session: false, }), async (reque
     })
 
     if (newPet) {
+      const petsList = await prisma.pet.findMany({
+        where: {
+          userId: request.user.id,
+        }
+      })
       response.status(201).json({
         success: true,
         message: "Pet created",
-        pet: newPet
+        pet: newPet,
+        petsList
       })
     } else {
       response.status(400).json({
