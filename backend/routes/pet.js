@@ -2,6 +2,7 @@ import express from "express"
 import prisma from "../db/index.js"
 import passport from "passport"
 
+
 const router = express.Router()
 
 //getting all the pets/posts
@@ -66,8 +67,8 @@ router.get("/:petId", async (request, response) => {
     }
 })
 
-
-router.post("/", async (request, response) => {
+//posting a new pet after logging in
+router.post("/",passport.authenticate("jwt", { session: false, }), async (request, response) => {
     // console.log(request.user)
     // console.log(typeof request.user.id)
     try {
@@ -100,6 +101,7 @@ router.post("/", async (request, response) => {
     }
 })
 
+//updating a user's pet after logging in
 router.put("/:petId", passport.authenticate("jwt", { session: false, }), async (request, response) => {
     // console.log(request.params.id, typeof request.params.id, request.user.id, typeof request.user.id)
     try {
@@ -190,7 +192,7 @@ router.put("/:petId", passport.authenticate("jwt", { session: false, }), async (
       });
       
       
-      // Get pets that belong to a specific species
+      // Get any pets that belong to a specific species
       router.get("/species/:species", async (request, response) => {
         try {
           const pets = await prisma.pet.findMany({
@@ -233,6 +235,35 @@ router.put("/:petId", passport.authenticate("jwt", { session: false, }), async (
           });
         }
       });
+})
+
+//users can delete their pets after logging in
+router.delete("/:petId", passport.authenticate("jwt", {session:false}), async(request, response) => {
+    try {
+        const deletePet = await prisma.pet.deleteMany({
+            where: {
+                userId: request.user.id,
+                id: parseInt(request.params.petId),
+
+            },
+        })
+        if(deletePet){
+            response.status(200).json({
+                success: true, 
+                message: "Pet was successfully deleted!"
+            })
+        } else {
+            response.status(400),json({
+                message: "Something went wrong, pet could not be deleted!"
+            })
+        }
+    } catch(error){
+        console.log(error)
+        response.status(400).json({
+            success: false,
+            message: "Something went wrong!"
+        })
+    }
 })
 
 export default router
