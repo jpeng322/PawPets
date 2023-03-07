@@ -119,7 +119,9 @@ router.post("/login", async (request, response) => {
                     response.status(200).json({
                         success: true,
                         message: "User logged in",
-                        token
+                        token,
+                        username: request.body.username,
+                        userId: foundUser.id
                     })
                 } else {
                     response.status(401).json({
