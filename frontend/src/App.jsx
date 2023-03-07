@@ -9,7 +9,12 @@ import {
 } from "react-router-dom";
 import './App.css'
 import axios from "axios";
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
+
+
+//contexts
+// import AuthContextProvider from '../contexts/authContext';
+import { AuthContext } from "../contexts/authContext";
 
 //components
 import Main from '../layouts/Main';
@@ -17,11 +22,17 @@ import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Home from '../pages/Home';
 import Dashboard from '../pages/Dashboard';
+import Pets from '../pages/Pets'
+
 
 
 
 
 function App() {
+  const { hasToken } = useContext(AuthContext)
+  
+  console.log(AuthContext)
+  console.log(hasToken)
   const [pets, setPets] = useState();
   const router = createBrowserRouter([
     {
@@ -31,7 +42,11 @@ function App() {
       ),
       children: [{
         path: "/",
-        element: <Home />
+        element: hasToken ? (<Dashboard />) : (<Home />)
+      },
+      {
+        path: "pets",
+        element: <Pets />
       },
       {
         path: "login",
@@ -77,16 +92,18 @@ function App() {
   return (
 
     <>
-      <RouterProvider router={router} />
-      <div className="App">
-        {/* <button onClick={() => loadPets()} >Click here to load pets </button> */}
-        {
-          pets &&
-          pets.length >= 1 &&
-          pets.map((pets) => <div>{pets.name}
-          </div>)}
+      {/* <AuthContextProvider> */}
+        <RouterProvider router={router} />
+        <div className="App">
+          {/* <button onClick={() => loadPets()} >Click here to load pets </button> */}
+          {
+            pets &&
+            pets.length >= 1 &&
+            pets.map((pets) => <div>{pets.name}
+            </div>)}
 
-      </div>
+        </div>
+      {/* </AuthContextProvider> */}
     </>
   )
 }
