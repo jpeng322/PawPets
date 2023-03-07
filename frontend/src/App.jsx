@@ -20,33 +20,6 @@ import Dashboard from '../pages/Dashboard';
 
 
 
-// when click show pets
-// const loadPets = async () => {
-//   const petData = await axios.get("http://localhost:8080/pet");
-
-//   console.log(petData);
-
-//   if(petData.status == 200 && petData.data.success == true){
-//     setPets(petData.data.pets);
-//   }
-// };
-
-
-// when the page loads show pets 
-useEffect(() => {
-  const loadPets = async () => {
-    const petData = await axios.get("http://localhost:8080/pet");
-
-    console.log(petData);
-
-    if (petData.status == 200 && petData.data.success == true) {
-      setPets(petData.data.pets);
-    }
-  };
-
-  loadPets();
-
-}, [])
 
 function App() {
   const [pets, setPets] = useState();
@@ -72,7 +45,37 @@ function App() {
     },
   ]);
 
+
+
+  // when click show pets
+  // const loadPets = async () => {
+  //   const petData = await axios.get("http://localhost:8080/pet");
+
+  //   console.log(petData);
+
+  //   if(petData.status == 200 && petData.data.success == true){
+  //     setPets(petData.data.pets);
+  //   }
+  // };
+
+
+  // when the page loads show pets 
+  useEffect(() => {
+    const loadPets = async () => {
+      const petData = await axios.get("http://localhost:8080/pet");
+
+      console.log(petData);
+
+      if (petData.status == 200 && petData.data.success == true) {
+        setPets(petData.data.pets);
+      }
+    };
+
+    loadPets();
+
+  }, [])
   return (
+
     <>
       <RouterProvider router={router} />
       <div className="App">
