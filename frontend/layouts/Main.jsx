@@ -6,7 +6,7 @@ import NavComp from '../components/NavComp'
 import "../CSS/Main.css"
 const Main = () => {
     return (
-        <Container fluid className="main-container">
+        <Container fluid className="main-container m-0 p-0">
             <header>
                 <NavComp />
             </header>

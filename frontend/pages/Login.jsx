@@ -20,7 +20,7 @@ const Login = () => {
         if (hasToken) {
             // fake.logout();
             navigate(`/dashboard/${userId}`);
-        }
+        } 
     }, [hasToken]);
 
     async function submitLogin(e) {

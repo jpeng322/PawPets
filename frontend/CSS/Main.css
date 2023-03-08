@@ -10,12 +10,13 @@
 
 
 main {
+    border: 1px solid blue;
     background-color: bisque;
     font-size: 1rem;
     flex-grow: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center; */
+    /* align-items: center; */
   }
   
   footer {
@@ -24,3 +25,4 @@ main {
     background-color: aqua;
     bottom: 0;
   }
+

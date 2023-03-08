@@ -4,7 +4,8 @@ import {
   RouterProvider,
   Route,
   Link,
-  useNavigate
+  useNavigate,
+  redirect
 } from "react-router-dom";
 import './App.css'
 import axios from "axios";
@@ -36,7 +37,7 @@ function App() {
   const { hasToken } = useContext(AuthContext)
 
 
-  // console.log(hasToken)
+  console.log(hasToken)
   // const [pets, setPets] = useState();
   const router = createBrowserRouter([
     {
@@ -71,7 +72,7 @@ function App() {
           element: <Signup />
         },
         {
-          path: `dashboard/:userId`,
+          path:  `dashboard/:userId`,
           element: <Dashboard />,
           loader: (({ params }) => {
             const userParam = params.userId
