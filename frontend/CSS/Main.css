@@ -1,4 +1,26 @@
-main {
-    font-size: 6rem;
-    height: auto
+
+
+.main-container {
+    border: 1px solid red;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
+
+
+main {
+    background-color: bisque;
+    font-size: 1rem;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  footer {
+    width: 100%;
+    position: absolute;
+    background-color: aqua;
+    bottom: 0;
+  }
