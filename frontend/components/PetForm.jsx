@@ -11,7 +11,7 @@ const PetForm = (props) => {
         try {
             const response = await axios({
                 method: 'post',
-                url: `http://localhost:3001/pet`,
+                url: `http://localhost:8080/pet`,
                 headers: {
                     // 'Content-type': "application/json; charset=utf-8",
                     'Authorization': `Bearer ${props.token}`,

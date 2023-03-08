@@ -29,7 +29,7 @@ const Login = () => {
         try {
             const response = await axios({
                 method: 'post',
-                url: "http://localhost:3001/auth/login",
+                url: "http://localhost:8080/auth/login",
                 data: {
                     username: username,
                     password: password

@@ -5,7 +5,7 @@ export const getPets = async () => {
 
     try {
         // const loadPets = async () => {
-        const response = await axios.get("http://localhost:3001/pet");
+        const response = await axios.get("http://localhost:8080/pet");
         // console.log(response)
         const pets = response.data.pet
         // console.log(pets);
@@ -24,7 +24,7 @@ export const getPets = async () => {
 
 export const getUserPets = async (userId) => {
     try {
-        const response = await axios.get(`http://localhost:3001/pet/user/${userId}`);
+        const response = await axios.get(`http://localhost:8080/pet/user/${userId}`);
         const userPets = response.data.getPet
         return userPets
         // };

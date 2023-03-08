@@ -22,7 +22,7 @@ const Dashboard = () => {
         try {
             const response = await axios({
                 method: 'delete',
-                url: `http://localhost:3001/pet/${petId}`,
+                url: `http://localhost:8080/pet/${petId}`,
                 headers: {
                     // 'Content-type': "application/json; charset=utf-8",
                     'Authorization': `Bearer ${token}`,
@@ -38,7 +38,22 @@ const Dashboard = () => {
         };
     }
 
- 
+    async function editPet(petId) {
+        try {
+            const response = await axios({
+                method: 'put',
+                url: `http://localhost:8080/pet/${petId}`,
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            })
+            if (response){
+                setUserPets(response.data.petsList)
+            }
+        } catch(e){
+            console.log(error)
+        }
+    }
 
 
 
@@ -52,6 +67,7 @@ const Dashboard = () => {
                         <div>Species: {userPet.species}</div>
                         <div>User: {userPet.userId}</div>
                         <button onClick={() => deletePet(userPet.id)}>Delete</button>
+                        <button onClick={() => editPet(user.petId)}>Edit</button>
                     </div>)
                 })}
             </div>
