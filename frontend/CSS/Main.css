@@ -1,8 +1,8 @@
 
 
 .main-container {
-    border: 1px solid red;
-    min-height: 100vh;
+    /* border: 1px solid red; */
+    min-height: 112vh;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -10,17 +10,35 @@
 
 
 main {
-    background-color: bisque;
+    /* border: 1px solid blue; */
+    background-color: #FFFBEB;
     font-size: 1rem;
     flex-grow: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center; */
+    /* align-items: center; */
   }
   
   footer {
     width: 100%;
-    position: absolute;
-    background-color: aqua;
-    bottom: 0;
+    height: 12vh;
+    /* position: absolute; */
+    background-color: #5ec4f4;;
+    /* bottom: 0; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem !important;
+    gap: .5rem;
+    color: #FFFBEB;
+    /* opacity: .2; */
   }
+  footer svg{
+    fill: #FFFBEB;
+    width: 25px;
+    height: auto;
+  }
+
+
+

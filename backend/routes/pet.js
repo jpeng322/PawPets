@@ -69,14 +69,14 @@ router.get("/:petId", async (request, response) => {
 
 //posting a new pet after logging in
 router.post("/", passport.authenticate("jwt", { session: false, }), async (request, response) => {
-  // console.log(request.user)
-  // console.log(typeof request.user.id)
   try {
     const newPet = await prisma.pet.create({
       data: {
         name: request.body.name,
         species: request.body.species,
-        userId: request.user.id
+        userId: request.user.id,
+        petUsername: request.user.username  || request.body.username
+
       }
     })
 

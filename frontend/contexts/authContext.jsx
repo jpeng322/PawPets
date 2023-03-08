@@ -9,13 +9,18 @@ const AuthContextProvider = (props) => {
 
     useEffect(() => {
         setHasToken(localStorage.getItem("token"))
+        setToken(localStorage.getItem("token"))
+        setLoggedUsername(localStorage.getItem("username"))
+        setUserId(localStorage.getItem("userId"))
+        // console.log("GOT TOKEN")
+        // console.log(hasToken)
 
     }, [])
 
     const [loggedUsername, setLoggedUsername] = useState()
     const [userId, setUserId] = useState("")
     const [hasToken, setHasToken] = useState(localStorage.getItem("token"))
-    // console.log(hasToken)
+    console.log(hasToken)
     const [token, setToken] = useState("")
 
 

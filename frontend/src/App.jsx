@@ -4,11 +4,15 @@ import {
   RouterProvider,
   Route,
   Link,
-  useNavigate
+  useNavigate,
+  redirect
 } from "react-router-dom";
 import './App.css'
 import axios from "axios";
 import { useState, useEffect, useContext } from "react"
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 //contexts
@@ -24,7 +28,7 @@ import Dashboard from '../pages/Dashboard';
 import Pets from '../pages/Pets'
 
 //loaders
-import { getPets, getUserPets } from '../loaders/index.js'
+import { getPets, getUserPets, getUsername } from '../loaders/index.js'
 
 
 
@@ -36,7 +40,7 @@ function App() {
   const { hasToken } = useContext(AuthContext)
 
 
-  // console.log(hasToken)
+  console.log(hasToken)
   // const [pets, setPets] = useState();
   const router = createBrowserRouter([
     {
@@ -44,6 +48,7 @@ function App() {
       element: (
         <Main />
       ),
+      errorElement: <p>404 NOT FOUND!</p>,
       children: [
         {
           path: "/home",
@@ -116,6 +121,18 @@ function App() {
     <>
       {/* <AuthContextProvider> */}
       <RouterProvider router={router} />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       {/* <div className="App"> */}
       {/* <button onClick={() => loadPets()} >Click here to load pets </button> */}
       {/* {
