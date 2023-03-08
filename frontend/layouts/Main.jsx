@@ -6,11 +6,13 @@ import NavComp from '../components/NavComp'
 import "../CSS/Main.css"
 const Main = () => {
     return (
-        <Container fluid>
+        <Container fluid className="main-container">
             <header>
                 <NavComp />
             </header>
-            <Outlet />
+            <main>
+                <Outlet />
+            </main>
             <footer className='layout'> Project done by Gracelyn, Jacky, Joselyn </footer>
         </Container>
     )
