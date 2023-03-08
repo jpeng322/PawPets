@@ -38,7 +38,7 @@ const Dashboard = () => {
         try {
             const response = await axios({
                 method: 'delete',
-                url: `http://localhost:3001/pet/${petId}`,
+                url: `http://localhost:8080/pet/${petId}`,
                 headers: {
                     // 'Content-type': "application/json; charset=utf-8",
                     'Authorization': `Bearer ${token}`,
@@ -59,7 +59,7 @@ const Dashboard = () => {
         try {
             const response = await axios({
                 method: 'put',
-                url: `http://localhost:3001/pet/${petId}`,
+                url: `http://localhost:8080/pet/${petId}`,
                 headers: {
                     // 'Content-type': "application/json; charset=utf-8",
                     'Authorization': `Bearer ${token}`,
@@ -97,7 +97,6 @@ const Dashboard = () => {
     })
 
 
-
     return (
         <Container fluid className="dashboard-container">
             {/* <Col></Col> */}
@@ -106,6 +105,7 @@ const Dashboard = () => {
                     <Col className=" dashboard-header text-center mb-5" xs={10} sm={6} md={10} xxl={9}>
                         {/* <div className="border d-flex"> */}
                         <div>
+
                             Your pets missed you!
                         </div>
                         <Button onClick={() => setShowForm(!showForm)}>Add Pet</Button>
@@ -160,6 +160,7 @@ const Dashboard = () => {
                     </Col>
                 </Row>
             </Col>
+
             <div> {showForm ? <PetForm userPets={userPets} setUserPets={setUserPets} userId={userId} token={token} showForm={showForm} setShowForm={setShowForm} /> : ""} </div>
         </Container>
     )
