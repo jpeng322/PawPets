@@ -45,6 +45,7 @@ function App() {
       element: (
         <Main />
       ),
+      errorElement: <p>404 NOT FOUND!</p>,
       children: [
         {
           path: "/home",
