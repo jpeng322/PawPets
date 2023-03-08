@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Navigate } from 'react-router-dom';
 import { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
@@ -11,6 +11,7 @@ import { AuthContext } from '../contexts/authContext';
 //styling
 import "../CSS/Login.css"
 import { Col, Row, Container, Image, Form, Button } from "react-bootstrap"
+import CatSelfie from "../images/cat-selfie.png"
 
 const Login = () => {
 
@@ -61,28 +62,41 @@ const Login = () => {
         };
     }
     return (
-        <Container>
-            <Row>
-                <Col> Welcome back to PawPets! </Col>
-            <Col>
-                <Form onSubmit={submitLogin}>
-                    <div className="mb-3">
-                        <label htmlFor="inputUsername" className="form-label">Username</label>
-                        <input type="text" className="form-control" id="inputUsername" aria-describedby="username" onChange={(e) => setUsername(e.target.value)} value={username} />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="inputPassword1" className="form-label">Password</label>
-                        <input type="password" className="form-control" id="exampleInputPassword1" onChange={(e) => setPassword(e.target.value)} value={password} />
-                    </div>
-                    <Button type="submit" className="btn btn-primary">Login</Button>
-                </Form>
+        <Container fluid className="login-container p-0 m-0">
+
+            <Col className="login-col d-flex flex-sm-column flex-lg-row mt-5 p-xs-3" xs={12} md={10} xl={9} >
+                <Row className="login-container-row d-flex flex-column flex-xl-row">
+                    <Col className="login-cotainer-col d-flex flex-column align-items-center " >
+                        <Col>
+                            <div className="login-header text-center mb-3"> Welcome Back to PawPets!</div>
+                        </Col>
+                        <Col xs={7} sm={7} md={5} lg={5} xl={8} xxl={6}>
+                            <Form onSubmit={submitLogin}>
+                                <div className="mb-3">
+                                    <label htmlFor="inputUsername" className="form-label">Username</label>
+                                    <input type="text" className="form-control" id="inputUsername" aria-describedby="username" onChange={(e) => setUsername(e.target.value)} value={username} />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="inputPassword1" className="form-label">Password</label>
+                                    <input type="password" className="form-control" id="exampleInputPassword1" onChange={(e) => setPassword(e.target.value)} value={password} />
+                                </div>
+
+                                <Button type="submit" className="btn btn-primary">Login</Button>
+
+
+                            </Form>
+                            <div className=" d-flex gap-2 mt-3 justify-content-center" >
+                                <div className="">Dont have an account?</div>
+                                <div><NavLink to="/signup">Sign up!</NavLink></div>
+                            </div>
+                        </Col>
+                    </Col>
+                    <Col className="cat-col" ><Image className='cat-selfie' fluid src={CatSelfie}></Image></Col>
+
+                </Row>
             </Col>
-            <Col>
-                    <span>Dont have an account?</span>
-                    <NavLink to="/signup">Sign up</NavLink>
-            </Col>
-        </Row>
         </Container >
+
     )
 }
 

@@ -133,7 +133,6 @@ const Dashboard = () => {
                             < div >
                                 <div>Name: {userPet.name}</div>
                                 <div>Species: {userPet.species}</div>
-                                <div>User: {userPet.userId}</div>
                                 <button onClick={() => deletePet(userPet.id)}>Delete</button>
                                 <button onClick={() => {
                                     setChangeId(userPet.id)

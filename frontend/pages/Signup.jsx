@@ -49,7 +49,7 @@ const Signup = () => {
                             </Form>
 
                             <div className="mt-3">
-                                <span className="me-2">Already have an account?</span><NavLink to="/signup">Log In!</NavLink>
+                                <span className="me-2">Already have an account?</span><NavLink to="/login">Log In!</NavLink>
                             </div>
                         </Col>
                     </Row>

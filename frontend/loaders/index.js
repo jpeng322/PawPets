@@ -34,3 +34,37 @@ export const getUserPets = async (userId) => {
 
 }
 
+
+
+export const getUsername = async (userId) => {
+    try {
+        const response = await axios.get(`http://localhost:3001/user/${userId}`);
+        const username = response.data.username
+        return username
+        // };
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export const getPetUserInfo = async (userId) => {
+    try {
+        const petResponse = await axios.get(`http://localhost:3001/pet/user/${userId}`);
+        const userPets = petResponse.data.getPet
+        // return userPets
+        // };
+    } catch (e) {
+        console.log(e)
+    }
+
+    try {
+        const userResponse = await axios.get(`http://localhost:3001/user/${userId}`);
+        const username = userResponse.data.username
+        // return username
+        // };
+    } catch (e) {
+        console.log(e)
+    }
+
+    return {userPets, username}
+}

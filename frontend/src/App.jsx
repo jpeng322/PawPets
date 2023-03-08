@@ -25,7 +25,7 @@ import Dashboard from '../pages/Dashboard';
 import Pets from '../pages/Pets'
 
 //loaders
-import { getPets, getUserPets } from '../loaders/index.js'
+import { getPets, getUserPets, getUsername } from '../loaders/index.js'
 
 
 

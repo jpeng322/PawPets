@@ -1,6 +1,9 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import axios from 'axios'
+import { AuthContext } from '../contexts/authContext'
 const PetForm = (props) => {
+
+    const {loggedUsername} = useContext(AuthContext)
 
     const [petName, setPetName] = useState("")
     const [species, setSpecies] = useState("")
@@ -9,6 +12,7 @@ const PetForm = (props) => {
     async function addPet() {
         // console.log(hasToken)
         try {
+            console.log(loggedUsername)
             const response = await axios({
                 method: 'post',
                 url: `http://localhost:3001/pet`,
@@ -19,11 +23,13 @@ const PetForm = (props) => {
                 data: {
                     name: petName,
                     species: species,
-                    userId: props.userId
+                    userId: props.userId,
+                    petUsername: loggedUsername
                 }
             })
 
             if (response) {
+                // console.log(response)
                 props.setUserPets(response.data.petsList)
             }
 
@@ -40,7 +46,7 @@ const PetForm = (props) => {
             </div>
             <div className="mb-3">
                 <label htmlFor="inputPassword1" className="form-label">Species</label>
-                <input type="password" className="form-control" id="exampleInputPassword1" onChange={(e) => setSpecies(e.target.value)} value={species} />
+                <input type="text" className="form-control" id="exampleInputPassword1" onChange={(e) => setSpecies(e.target.value)} value={species} />
             </div>
             <button onClick={addPet} className="btn btn-primary">Create</button>
             <button onClick={() => props.setShowForm(!(props.showForm))}>Close</button>
