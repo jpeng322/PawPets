@@ -11,6 +11,9 @@ import './App.css'
 import axios from "axios";
 import { useState, useEffect, useContext } from "react"
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 //contexts
 // import AuthContextProvider from '../contexts/authContext';
@@ -73,7 +76,7 @@ function App() {
           element: <Signup />
         },
         {
-          path:  `dashboard/:userId`,
+          path: `dashboard/:userId`,
           element: <Dashboard />,
           loader: (({ params }) => {
             const userParam = params.userId
@@ -118,6 +121,18 @@ function App() {
     <>
       {/* <AuthContextProvider> */}
       <RouterProvider router={router} />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       {/* <div className="App"> */}
       {/* <button onClick={() => loadPets()} >Click here to load pets </button> */}
       {/* {

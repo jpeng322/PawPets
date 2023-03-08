@@ -35,20 +35,18 @@
 }
 
 
-@media all and (min-width: 1650px) {
-    .login-cotainer-col {
+/* @media all and (min-width: 1650px) {
+    .login-container-col {
         position: absolute;
-        /* : 20vw; */
         top: 70px;
         left: 260px;
-        /* align-items: start; */
         width: 800px !important;
 
     }
 
     .cat-selfie{
-        /* border: 1px solid red !important; */
         position: relative;
         left: 600px
+        z-index: -1;
     }
-}
+} */

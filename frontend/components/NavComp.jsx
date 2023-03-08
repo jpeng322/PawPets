@@ -5,7 +5,7 @@ import PawImg from "../src/assets/paw-solid.svg"
 import { Container, Nav, Navbar, Image } from 'react-bootstrap'
 
 import "../CSS/NavComp.css"
-
+import { toast } from "react-toastify"
 //contexts
 import { AuthContext } from '../contexts/authContext';
 const NavComp = () => {
@@ -19,7 +19,9 @@ const NavComp = () => {
     setLoggedUsername("")
     localStorage.removeItem("userId")
     setUserId("")
-    
+    toast.success("You have logged out!", {
+      position: toast.POSITION.TOP_CENTER
+    });
     // navigate("/")
   }
 

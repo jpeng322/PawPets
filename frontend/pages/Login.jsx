@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../contexts/authContext';
-
+import { toast } from "react-toastify"
 
 
 
@@ -49,7 +49,7 @@ const Login = () => {
                 localStorage.setItem("token", `${data.token}`)
                 setToken(data.token)
                 setHasToken("token")
-                
+
                 localStorage.setItem("username", data.username)
                 setLoggedUsername(data.username)
 
@@ -57,11 +57,20 @@ const Login = () => {
                 setUserId(data.userId)
                 // return <Navigate to="(`/dashboard/${data.userId}`" replace={true} />
                 // navigate(`/dashboard/${data.userId}`)
+                toast.success(`Welcome back ${data.username}!`, {
+                    position: toast.POSITION.TOP_CENTER,
+                });
             } else {
                 throw Error("No response")
             }
+
+
         } catch (e) {
-            console.log(e)
+            toast.error(`Unable to log in. ${e.response.data.message}!`, {
+                position: toast.POSITION.TOP_CENTER,
+            })
+            console.log(e.response.data)
+            console.log("CAUGHTCAUGHTCAUGHT")
         };
     }
     return (
@@ -89,8 +98,8 @@ const Login = () => {
 
                             </Form>
                             <div className=" d-flex gap-2 mt-3 justify-content-center" >
-                                <div className="">Dont have an account?</div>
-                                <div><NavLink to="/signup">Sign up!</NavLink></div>
+                                <span className="">Dont have an account?</span>
+                                <NavLink to="/signup">Sign up!</NavLink>
                             </div>
                         </Col>
                     </Col>
