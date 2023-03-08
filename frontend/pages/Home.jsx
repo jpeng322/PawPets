@@ -1,8 +1,11 @@
 import React from 'react'
+import "../CSS/Home.css"
 
 const Home = () => {
   return (
-    <div>This is the home page.</div>
+    <div className='home-greeting'>
+    <h1>Welcome!!</h1>
+    </div>
   )
 }
 
