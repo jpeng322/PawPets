@@ -38,7 +38,7 @@ export const getUserPets = async (userId) => {
 
 export const getUsername = async (userId) => {
     try {
-        const response = await axios.get(`http://localhost:3001/user/${userId}`);
+        const response = await axios.get(`http://localhost:8080/user/${userId}`);
         const username = response.data.username
         return username
         // };
@@ -49,7 +49,7 @@ export const getUsername = async (userId) => {
 
 export const getPetUserInfo = async (userId) => {
     try {
-        const petResponse = await axios.get(`http://localhost:3001/pet/user/${userId}`);
+        const petResponse = await axios.get(`http://localhost:8080/pet/user/${userId}`);
         const userPets = petResponse.data.getPet
         // return userPets
         // };
@@ -58,7 +58,7 @@ export const getPetUserInfo = async (userId) => {
     }
 
     try {
-        const userResponse = await axios.get(`http://localhost:3001/user/${userId}`);
+        const userResponse = await axios.get(`http://localhost:8080/user/${userId}`);
         const username = userResponse.data.username
         // return username
         // };
