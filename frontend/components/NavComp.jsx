@@ -10,12 +10,16 @@ import "../CSS/NavComp.css"
 import { AuthContext } from '../contexts/authContext';
 const NavComp = () => {
 
-  const { hasToken, setHasToken, loggedUsername, setLoggedUsername, userId } = useContext(AuthContext)
-
+  const { hasToken, setHasToken, loggedUsername, setLoggedUsername, userId, setUserId } = useContext(AuthContext)
+  console.log(userId)
   function Logout() {
     localStorage.removeItem("token")
     setHasToken("")
+    localStorage.removeItem("username")
     setLoggedUsername("")
+    localStorage.removeItem("userId")
+    setUserId("")
+    
     // navigate("/")
   }
 
@@ -29,8 +33,8 @@ const NavComp = () => {
             to={hasToken ? "/pets" : "/"}
             aria-label="bring to home page" > */}
 
-                <Image className="me-3" src={PawImg} href="/"></Image>
-              <span className="brand-name mt-3">PawPets</span>
+          <Image className="me-3" src={PawImg} href="/"></Image>
+          <span className="brand-name mt-3">PawPets</span>
 
           {/* </NavLink> */}
         </Navbar.Brand>

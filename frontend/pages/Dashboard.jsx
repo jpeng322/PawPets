@@ -10,9 +10,12 @@ import PetForm from '../components/PetForm';
 
 //css
 import "../CSS/Dashboard.css"
-import { Col, Row, Container, Image, Form, Button } from "react-bootstrap"
+import { Col, Row, Container, Image, Button } from "react-bootstrap"
 
 const Dashboard = () => {
+
+    const { token, userId } = useContext(AuthContext)
+
     const userPetData = useLoaderData()
 
     const [userPets, setUserPets] = useState(userPetData)
@@ -23,14 +26,13 @@ const Dashboard = () => {
 
     const [changeId, setChangeId] = useState()
 
-    console.log(changeId)
-
-    const { token, userId } = useContext(AuthContext)
 
     const [petEditName, setPetEditName] = useState()
 
     const [petEditSpecies, setPetEditSpecies] = useState()
 
+
+    console.log(token)
     async function deletePet(petId) {
         // console.log(hasToken)
         try {
@@ -85,7 +87,7 @@ const Dashboard = () => {
         } else {
             return (
                 < div >
-                    <div>Name: {userPet.name}</div>
+                    <div> {userPet.name}</div>
                     <div>Species: {userPet.species}</div>
                     <div>User: {userPet.userId}</div>
                     <button onClick={() => deletePet(userPet.id)}>Delete</button>
@@ -116,7 +118,8 @@ const Dashboard = () => {
                             {userPets.map(userPet => {
                                 if (userPet.id === changeId) {
                                     return (
-                                        <Col className="col-auto pet-post">
+                                        <Col className="pet-post" xs={10} sm={8} md={5} lg={5} xl={4} xxl={3}>
+                                            <div className="img-container"></div>
                                             <div className="mb-3">
                                                 <label htmlFor="inputUsername" className="form-label">Name:</label>
                                                 <input type="text" className="form-control" id="inputUsername" aria-describedby="username"

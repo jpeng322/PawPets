@@ -16,6 +16,8 @@ model User {
   username String @unique @db.VarChar(255)
   password String 
   pet Pet[]
+
+  @@id([id, username])
 }
 
 model Pet {
@@ -23,7 +25,9 @@ model Pet {
   name String @db.VarChar(255)
   species String
   userId Int 
-  user User @relation(fields: [userId], references: [id])
+  petUsername String
+  user User @relation(fields: [userId, petUsername], references: [id, username])
 
-  @@index([userId])
+  // @@id([userId, petUsername])
+  @@index([userId, petUsername])
 }

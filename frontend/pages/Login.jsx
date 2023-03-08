@@ -49,7 +49,11 @@ const Login = () => {
                 localStorage.setItem("token", `${data.token}`)
                 setToken(data.token)
                 setHasToken("token")
+                
+                localStorage.setItem("username", data.username)
                 setLoggedUsername(data.username)
+
+                localStorage.setItem("userId", data.userId)
                 setUserId(data.userId)
                 // return <Navigate to="(`/dashboard/${data.userId}`" replace={true} />
                 // navigate(`/dashboard/${data.userId}`)

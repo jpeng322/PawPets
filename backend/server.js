@@ -8,6 +8,7 @@ import cors from "cors";
 //routers
 import authRouter from "./routes/auth.js";
 import petRouter from "./routes/pet.js";
+import userRouter from "./routes/user.js"
 
 dotenv.config()
 
@@ -19,8 +20,12 @@ app.use(cors())
 
 jwtStrategy(passport)
 
+app.use("/user", userRouter)
+
 // app.use("/pet", passport.authenticate("jwt", { session: false }), petRouter)
 app.use("/pet", petRouter)
+
+
 
 app.use("/auth", authRouter)
 
