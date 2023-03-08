@@ -24,15 +24,16 @@ const NavComp = () => {
     <>
       <Navbar className="" expand="lg">
 
-        <Navbar.Brand href="#home" >
-          <NavLink className="d-flex "
+        <Navbar.Brand href="/home" >
+          {/* <NavLink className="d-flex "
             to={hasToken ? "/pets" : "/"}
-            aria-label="bring to home page" >
-            <div>
-              <Image className="me-3" src={PawImg} href="/"></Image>
-            </div>
-            <div className="brand-name">PawPets</div>
-          </NavLink></Navbar.Brand>
+            aria-label="bring to home page" > */}
+
+                <Image className="me-3" src={PawImg} href="/"></Image>
+              <span className="brand-name mt-3">PawPets</span>
+
+          {/* </NavLink> */}
+        </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
