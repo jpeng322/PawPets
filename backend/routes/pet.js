@@ -123,9 +123,15 @@ router.put("/:petId", passport.authenticate("jwt", { session: false, }), async (
     })
 
     if (updatePet) {
+      const petsList = await prisma.pet.findMany({
+        where: {
+          userId: request.user.id,
+        }
+      })
       response.status(200).json({
         success: true,
         message: "Pet information was updated",
+        petsList
       })
     } else {
       response.status(400).json({
