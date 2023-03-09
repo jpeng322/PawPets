@@ -51,14 +51,8 @@ function App() {
       errorElement: <p>404 NOT FOUND!</p>,
       children: [
         {
-          path: "/home",
+          path: "/",
           element: <Home />,
-          // loader: hasToken ? (({ params }) => {
-          //   const userParam = 3
-          //   return getUserPets(userParam)
-          // }) : (() => {
-          //   return getPets()
-          // })
         },
         {
           path: "pets",

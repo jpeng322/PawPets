@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useState } from 'react';
 import axios from 'axios';
 import { Col, Row, Container, Image, Form, Button } from "react-bootstrap"
+import { toast } from "react-toastify"
 
 
 import "../CSS/Signup.css"
@@ -12,17 +13,31 @@ const Signup = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
-    function submitSignup(e) {
+    async function submitSignup(e) {
         e.preventDefault()
         console.log(username, password)
-        axios({
-            method: 'post',
-            url: "http://localhost:8080/auth/signup",
-            data: {
-                username: username,
-                password: password
+        try {
+            const response = await axios({
+                method: 'post',
+                url: "http://localhost:8080/auth/signup",
+                data: {
+                    username: username,
+                    password: password
+                }
+            })
+
+            if (response) {
+                toast.success("Successfully signed up!", {
+                    position: toast.POSITION.TOP_CENTER,
+                })
+            } else {
+                throw Error("No response")
             }
-        });
+        } catch (e) {
+            toast.error(`Unable to log in. ${e.response.data.message}!`, {
+                position: toast.POSITION.TOP_CENTER,
+            })
+        };
     }
     return (
         <Container fluid className="signup-container p-0 m-0">
