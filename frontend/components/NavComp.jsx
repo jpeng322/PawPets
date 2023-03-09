@@ -30,7 +30,7 @@ const NavComp = () => {
     <>
       <Navbar className="" expand="lg">
 
-        <Navbar.Brand href="/home" >
+        <Navbar.Brand href="/" >
           {/* <NavLink className="d-flex "
             to={hasToken ? "/pets" : "/"}
             aria-label="bring to home page" > */}
@@ -58,7 +58,7 @@ const NavComp = () => {
               <span>My Pets</span>
             </NavLink> */}
             {hasToken ?
-              (<button onClick={Logout}> <NavLink to="/home" aria-label="bring to home page"> <span>Logout</span> </NavLink> </button>) :
+              (<button onClick={Logout}> <NavLink to="/" aria-label="bring to home page"> <span>Logout</span> </NavLink> </button>) :
               (<NavLink to="/login" aria-label="bring to login page"> <span>Login</span> </NavLink>)}
           </Nav>
         </Navbar.Collapse>
