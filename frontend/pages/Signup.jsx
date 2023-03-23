@@ -19,7 +19,7 @@ const Signup = () => {
         try {
             const response = await axios({
                 method: 'post',
-                url: "http://localhost:8080/auth/signup",
+                url: "http://localhost:3001/auth/signup",
                 data: {
                     username: username,
                     password: password

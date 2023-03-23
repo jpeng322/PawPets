@@ -85,7 +85,7 @@ function App() {
 
   // when click show pets
   // const loadPets = async () => {
-  //   const petData = await axios.get("http://localhost:8080/pet");
+  //   const petData = await axios.get("http://localhost:3001/pet");
 
   //   console.log(petData);
 
@@ -98,7 +98,7 @@ function App() {
   // when the page loads show pets 
   // useEffect(() => {
   //   const loadPets = async () => {
-  //     const petData = await axios.get("http://localhost:8080/pet");
+  //     const petData = await axios.get("http://localhost:3001/pet");
 
   //     console.log(petData);
 

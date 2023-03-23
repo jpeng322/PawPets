@@ -2,6 +2,7 @@
 import { useState, useContext } from 'react'
 import { NavLink } from "react-router-dom";
 import PawImg from "../src/assets/paw-solid.svg"
+import PawImg2 from "../images/pawprint.png"
 import { Container, Nav, Navbar, Image } from 'react-bootstrap'
 
 import "../CSS/NavComp.css"
@@ -35,7 +36,7 @@ const NavComp = () => {
             to={hasToken ? "/pets" : "/"}
             aria-label="bring to home page" > */}
 
-          <Image className="me-3" src={PawImg} href="/"></Image>
+          <Image className="me-1" src={PawImg2} href="/"></Image>
           <span className="brand-name mt-3">PawPets</span>
 
           {/* </NavLink> */}

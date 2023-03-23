@@ -38,7 +38,7 @@ const Dashboard = () => {
         try {
             const response = await axios({
                 method: 'delete',
-                url: `http://localhost:8080/pet/${petId}`,
+                url: `http://localhost:3001/pet/${petId}`,
                 headers: {
                     // 'Content-type': "application/json; charset=utf-8",
                     'Authorization': `Bearer ${token}`,
@@ -59,7 +59,7 @@ const Dashboard = () => {
         try {
             const response = await axios({
                 method: 'put',
-                url: `http://localhost:8080/pet/${petId}`,
+                url: `http://localhost:3001/pet/${petId}`,
                 headers: {
                     // 'Content-type': "application/json; charset=utf-8",
                     'Authorization': `Bearer ${token}`,
