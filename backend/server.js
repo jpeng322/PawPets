@@ -2,40 +2,40 @@ import express from "express";
 import { PrismaClient } from "@prisma/client";
 import jwtStrategy from "./auth/index.js";
 import passport from "passport";
-import * as dotenv from 'dotenv';
+import * as dotenv from "dotenv";
 import cors from "cors";
+import fileUpload from "express-fileupload";
 
 //routers
 import authRouter from "./routes/auth.js";
 import petRouter from "./routes/pet.js";
-import userRouter from "./routes/user.js"
+import userRouter from "./routes/user.js";
+import postRouter from "./routes/post.js"
+dotenv.config();
 
-dotenv.config()
+const app = express();
 
-const app = express()
+app.use(fileUpload());
 
-app.use(express.json())
+app.use(express.json());
 
-app.use(cors())
+app.use(cors());
 
-jwtStrategy(passport)
+jwtStrategy(passport);
 
-app.use("/user", userRouter)
+app.use("/user", userRouter);
 
 // app.use("/pet", passport.authenticate("jwt", { session: false }), petRouter)
-app.use("/pet", petRouter)
+app.use("/pet", petRouter);
 
+app.use("/auth", authRouter);
 
-
-app.use("/auth", authRouter)
-
-
-
+app.use("/post", postRouter)
 // app.use("/upload", picsRouter)
 
 // app.use("/upload", passport.authenticate("jwt", { session: false }), picsRouter)
 // app.use("/upload", picsRouter)
 
 app.listen(process.env.PORT, function () {
-    console.log(`Server listening on ${process.env.PORT}`)
-})
+  console.log(`Server listening on ${process.env.PORT}`);
+});

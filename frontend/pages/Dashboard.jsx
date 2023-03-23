@@ -14,7 +14,7 @@ import { Col, Row, Container, Image, Button } from "react-bootstrap"
 
 const Dashboard = () => {
 
-    const { token, userId } = useContext(AuthContext)
+    const { token, userId, uploadFile } = useContext(AuthContext)
 
     const userPetData = useLoaderData()
 
@@ -96,7 +96,7 @@ const Dashboard = () => {
         }
     })
 
-
+    console.log(uploadFile)
     return (
         <Container fluid className="dashboard-container">
             {/* <Col></Col> */}
@@ -142,7 +142,9 @@ const Dashboard = () => {
                                     return (
                                         <Col className="pet-post" xs={10} sm={8} md={5} lg={5} xl={4} xxl={3}>
                                             {/* <Image fluid src="" alt="pet-img" className="img-container" xs={12}></Image> */}
-                                            <div className="img-container"></div>
+                                            <div className="img-container">
+                                                <Image fluid src={`../public/${uploadFile.fileName}`} alt="" />
+                                            </div>
                                             <div>Name: {userPet.name}</div>
                                             <div>Species: {userPet.species}</div>
                                             <div className='d-flex gap-2'>
