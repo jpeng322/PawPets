@@ -26,6 +26,7 @@ export const getUserPets = async (userId) => {
     try {
         const response = await axios.get(`http://localhost:3001/pet/user/${userId}`);
         const userPets = response.data.getPet
+        console.log(userPets, "USERPETS GET ROUTE")
         return userPets
         // };
     } catch (e) {

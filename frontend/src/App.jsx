@@ -39,9 +39,6 @@ function App() {
 
   const { hasToken } = useContext(AuthContext)
 
-
-  console.log(hasToken)
-  // const [pets, setPets] = useState();
   const router = createBrowserRouter([
     {
       path: "/",

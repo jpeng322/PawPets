@@ -11,11 +11,11 @@ const PetForm = (props) => {
   const [species, setSpecies] = useState("");
   const [file, setFile] = useState("");
   const [filename, setFilename] = useState("");
-//   const [uploadFile, setUploadFile] = useState("");
+  //   const [uploadFile, setUploadFile] = useState("");
 
-  async function addPet() {
-    // console.log(hasToken)
-
+  async function addPet(e) {
+    console.log("ADDEDPET")
+    e.preventDefault()
     const formData = new FormData();
     formData.append("file", file);
     try {
@@ -29,9 +29,9 @@ const PetForm = (props) => {
         }
       );
 
-      const { fileName, filePath } = fileResponse.data;
-    console.log({fileName, filePath})
-      setUploadFile({ fileName, filePath });
+      // const { fileName, filePath } = fileResponse.data;
+      // console.log({ fileName, filePath });
+      // setUploadFile({ fileName, filePath });
     } catch (e) {
       console.log(e);
     }
@@ -64,6 +64,7 @@ const PetForm = (props) => {
           species: species,
           userId: props.userId,
           petUsername: loggedUsername,
+          link: file.name,
         },
       });
 
@@ -76,21 +77,39 @@ const PetForm = (props) => {
     }
   }
 
-  function onChange(e) {
-    console.log(e.target.files[0]);
-    setFile(e.target.files[0]);
-    setFilename(e.target.files[0].name);
-  }
+  //   function onChange(e) {
+  //     // console.log(e.target.files[0]);
+  //     setFile(e.target.files[0]);
+  //     setFilename(e.target.files[0].name);
+  //     console.log(file.name, "ONCAHNGE FILE NAME");
+  //   }
 
+  console.log(file.name);
   return (
     <Draggable>
-      <div className="add-form">
-        <div>
+      <Form onSubmit={addPet} className="add-form">
+      {/* <div className="add-form"> */}
+        {/* <div>
           <Form.Group controlId="formFile" className="mb-3">
             <Form.Label>Upload a Picture</Form.Label>
-            <Form.Control type="file" onChange={onChange} />
+            <Form.Control
+              type="file"
+              onChange={(e) => {
+                setFile(e.target.files[0]);
+              }}
+            />
           </Form.Group>
-          <div></div>
+        </div> */}
+                <div>
+          <Form.Group controlId="formFile" className="mb-3">
+            <Form.Label>Upload a Picture</Form.Label>
+            <Form.Control
+              type="file"
+              onChange={(e) => {
+                setFile(e.target.files[0]);
+              }}
+            />
+          </Form.Group>
         </div>
         <div className="mb-3">
           <label htmlFor="inputUsername" className="form-label">
@@ -118,7 +137,9 @@ const PetForm = (props) => {
           />
         </div>
         <div className="d-flex justify-content-between">
-          <Button onClick={addPet} variant="success">
+          <Button type="submit"
+            // onClick={addPet}
+            variant="success">
             Create
           </Button>
           <button
@@ -130,7 +151,8 @@ const PetForm = (props) => {
             </svg>
           </button>
         </div>
-      </div>
+        {/* </div> */}
+        </Form>
     </Draggable>
   );
 };

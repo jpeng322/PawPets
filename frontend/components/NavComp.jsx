@@ -1,37 +1,38 @@
-
-import { useState, useContext } from 'react'
+import { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import PawImg from "../src/assets/paw-solid.svg"
-import PawImg2 from "../images/pawprint.png"
-import { Container, Nav, Navbar, Image } from 'react-bootstrap'
+import PawImg from "../src/assets/paw-solid.svg";
+import PawImg2 from "../images/pawprint.png";
+import { Container, Nav, Navbar, Image } from "react-bootstrap";
 
-import "../CSS/NavComp.css"
-import { toast } from "react-toastify"
+import "../CSS/NavComp.css";
+import { toast } from "react-toastify";
 //contexts
-import { AuthContext } from '../contexts/authContext';
+import { AuthContext } from "../contexts/authContext";
 const NavComp = () => {
-
-  const { hasToken, setHasToken, loggedUsername, setLoggedUsername, userId, setUserId } = useContext(AuthContext)
-  console.log(userId)
+  const {
+    hasToken,
+    setHasToken,
+    loggedUsername,
+    setLoggedUsername,
+    userId,
+    setUserId,
+  } = useContext(AuthContext);
   function Logout() {
-    localStorage.removeItem("token")
-    setHasToken("")
-    localStorage.removeItem("username")
-    setLoggedUsername("")
-    localStorage.removeItem("userId")
-    setUserId("")
+    localStorage.removeItem("token");
+    setHasToken("");
+    localStorage.removeItem("username");
+    setLoggedUsername("");
+    localStorage.removeItem("userId");
+    setUserId("");
     toast.success("You have logged out!", {
-      position: toast.POSITION.TOP_CENTER
+      position: toast.POSITION.TOP_CENTER,
     });
     // navigate("/")
   }
-
-  console.log(hasToken)
   return (
     <>
       <Navbar className="" expand="lg">
-
-        <Navbar.Brand href="/" >
+        <Navbar.Brand href="/">
           {/* <NavLink className="d-flex "
             to={hasToken ? "/pets" : "/"}
             aria-label="bring to home page" > */}
@@ -46,27 +47,40 @@ const NavComp = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <span>{loggedUsername}</span>
-            <NavLink to="/pets"
-              aria-label="bring to pet page">
+            <NavLink to="/pets" aria-label="bring to pet page">
               <span>Pets</span>
             </NavLink>
-            {hasToken && (<NavLink to={`/dashboard/${userId}`}
-              aria-label="bring to user pet page">
-              <span>My Pets</span>
-            </NavLink>)}
+            {hasToken && (
+              <NavLink
+                to={`/dashboard/${userId}`}
+                aria-label="bring to user pet page"
+              >
+                <span>My Pets</span>
+              </NavLink>
+            )}
             {/* <NavLink to={`/dashboard/${userId}`}
               aria-label="bring to user pet page">
               <span>My Pets</span>
             </NavLink> */}
-            {hasToken ?
-              (<button onClick={Logout}> <NavLink to="/" aria-label="bring to home page"> <span>Logout</span> </NavLink> </button>) :
-              (<NavLink to="/login" aria-label="bring to login page"> <span>Login</span> </NavLink>)}
+            {hasToken ? (
+              <button onClick={Logout}>
+                {" "}
+                <NavLink to="/" aria-label="bring to home page">
+                  {" "}
+                  <span>Logout</span>{" "}
+                </NavLink>{" "}
+              </button>
+            ) : (
+              <NavLink to="/login" aria-label="bring to login page">
+                {" "}
+                <span>Login</span>{" "}
+              </NavLink>
+            )}
           </Nav>
         </Navbar.Collapse>
-      </Navbar >
-
+      </Navbar>
     </>
-  )
-}
+  );
+};
 
-export default NavComp
+export default NavComp;
