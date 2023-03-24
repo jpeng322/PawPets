@@ -124,7 +124,9 @@ console.log(userPets)
                       xl={4}
                       xxl={3}
                       >
-                      <div className="img-container"></div>
+                    <div className="img-container">
+                        <Image className=""  src={`../public/${userPet.link}`} alt="" />
+                      </div>
                       <div className="">
                         <label htmlFor="inputUsername" className="form-label">
                           Name:

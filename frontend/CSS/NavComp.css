@@ -20,12 +20,18 @@ nav img {
     /* flex-basis: none; */
 }
 nav.navbar{
-    /* border: 1px solid red; */
+    border: 1px solid red;
     display: flex;
     justify-content: space-between;
     padding: 1rem 2rem;
+    align-items: center;
 }
 
+nav.navbar > *:nth-last-child(1) >* {
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+}
 nav a, .brand-name{
     /* border: 1px solid red; */
     text-decoration: none;
@@ -43,4 +49,22 @@ nav a, .brand-name{
 .navbar-nav {
     display: flex;
     gap: 2rem;
+}
+
+.navbar button {
+    border: none;
+    border-radius: none !important;
+    /* background-color: #5ec4f4; */
+
+    transition: background 1s;
+    background-color: #5ec4f4 ;
+    
+}
+
+.navbar button:hover {
+    background: linear-gradient(90deg, #2196f3, transparent) #3f51b5;
+}
+
+.navbar button span {
+    color: black
 }

@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import PawImg from "../src/assets/paw-solid.svg";
 import PawImg2 from "../images/pawprint.png";
-import { Container, Nav, Navbar, Image } from "react-bootstrap";
+import { Container, Nav, Navbar, Image, Button } from "react-bootstrap";
 
 import "../CSS/NavComp.css";
 import { toast } from "react-toastify";
@@ -63,17 +63,18 @@ const NavComp = () => {
               <span>My Pets</span>
             </NavLink> */}
             {hasToken ? (
-              <button onClick={Logout}>
-                {" "}
+              <Button size="lg" variant="outline-secondary" onClick={Logout}>
+                
                 <NavLink to="/" aria-label="bring to home page">
-                  {" "}
-                  <span>Logout</span>{" "}
-                </NavLink>{" "}
-              </button>
+                  
+                  <span>Logout</span>
+                </NavLink>
+
+              </Button>
             ) : (
               <NavLink to="/login" aria-label="bring to login page">
-                {" "}
-                <span>Login</span>{" "}
+
+                <span>Login</span>
               </NavLink>
             )}
           </Nav>

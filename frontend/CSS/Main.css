@@ -29,10 +29,12 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 1rem !important;
-    gap: .5rem;
+    padding: 1.5rem ;
+    gap: .25rem;
     color: #FFFBEB;
     /* opacity: .2; */
+    /* padding: 2rem; */
+    border: 1px solid red;
   }
   footer svg{
     fill: #FFFBEB;
