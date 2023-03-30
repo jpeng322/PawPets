@@ -1,9 +1,8 @@
-import express from "express"
-import prisma from "../db/index.js"
-import passport from "passport"
+import express from "express";
+import prisma from "../db/index.js";
+import passport from "passport";
 
-
-const router = express.Router()
+const router = express.Router();
 
 //getting all the pets/posts
 router.get("/", async (request, response) => {
@@ -13,28 +12,28 @@ router.get("/", async (request, response) => {
       //     name: request.body.name,
       //     species: request.body.species
       // }
-    })
+    });
 
     if (allPets) {
       response.status(200).json({
         success: true,
         message: "all pets fetched!",
-        pet: allPets
-      })
+        pet: allPets,
+      });
     } else {
       response.status(400).json({
         success: false,
-        message: "Something went wrong!"
-      })
+        message: "Something went wrong!",
+      });
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     response.status(400).json({
       success: false,
-      message: "could not get any pet data!"
-    })
+      message: "could not get any pet data!",
+    });
   }
-})
+});
 
 //getting pets by id
 router.get("/:petId", async (request, response) => {
@@ -42,112 +41,119 @@ router.get("/:petId", async (request, response) => {
   try {
     const getPetsbyId = await prisma.pet.findFirst({
       where: {
-        id: parseInt(request.params.petId)
-      }
-    })
+        id: parseInt(request.params.petId),
+      },
+    });
 
     if (getPetsbyId) {
       response.status(200).json({
         success: true,
         message: "successfully fetched pet by id!",
-        pet: getPetsbyId
-      })
+        pet: getPetsbyId,
+      });
     } else {
       response.status(400).json({
         success: false,
-        message: "something went wrong, could not fetch data"
-      })
+        message: "something went wrong, could not fetch data",
+      });
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     response.status(400).json({
       success: false,
-      message: "Something went wrong, sorry!"
-    })
+      message: "Something went wrong, sorry!",
+    });
   }
-})
+});
 
 //posting a new pet after logging in
-router.post("/", passport.authenticate("jwt", { session: false, }), async (request, response) => {
-  try {
-    const newPet = await prisma.pet.create({
-      data: {
-        name: request.body.name,
-        species: request.body.species,
-        userId: request.user.id,
-        petUsername: request.user.username  || request.body.username
-
-      }
-    })
-
-    if (newPet) {
-      const petsList = await prisma.pet.findMany({
-        where: {
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  async (request, response) => {
+    try {
+      const newPet = await prisma.pet.create({
+        data: {
+          name: request.body.name,
+          species: request.body.species,
           userId: request.user.id,
-        }
-      })
-      response.status(201).json({
-        success: true,
-        message: "Pet created",
-        pet: newPet,
-        petsList
-      })
-    } else {
+          petUsername: request.user.username || request.body.username,
+          link: request.body.link || "no-image.jpg",
+        },
+      });
+
+      if (newPet) {
+        const petsList = await prisma.pet.findMany({
+          where: {
+            userId: request.user.id,
+          },
+        });
+        response.status(201).json({
+          success: true,
+          message: "Pet created",
+          pet: newPet,
+          petsList,
+        });
+      } else {
+        response.status(400).json({
+          success: false,
+          message: "Pet was not created",
+        });
+      }
+    } catch (e) {
+      console.log(e);
       response.status(400).json({
         success: false,
-        message: "Pet was not created"
-      })
+        message: "Something went wrong",
+      });
     }
-  } catch (e) {
-    console.log(e)
-    response.status(400).json({
-      success: false,
-      message: "Something went wrong"
-    })
   }
-})
+);
 
 //updating a user's pet after logging in
-router.put("/:petId", passport.authenticate("jwt", { session: false, }), async (request, response) => {
-  // console.log(request.params.id, typeof request.params.id, request.user.id, typeof request.user.id)
-  try {
-    const updatePet = await prisma.pet.updateMany({
-      where: {
-        userId: request.user.id,
-        id: parseInt(request.params.petId)
-      },
-      data: {
-        name: request.body.name,
-        species: request.body.species
-      },
-    })
-
-    if (updatePet) {
-      const petsList = await prisma.pet.findMany({
+router.put(
+  "/:petId",
+  passport.authenticate("jwt", { session: false }),
+  async (request, response) => {
+    // console.log(request.params.id, typeof request.params.id, request.user.id, typeof request.user.id)
+    try {
+      const updatePet = await prisma.pet.updateMany({
         where: {
           userId: request.user.id,
-        }
-      })
-      response.status(200).json({
-        success: true,
-        message: "Pet information was updated",
-        petsList
-      })
-    } else {
+          id: parseInt(request.params.petId),
+        },
+        data: {
+          name: request.body.name,
+          species: request.body.species,
+        },
+      });
+
+      if (updatePet) {
+        const petsList = await prisma.pet.findMany({
+          where: {
+            userId: request.user.id,
+          },
+        });
+        response.status(200).json({
+          success: true,
+          message: "Pet information was updated",
+          petsList,
+        });
+      } else {
+        response.status(400).json({
+          success: false,
+          message: "Pet not updated. Something failed.",
+        });
+      }
+    } catch (err) {
+      console.log(err);
       response.status(400).json({
         success: false,
-        message: "Pet not updated. Something failed."
-      })
+        message: "Something went wrong",
+      });
     }
-  } catch (err) {
-    console.log(err)
-    response.status(400).json({
-      success: false,
-      message: "Something went wrong"
-    })
   }
-})
-
+);
 
 // router.post("/", async (request, response) => {
 //   try {
@@ -180,12 +186,10 @@ router.put("/:petId", passport.authenticate("jwt", { session: false, }), async (
 //   }
 // })
 
-
 // Get pets by an owner
 router.get("/user/:userId", async function (request, response) {
   const userId = parseInt(request.params.userId);
   try {
-
     const getPet = await prisma.pet.findMany({
       where: {
         userId: userId,
@@ -203,7 +207,6 @@ router.get("/user/:userId", async function (request, response) {
     console.log(error);
   }
 });
-
 
 // Get any pets that belong to a specific species
 router.get("/species/:species", async (request, response) => {
@@ -223,64 +226,72 @@ router.get("/species/:species", async (request, response) => {
   }
 });
 
-
 // User can get their own pets
-router.get("/:petId", passport.authenticate("jwt", { session: false, }), async (request, response) => {
-  const petId = parseInt(request.params.petId);
-  console.log(request.user);
+router.get(
+  "/:petId",
+  passport.authenticate("jwt", { session: false }),
+  async (request, response) => {
+    const petId = parseInt(request.params.petId);
+    console.log(request.user);
 
-  const getPetbyOwner = await prisma.pet.findMany({
-    where: {
-      AND: [{ userId: request.user.id }, { id: petId }],
-    },
-  });
-  console.log(getPetbyOwner.length);
+    const getPetbyOwner = await prisma.pet.findMany({
+      where: {
+        AND: [{ userId: request.user.id }, { id: petId }],
+      },
+    });
+    console.log(getPetbyOwner.length);
 
-  if (getPetbyOwner.length == 0) {
-    response.status(404).json({
-      success: false,
-      message: "pet not found for user",
-    });
-  } else {
-    response.status(200).json({
-      sucess: true,
-      data: getPetbyOwner,
-    });
+    if (getPetbyOwner.length == 0) {
+      response.status(404).json({
+        success: false,
+        message: "pet not found for user",
+      });
+    } else {
+      response.status(200).json({
+        sucess: true,
+        data: getPetbyOwner,
+      });
+    }
   }
-});
+);
 
 //users can delete their pets after logging in
-router.delete("/:petId", passport.authenticate("jwt", { session: false }), async (request, response) => {
-  try {
-    const deletePet = await prisma.pet.deleteMany({
-      where: {
-        userId: request.user.id,
-        id: parseInt(request.params.petId),
-      },
-    })
-    if (deletePet) {
-      const newPets = await prisma.pet.findMany({
+router.delete(
+  "/:petId",
+  passport.authenticate("jwt", { session: false }),
+  async (request, response) => {
+    try {
+      const deletePet = await prisma.pet.deleteMany({
         where: {
           userId: request.user.id,
+          id: parseInt(request.params.petId),
         },
-      })
-      response.status(200).json({
-        success: true,
-        message: "Pet was successfully deleted!",
-        petsList: newPets
-      })
-    } else {
-      response.status(400), json({
-        message: "Something went wrong, pet could not be deleted!"
-      })
+      });
+      if (deletePet) {
+        const newPets = await prisma.pet.findMany({
+          where: {
+            userId: request.user.id,
+          },
+        });
+        response.status(200).json({
+          success: true,
+          message: "Pet was successfully deleted!",
+          petsList: newPets,
+        });
+      } else {
+        response.status(400),
+          json({
+            message: "Something went wrong, pet could not be deleted!",
+          });
+      }
+    } catch (error) {
+      console.log(error);
+      response.status(400).json({
+        success: false,
+        message: "Something went wrong!",
+      });
     }
-  } catch (error) {
-    console.log(error)
-    response.status(400).json({
-      success: false,
-      message: "Something went wrong!"
-    })
   }
-})
+);
 
-export default router
+export default router;

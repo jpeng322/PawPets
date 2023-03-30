@@ -1,50 +1,42 @@
-import './App.css';
+import "./App.css";
+import styled, { ThemeProvider } from "styled-components";
 import {
   createBrowserRouter,
   RouterProvider,
   Route,
   Link,
   useNavigate,
-  redirect
+  redirect,
 } from "react-router-dom";
-import './App.css'
+import "./App.css";
 import axios from "axios";
-import { useState, useEffect, useContext } from "react"
+import { useState, useEffect, useContext } from "react";
 
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //contexts
 // import AuthContextProvider from '../contexts/authContext';
 import { AuthContext } from "../contexts/authContext";
 
 //components
-import Main from '../layouts/Main';
-import Login from '../pages/Login';
-import Signup from '../pages/Signup';
-import Home from '../pages/Home';
-import Dashboard from '../pages/Dashboard';
-import Pets from '../pages/Pets'
+import Main from "../layouts/Main";
+import Login from "../pages/Login";
+import Signup from "../pages/Signup";
+import Home from "../pages/Home";
+import Dashboard from "../pages/Dashboard";
+import Pets from "../pages/Pets";
 
 //loaders
-import { getPets, getUserPets, getUsername } from '../loaders/index.js'
-
-
-
-
+import { getPets, getUserPets, getUsername } from "../loaders/index.js";
 
 function App() {
-
-
-  const { hasToken } = useContext(AuthContext)
+  const { hasToken } = useContext(AuthContext);
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: (
-        <Main />
-      ),
+      element: <Main />,
       errorElement: <p>404 NOT FOUND!</p>,
       children: [
         {
@@ -54,64 +46,42 @@ function App() {
         {
           path: "pets",
           element: <Pets />,
-          loader: (() => {
-            return getPets()
-          })
+          loader: () => {
+            return getPets();
+          },
         },
         {
           path: "login",
-          element: <Login />
+          element: <Login />,
         },
         {
           path: "signup",
-          element: <Signup />
+          element: <Signup />,
         },
         {
           path: `dashboard/:userId`,
           element: <Dashboard />,
-          loader: (({ params }) => {
-            const userParam = params.userId
-            return getUserPets(userParam)
-          })
-        }
-      ]
+          loader: ({ params }) => {
+            const userParam = params.userId;
+            return getUserPets(userParam);
+          },
+        },
+      ],
     },
   ]);
 
+  const theme = {
+    //background yellow
+    primary: "#FFFBEB",
+    //background blue
+    secondary:"#5ec4f4",
+}
 
-
-  // when click show pets
-  // const loadPets = async () => {
-  //   const petData = await axios.get("http://localhost:3001/pet");
-
-  //   console.log(petData);
-
-  //   if(petData.status == 200 && petData.data.success == true){
-  //     setPets(petData.data.pets);
-  //   }
-  // };
-
-
-  // when the page loads show pets 
-  // useEffect(() => {
-  //   const loadPets = async () => {
-  //     const petData = await axios.get("http://localhost:3001/pet");
-
-  //     console.log(petData);
-
-  //     if (petData.status == 200 && petData.data.success == true) {
-  //       setPets(petData.data.pets);
-  //     }
-  //   };
-
-  //   loadPets();
-
-  // }, [])
   return (
-
     <>
-      {/* <AuthContextProvider> */}
-      <RouterProvider router={router} />
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -124,18 +94,8 @@ function App() {
         pauseOnHover
         theme="light"
       />
-      {/* <div className="App"> */}
-      {/* <button onClick={() => loadPets()} >Click here to load pets </button> */}
-      {/* {
-            pets &&
-            pets.length >= 1 &&
-            pets.map((pets) => <div>{pets.name}
-            </div>)} */}
-
-      {/* </div> */}
-      {/* </AuthContextProvider> */}
     </>
-  )
+  );
 }
 
-export default App
+export default App;

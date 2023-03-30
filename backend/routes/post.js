@@ -1,10 +1,15 @@
 import express from "express";
-import { dirname } from "path";
+const router = express.Router();
+import { dirname} from "path";
 import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const router = express.Router();
+
+
+// const appDir = dirname(require.main.filename);
+
 
 router.post("/pics", (request, response) => {
+
   console.log(request.headers);
   try {
     response.status(200).json({
@@ -27,9 +32,9 @@ router.post("/upload", (req, res) => {
   }
 
   const file = req.files.file;
-    console.log(__dirname );
-    // C:\Users\Jason\repos\TKH-phase2\TKH-Phase2-Project\frontend
-  file.mv(`C:/Users/Jason/repos/TKH-phase2/TKH-Phase2-Project/frontend/public/${file.name}`, (err) => {
+
+  const frontendRoute = __dirname.replace("backend", "frontend").replace("routes","public")
+  file.mv(`${frontendRoute}/${file.name}`, (err) => {
     if (err) {
       console.log(err);
       return res.status(500).send(err);

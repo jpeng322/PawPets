@@ -27,6 +27,7 @@ model Pet {
   userId Int 
   petUsername String
   user User @relation(fields: [userId, petUsername], references: [id, username])
+  link String
 
   // @@id([userId, petUsername])
   @@index([userId, petUsername])
