@@ -175,7 +175,7 @@ console.log(userPets)
                           {/* <Image fluid src="" alt="pet-img" className="img-container" xs={12}></Image> */}
                     <div className="pet-name" >{userPet.name}</div>
                       <div className="img-container">
-                        <Image className=""  src={`../public/${userPet.link}`} alt="" />
+                        <Image className=""  src={`../images/${userPet.link}`} alt="" />
                       </div>
                      
                       <div>Species: {userPet.species}</div>
