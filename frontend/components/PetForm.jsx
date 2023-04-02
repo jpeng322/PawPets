@@ -10,24 +10,69 @@ const PetForm = (props) => {
   const [petName, setPetName] = useState("");
   const [species, setSpecies] = useState("");
   const [file, setFile] = useState("");
-  const [filename, setFilename] = useState("");
+  const [blobFile, setBlobFile] = useState("");
+  const [cloudUrl, setCloudUrl] = useState("");
   //   const [uploadFile, setUploadFile] = useState("");
 
+  function handleFileChange(e) {
+    const file = e.target.files[0];
+    blobFileFunc(file);
+    // console.log(file, blobFileFunc(file))
+  }
   async function addPet(e) {
-    console.log("ADDEDPET")
-    e.preventDefault()
-    const formData = new FormData();
-    formData.append("file", file);
+    e.preventDefault();
+    // const formData = new FormData();
+    // await blobFileFunc(file);
+    // formData.append("file", blobFile);
+    // console.log(file, blobFile);
     try {
       const fileResponse = await axios.post(
         "http://localhost:3001/post/upload",
-        formData,
+
         {
+          data: {
+            imageUrl: blobFile,
+          },
           headers: {
             "Content-Type": "multipart/form-data",
           },
         }
       );
+
+      if (fileResponse) {
+        console.log(fileResponse)
+        try {
+          const response = await axios({
+            method: "post",
+            url: `http://localhost:3001/pet`,
+            headers: {
+              // 'Content-type': "application/json; charset=utf-8",
+              Authorization: `Bearer ${props.token}`,
+            },
+            data: {
+              // imageUrl: blobFile,
+              name: petName,
+              species: species,
+              userId: props.userId,
+              petUsername: loggedUsername,
+              link: fileResponse.data.link,
+            },
+          });
+  
+          if (response) {
+            // console.log(response)
+            props.setUserPets(response.data.petsList);
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    
+      // console.log(fileResponse)
+      // setCloudUrl(fileResponse.data.link);
+      // console.log(cloudUrl);
+
+      // setFilename(fileResponse.data.link);
 
       // const { fileName, filePath } = fileResponse.data;
       // console.log({ fileName, filePath });
@@ -50,65 +95,48 @@ const PetForm = (props) => {
     //   } catch(e) {
     //       console.log(e)
     //   }
-    try {
-      console.log(loggedUsername);
-      const response = await axios({
-        method: "post",
-        url: `http://localhost:3001/pet`,
-        headers: {
-          // 'Content-type': "application/json; charset=utf-8",
-          Authorization: `Bearer ${props.token}`,
-        },
-        data: {
-          name: petName,
-          species: species,
-          userId: props.userId,
-          petUsername: loggedUsername,
-          link: file.name,
-        },
-      });
+    // try {
+    //   const response = await axios({
+    //     method: "post",
+    //     url: `http://localhost:3001/pet`,
+    //     headers: {
+    //       // 'Content-type': "application/json; charset=utf-8",
+    //       Authorization: `Bearer ${props.token}`,
+    //     },
+    //     data: {
+    //       imageUrl: blobFile,
+    //       name: petName,
+    //       species: species,
+    //       userId: props.userId,
+    //       petUsername: loggedUsername,
+    //       // link: filePath,
+    //     },
+    //   });
 
-      if (response) {
-        // console.log(response)
-        props.setUserPets(response.data.petsList);
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    //   if (response) {
+    //     // console.log(response)
+    //     props.setUserPets(response.data.petsList);
+    //   }
+    // } catch (e) {
+    //   console.log(e);
+    // }
   }
 
-  //   function onChange(e) {
-  //     // console.log(e.target.files[0]);
-  //     setFile(e.target.files[0]);
-  //     setFilename(e.target.files[0].name);
-  //     console.log(file.name, "ONCAHNGE FILE NAME");
-  //   }
+  function blobFileFunc(file) {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setBlobFile(reader.result);
+    };
+  }
 
-  console.log(file.name);
   return (
     <Draggable>
       <Form onSubmit={addPet} className="add-form">
-      {/* <div className="add-form"> */}
-        {/* <div>
+        <div>
           <Form.Group controlId="formFile" className="mb-3">
             <Form.Label>Upload a Picture</Form.Label>
-            <Form.Control
-              type="file"
-              onChange={(e) => {
-                setFile(e.target.files[0]);
-              }}
-            />
-          </Form.Group>
-        </div> */}
-                <div>
-          <Form.Group controlId="formFile" className="mb-3">
-            <Form.Label>Upload a Picture</Form.Label>
-            <Form.Control
-              type="file"
-              onChange={(e) => {
-                setFile(e.target.files[0]);
-              }}
-            />
+            <Form.Control type="file" onChange={handleFileChange} />
           </Form.Group>
         </div>
         <div className="mb-3">
@@ -137,9 +165,11 @@ const PetForm = (props) => {
           />
         </div>
         <div className="d-flex justify-content-between">
-          <Button type="submit"
+          <Button
+            type="submit"
             // onClick={addPet}
-            variant="success">
+            variant="success"
+          >
             Create
           </Button>
           <button
@@ -152,7 +182,7 @@ const PetForm = (props) => {
           </button>
         </div>
         {/* </div> */}
-        </Form>
+      </Form>
     </Draggable>
   );
 };

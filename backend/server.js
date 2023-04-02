@@ -10,7 +10,7 @@ import fileUpload from "express-fileupload";
 import authRouter from "./routes/auth.js";
 import petRouter from "./routes/pet.js";
 import userRouter from "./routes/user.js";
-import postRouter from "./routes/post.js"
+import postRouter from "./routes/post.js";
 dotenv.config();
 
 const app = express();
@@ -30,7 +30,7 @@ app.use("/pet", petRouter);
 
 app.use("/auth", authRouter);
 
-app.use("/post", postRouter)
+app.use("/post", postRouter);
 // app.use("/upload", picsRouter)
 
 // app.use("/upload", passport.authenticate("jwt", { session: false }), picsRouter)

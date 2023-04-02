@@ -24,7 +24,7 @@ const Pets = () => {
             >
               <div className="pet-name"> {pet.name}</div>
               <div className="img-container">
-                <Image className=" " src={`../images/${pet.link}`} alt="" />
+                <Image className=" " src={`${pet.link}`} alt="" />
               </div>
               <div className="mt-3">Species: {pet.species}</div>
               <div>User: {pet.petUsername}</div>

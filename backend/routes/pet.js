@@ -1,7 +1,7 @@
 import express from "express";
 import prisma from "../db/index.js";
 import passport from "passport";
-
+import cloudinary from "../cloudinary.js";
 const router = express.Router();
 
 //getting all the pets/posts
@@ -66,11 +66,12 @@ router.get("/:petId", async (request, response) => {
   }
 });
 
-//posting a new pet after logging in
+// posting a new pet after logging in
 router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
   async (request, response) => {
+    console.log(request.body)
     try {
       const newPet = await prisma.pet.create({
         data: {
@@ -78,7 +79,7 @@ router.post(
           species: request.body.species,
           userId: request.user.id,
           petUsername: request.user.username || request.body.username,
-          link: request.body.link || "no-image.jpg",
+          link: request.body.link,
         },
       });
 
@@ -109,6 +110,107 @@ router.post(
     }
   }
 );
+
+// router.post(
+//   "/",
+//   passport.authenticate("jwt", { session: false }),
+//   async (request, response) => {
+//     // console.log(request.body);
+
+//     // try {
+//     const cloudRes = cloudinary.uploader.upload(request.body.imageUrl, {
+//       folder: "Pawpets",
+//     });
+//     cloudRes.then((data) => {
+//       console.log("THIS IS DATA");
+//       console.log(data);
+//       console.log(data.secure_url);
+//       // const cloudResData = data.secure_url;
+//       const newPet = prisma.pet
+//         .create({
+//           data: {
+//             name: request.body.name,
+//             species: request.body.species,
+//             userId: request.user.id,
+//             petUsername: request.user.username || request.body.username,
+//             link: data.secure_url,
+//           },
+//         })
+//         .then((response) => {
+//           if (newPet) {
+//             const petsList = prisma.pet
+//               .findMany({
+//                 where: {
+//                   userId: request.user.id,
+//                 },
+//               })
+//               .then((response) =>
+//                 response.status(201).json({
+//                   success: true,
+//                   message: "Pet created",
+//                   pet: newPet,
+//                   petsList,
+//                 })
+//               )
+//               .catch((e) => {
+//                 console.log(e);
+//                 // response.status(400).json({
+//                 //   success: false,
+//                 //   message: "Pet was not created",
+//                 // });
+//               });
+//           }
+//         })
+//         .catch((e) => {
+//           console.log(e);
+//           // response.status(400).json({
+//           //   success: false,
+//           //   message: "Something went wrong",
+//           // });
+//         });
+//     });
+//     //   const newPet = await prisma.pet.create({
+//     //     data: {
+//     //       name: request.body.name,
+//     //       species: request.body.species,
+//     //       userId: request.user.id,
+//     //       petUsername: request.user.username || request.body.username,
+//     //       // link: request.body.link || "no-image.jpg",
+//     //     },
+//     //   });
+//     // })
+//     // .catch((err) => {
+//     //   console.log("ERROROERROERER");
+//     //   console.log(err);
+//     // });
+
+//     //     if (newPet) {
+//     //       const petsList = await prisma.pet.findMany({
+//     //         where: {
+//     //           userId: request.user.id,
+//     //         },
+//     //       });
+//     //       response.status(201).json({
+//     //         success: true,
+//     //         message: "Pet created",
+//     //         pet: newPet,
+//     //         petsList,
+//     //       });
+//     //     } else {
+//     //       response.status(400).json({
+//     //         success: false,
+//     //         message: "Pet was not created",
+//     //       });
+//     //     }
+//     //   } catch (e) {
+//     //     console.log(e);
+//     //     response.status(400).json({
+//     //       success: false,
+//     //       message: "Something went wrong",
+//     //     });
+//     //   }
+//   }
+// );
 
 //updating a user's pet after logging in
 router.put(
@@ -154,37 +256,6 @@ router.put(
     }
   }
 );
-
-// router.post("/", async (request, response) => {
-//   try {
-//     const newPet = await prisma.pet.create({
-//       data: {
-//         name: request.body.name,
-//         species: request.body.species,
-//         userId: 1,
-//       },
-//     });
-
-//     if (newPet) {
-//       response.status(201).json({
-//         success: true,
-//         message: "Pet created",
-//         pet: newPet,
-//       });
-//     } else {
-//       response.status(400).json({
-//         success: false,
-//         message: "Pet was not created",
-//       });
-//     }
-//   } catch (e) {
-//     console.log(e);
-//     response.status(400).json({
-//       success: false,
-//       message: "Something went wrong",
-//     });
-//   }
-// })
 
 // Get pets by an owner
 router.get("/user/:userId", async function (request, response) {
