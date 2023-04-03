@@ -41,7 +41,7 @@ router.get("/:petPostId", async (request, response) => {
       },
     });
     if (getAllComments) {
-      response.status(201).json({
+      response.status(200).json({
         success: true,
         getAllComments,
       });
