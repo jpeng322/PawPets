@@ -85,6 +85,33 @@
   width: 18px;
 }
 
+.comment-btn {
+  /* border: 1px solid #212529; */
+  border-radius: 0.25rem;
+  padding: 0.75rem;
+  box-shadow: 0 0 3px rgb(0 0 0 / 0.2);
+}
+
+.comment-btn:hover {
+  transition: 0.2s;
+  background-color: #c1b5ac;
+}
+.comment-icon {
+  /* border: 1px solid red; */
+  width: 20px;
+}
+
+.comment-line >*:nth-child(1) {
+  /* border: 1px solid red; */
+  flex: 1;
+}
+
+.modal-backdrop {
+  opacity: 0.5 !important;
+  transition: 2s;
+  background: #00000010;
+}
+
 @media all and (max-width: 900px) {
   .dashboard-header button {
     position: relative;
