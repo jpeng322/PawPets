@@ -11,6 +11,7 @@ import authRouter from "./routes/auth.js";
 import petRouter from "./routes/pet.js";
 import userRouter from "./routes/user.js";
 import postRouter from "./routes/post.js";
+import commentRouter from "./routes/comment.js"
 dotenv.config();
 
 const app = express();
@@ -31,6 +32,8 @@ app.use("/pet", petRouter);
 app.use("/auth", authRouter);
 
 app.use("/post", postRouter);
+
+app.use("/comment", commentRouter)
 // app.use("/upload", picsRouter)
 
 // app.use("/upload", passport.authenticate("jwt", { session: false }), picsRouter)

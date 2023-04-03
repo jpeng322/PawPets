@@ -21,6 +21,9 @@ const Pets = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  function submitComment(){
+
+  }
   return (
     <Container fluid className="pets-container pe-0 ps-0">
       <Col className="w-100 pets-row-container d-flex justify-content-center">

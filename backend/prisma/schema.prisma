@@ -6,29 +6,41 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
 model User {
-  id Int @unique @default(autoincrement())
+  id       Int    @unique @default(autoincrement())
   username String @unique @db.VarChar(255)
-  password String 
-  pet Pet[]
+  password String
+  pet      Pet[]
 
   @@id([id, username])
 }
 
 model Pet {
-  id Int @unique @default(autoincrement())
-  name String @db.VarChar(255)
-  species String
-  userId Int 
-  petUsername String
-  user User @relation(fields: [userId, petUsername], references: [id, username])
-  link String
+  id          Int       @unique @default(autoincrement())
+  name        String    @db.VarChar(255)
+  species     String
+  userId      Int
+  petUsername String    @unique
+  user        User      @relation(fields: [userId, petUsername], references: [id, username])
+  link        String
+  Comment     Comment[]
 
   // @@id([userId, petUsername])
   @@index([userId, petUsername])
+}
+
+model Comment {
+  id              Int    @unique @default(autoincrement())
+  comment         String @db.VarChar(50)
+  commentUsername String
+  petPostId       Int
+  userComment     Pet    @relation(fields: [petPostId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@index([petPostId])
 }
