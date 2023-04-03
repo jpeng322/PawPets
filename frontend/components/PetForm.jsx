@@ -5,26 +5,17 @@ import { AuthContext } from "../contexts/authContext";
 import { Col, Row, Container, Image, Form, Button } from "react-bootstrap";
 import Draggable from "react-draggable";
 const PetForm = (props) => {
-  const { loggedUsername, uploadFile, setUploadFile } = useContext(AuthContext);
+  const { loggedUsername } = useContext(AuthContext);
 
   const [petName, setPetName] = useState("");
   const [species, setSpecies] = useState("");
-  const [file, setFile] = useState("");
   const [blobFile, setBlobFile] = useState("");
-  const [cloudUrl, setCloudUrl] = useState("");
-  //   const [uploadFile, setUploadFile] = useState("");
-
   function handleFileChange(e) {
     const file = e.target.files[0];
     blobFileFunc(file);
-    // console.log(file, blobFileFunc(file))
   }
   async function addPet(e) {
     e.preventDefault();
-    // const formData = new FormData();
-    // await blobFileFunc(file);
-    // formData.append("file", blobFile);
-    // console.log(file, blobFile);
     try {
       const fileResponse = await axios.post(
         "http://localhost:3001/post/upload",
@@ -40,7 +31,7 @@ const PetForm = (props) => {
       );
 
       if (fileResponse) {
-        console.log(fileResponse)
+        console.log(fileResponse);
         try {
           const response = await axios({
             method: "post",
@@ -58,7 +49,7 @@ const PetForm = (props) => {
               link: fileResponse.data.link,
             },
           });
-  
+
           if (response) {
             // console.log(response)
             props.setUserPets(response.data.petsList);
@@ -67,59 +58,9 @@ const PetForm = (props) => {
           console.log(e);
         }
       }
-    
-      // console.log(fileResponse)
-      // setCloudUrl(fileResponse.data.link);
-      // console.log(cloudUrl);
-
-      // setFilename(fileResponse.data.link);
-
-      // const { fileName, filePath } = fileResponse.data;
-      // console.log({ fileName, filePath });
-      // setUploadFile({ fileName, filePath });
     } catch (e) {
       console.log(e);
     }
-    //   try {
-    //       const fileResponse = await axios({
-    //           method: "post",
-    //           url: "http://localhost:3001/post/upload",
-    //           data: {
-    //               imageData: file
-    //           }
-    //       })
-
-    //       const { fileName, filePath } = fileResponse.data
-
-    //       setUploadedFile({fileName, filePath})
-    //   } catch(e) {
-    //       console.log(e)
-    //   }
-    // try {
-    //   const response = await axios({
-    //     method: "post",
-    //     url: `http://localhost:3001/pet`,
-    //     headers: {
-    //       // 'Content-type': "application/json; charset=utf-8",
-    //       Authorization: `Bearer ${props.token}`,
-    //     },
-    //     data: {
-    //       imageUrl: blobFile,
-    //       name: petName,
-    //       species: species,
-    //       userId: props.userId,
-    //       petUsername: loggedUsername,
-    //       // link: filePath,
-    //     },
-    //   });
-
-    //   if (response) {
-    //     // console.log(response)
-    //     props.setUserPets(response.data.petsList);
-    //   }
-    // } catch (e) {
-    //   console.log(e);
-    // }
   }
 
   function blobFileFunc(file) {

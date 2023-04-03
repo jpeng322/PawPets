@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, redirect, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { Col, Row, Container, Image, Form, Button } from "react-bootstrap";
@@ -9,6 +9,8 @@ import "../CSS/Signup.css";
 import { StyledButton, BlueHeader } from "../components/styled/Button";
 import DogImage from "../images/dog-image.png";
 const Signup = () => {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -29,6 +31,8 @@ const Signup = () => {
         toast.success("Successfully signed up!", {
           position: toast.POSITION.TOP_CENTER,
         });
+
+        return navigate("/login");
       } else {
         throw Error("No response");
       }
