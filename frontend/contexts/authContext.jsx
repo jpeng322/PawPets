@@ -22,11 +22,11 @@ const AuthContextProvider = (props) => {
     const [hasToken, setHasToken] = useState(localStorage.getItem("token"))
     console.log(hasToken)
     const [token, setToken] = useState("")
-    const [uploadFile, setUploadFile] = useState("")
+    // const [uploadFile, setUploadFile] = useState("")
 
 
     return (
-        <AuthContext.Provider value={{ hasToken, setHasToken, loggedUsername, setLoggedUsername, userId, setUserId, token, setToken, uploadFile, setUploadFile }}>
+        <AuthContext.Provider value={{ hasToken, setHasToken, loggedUsername, setLoggedUsername, userId, setUserId, token, setToken, }}>
 
             {props.children}
         </AuthContext.Provider>

@@ -75,7 +75,7 @@ router.post(
     try {
       const newPet = await prisma.pet.create({
         data: {
-          name: request.body.name,
+          name: request.body.name || "" ,
           species: request.body.species,
           userId: request.user.id,
           petUsername: request.user.username || request.body.username,

@@ -85,6 +85,12 @@
   width: 18px;
 }
 
+.comment-container {
+  /* border: 1px solid red; */
+  padding: .5rem;
+  border-radius: .5rem;
+  background-color: #ebe7e7;
+}
 .comment-btn {
   /* border: 1px solid #212529; */
   border-radius: 0.25rem;

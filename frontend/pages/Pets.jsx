@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../contexts/authContext.jsx";
 import { useLoaderData } from "react-router-dom";
 import {
   Col,
@@ -10,20 +11,97 @@ import {
   Modal,
 } from "react-bootstrap";
 
+import axios from "axios";
 //css
 import { PetCard } from "../components/styled/Card.jsx";
 
 const Pets = () => {
   const pets = useLoaderData();
 
+  const { loggedUsername } = useContext(AuthContext);
+
   const [show, setShow] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [commentValue, setCommentValue] = useState("");
 
+  const newDate = new Date();
+  const date = newDate.getDate();
+  console.log(newDate);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
-  function submitComment(){
+  async function displayComments() {
+    setShow(true);
+    try {
+      const response = await axios({
+        method: "get",
+        url: "http://localhost:3001/comment/1",
+      });
 
+      if (response) {
+        console.log(response);
+        const comments = response.data.getAllComments;
+        setComments(comments);
+      } else {
+        console.log("NO RESPONSE");
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
+
+  // const handleShow = () => setShow(true);
+
+  async function submitComment(id) {
+    try {
+      const response = await axios({
+        method: "post",
+        url: `http://localhost:3001/comment/`,
+        data: {
+          comment: commentValue,
+          commentUsername: loggedUsername,
+          petPostId: id,
+        },
+      });
+
+      if (response) {
+        console.log(response);
+        // const comments = response.data.getAllComments;
+        setComments([...comments, response.data.newComment]);
+      } else {
+        console.log("NO RESPONSE");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  function timeSince(date) {
+    var seconds = Math.floor((new Date() - date) / 1000);
+
+    var interval = seconds / 31536000;
+
+    if (interval > 1) {
+      return Math.floor(interval) + " years";
+    }
+    interval = seconds / 2592000;
+    if (interval > 1) {
+      return Math.floor(interval) + " months";
+    }
+    interval = seconds / 86400;
+    if (interval > 1) {
+      return Math.floor(interval) + " days";
+    }
+    interval = seconds / 3600;
+    if (interval > 1) {
+      return Math.floor(interval) + " hours";
+    }
+    interval = seconds / 60;
+    if (interval > 1) {
+      return Math.floor(interval) + " minutes";
+    }
+    return Math.floor(seconds) + " seconds";
+  }
+
   return (
     <Container fluid className="pets-container pe-0 ps-0">
       <Col className="w-100 pets-row-container d-flex justify-content-center">
@@ -44,7 +122,7 @@ const Pets = () => {
               </div>
               <div className="mt-3">Species: {pet.species}</div>
               <div>User: {pet.petUsername}</div>
-              <div onClick={handleShow} className="comment-btn">
+              <div onClick={displayComments} className="comment-btn">
                 Comment{" "}
                 <span className="ms-1">
                   <svg
@@ -60,12 +138,29 @@ const Pets = () => {
                 Launch demo modal
               </Button> */}
 
-              <Modal className="d-flex justify-content-center align-items-center" show={show} onHide={handleClose}>
+              <Modal
+                className="d-flex justify-content-center align-items-center"
+                show={show}
+                onHide={handleClose}
+              >
                 <Modal.Header closeButton>
-                  <Modal.Title>Modal heading</Modal.Title>
+                  <Modal.Title>{pet.name}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  Woohoo, you're reading this text in a modal!
+                  <Image fluid className=" " src={`${pet.link}`} alt="" />
+                  {comments.map((comment) => (
+                    <div className="comment-container d-flex flex-column mt-3">
+                      <div>
+                        {" "}
+                        {/* {console.log(typeOf)} */}
+                        {/* {console.log(newDate - new Date(comment.createdAt))} */}
+                        {console.log(timeSince(new Date(comment.createdAt)))}
+                        <div> {comment.commentUsername}</div>{" "}
+                        <div>{timeSince(new Date(comment.createdAt))} ago</div>
+                      </div>
+                      <div>Comment: {comment.comment}</div>
+                    </div>
+                  ))}
                 </Modal.Body>
                 <Modal.Footer className="d-flex flex-row">
                   {/* <Button variant="secondary" onClick={handleClose}>
@@ -73,20 +168,23 @@ const Pets = () => {
                   </Button> */}
                   <div className="comment-line d-flex w-100 justify-content-between align-items-center gap-3">
                     <Form.Group className="" controlId="formBasicEmail">
-                      <Form.Control className="comment-input" type="email" placeholder="" />
+                      <Form.Control
+                        className="comment-input"
+                        type="email"
+                        placeholder=""
+                        onChange={(e) => setCommentValue(e.target.value)}
+                        value={commentValue}
+                      />
                     </Form.Group>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button
+                      variant="primary"
+                      onClick={() => submitComment(pet.id)}
+                    >
                       Comment
                     </Button>
                   </div>
                 </Modal.Footer>
               </Modal>
-              {/* <div className="d-flex">
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Control type="email" placeholder="Write a comment" />
-                </Form.Group>
-                <Button> Post </Button>
-              </div> */}
             </Col>
           ))}
         </Row>
