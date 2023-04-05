@@ -60,4 +60,31 @@ router.get("/:petPostId", async (request, response) => {
   }
 });
 
+router.delete("/:petPostId", async (request, response) => {
+  try {
+    const deletedComments = await prisma.comment.deleteMany({
+      where: {
+        petPostId: parseInt(request.params.petPostId),
+      },
+    });
+    if (deletedComments) {
+      response.status(200).json({
+        success: true,
+        deletedComments,
+      });
+    } else {
+      response.status(400).json({
+        success: false,
+        message: "Comments could not be deleted.",
+      });
+    }
+  } catch (e) {
+    console.log(e);
+    response.status(400).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+});
+
 export default router;

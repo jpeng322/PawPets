@@ -32,7 +32,7 @@ const Dashboard = () => {
   async function deletePet(petId) {
     // console.log(hasToken)
     try {
-      const response = await axios({
+      const deleteComments = await axios({
         method: "delete",
         url: `http://localhost:3001/pet/${petId}`,
         headers: {
@@ -41,8 +41,19 @@ const Dashboard = () => {
         },
       });
 
-      if (response) {
-        setUserPets(response.data.petsList);
+      if (deleteComments) {
+        const response = await axios({
+          method: "delete",
+          url: `http://localhost:3001/pet/${petId}`,
+          headers: {
+            // 'Content-type': "application/json; charset=utf-8",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response) {
+          setUserPets(response.data.petsList);
+        }
       }
     } catch (e) {
       console.log(e);
@@ -114,16 +125,20 @@ const Dashboard = () => {
                 if (userPet.id === changeId) {
                   return (
                     <Col
-                    className="pet-post gap-3"
+                      className="pet-post gap-3"
                       xs={10}
                       sm={8}
                       md={5}
                       lg={5}
                       xl={4}
                       xxl={3}
-                      >
-                    <div className="img-container">
-                        <Image className=""  src={`../public/${userPet.link}`} alt="" />
+                    >
+                      <div className="img-container">
+                        <Image
+                          className=""
+                          src={`../public/${userPet.link}`}
+                          alt=""
+                        />
                       </div>
                       <div className="">
                         <label htmlFor="inputUsername" className="form-label">
@@ -170,12 +185,12 @@ const Dashboard = () => {
                       xl={4}
                       xxl={3}
                     >
-                          {/* <Image fluid src="" alt="pet-img" className="img-container" xs={12}></Image> */}
-                    <div className="pet-name" >{userPet.name}</div>
+                      {/* <Image fluid src="" alt="pet-img" className="img-container" xs={12}></Image> */}
+                      <div className="pet-name">{userPet.name}</div>
                       <div className="img-container">
-                        <Image className=""  src={`${userPet.link}`} alt="" />
+                        <Image className="" src={`${userPet.link}`} alt="" />
                       </div>
-                     
+
                       <div>Species: {userPet.species}</div>
                       <div className="d-flex gap-2">
                         <Button

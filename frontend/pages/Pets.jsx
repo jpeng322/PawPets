@@ -29,12 +29,12 @@ const Pets = () => {
   console.log(newDate);
   const handleClose = () => setShow(false);
 
-  async function displayComments() {
+  async function displayComments(id) {
     setShow(true);
     try {
       const response = await axios({
         method: "get",
-        url: "http://localhost:3001/comment/1",
+        url: `http://localhost:3001/comment/${id}`,
       });
 
       if (response) {
@@ -122,7 +122,10 @@ const Pets = () => {
               </div>
               <div className="mt-3">Species: {pet.species}</div>
               <div>User: {pet.petUsername}</div>
-              <div onClick={displayComments} className="comment-btn">
+              <div
+                onClick={() => displayComments(pet.id)}
+                className="comment-btn"
+              >
                 Comment{" "}
                 <span className="ms-1">
                   <svg
@@ -150,22 +153,22 @@ const Pets = () => {
                   <Image fluid className=" " src={`${pet.link}`} alt="" />
                   {comments.map((comment) => (
                     <div className="comment-container d-flex flex-column mt-3">
-                      <div>
+                      <div className="  d-flex justify-content-between align-items-center">
                         {" "}
-                        {/* {console.log(typeOf)} */}
-                        {/* {console.log(newDate - new Date(comment.createdAt))} */}
                         {console.log(timeSince(new Date(comment.createdAt)))}
-                        <div> {comment.commentUsername}</div>{" "}
-                        <div>{timeSince(new Date(comment.createdAt))} ago</div>
+                        <div className="comment-username fw-bolder">
+                          {" "}
+                          {comment.commentUsername}
+                        </div>{" "}
+                        <div className="comment-timestamp">
+                          {timeSince(new Date(comment.createdAt))} ago
+                        </div>
                       </div>
                       <div>Comment: {comment.comment}</div>
                     </div>
                   ))}
                 </Modal.Body>
                 <Modal.Footer className="d-flex flex-row">
-                  {/* <Button variant="secondary" onClick={handleClose}>
-                    Close
-                  </Button> */}
                   <div className="comment-line d-flex w-100 justify-content-between align-items-center gap-3">
                     <Form.Group className="" controlId="formBasicEmail">
                       <Form.Control

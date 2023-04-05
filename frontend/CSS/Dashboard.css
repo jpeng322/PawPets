@@ -85,11 +85,15 @@
   width: 18px;
 }
 
+.comment-timestamp {
+  font-size: .80rem;
+  /* border: 1px solid red; */
+}
 .comment-container {
   /* border: 1px solid red; */
   padding: .5rem;
   border-radius: .5rem;
-  background-color: #ebe7e7;
+  background-color: #e2dede;
 }
 .comment-btn {
   /* border: 1px solid #212529; */
