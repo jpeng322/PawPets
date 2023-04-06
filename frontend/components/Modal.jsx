@@ -1,18 +1,25 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../contexts/authContext.jsx";
-import {
-  Col,
-  Row,
-  Container,
-  Image,
-  Button,
-  Form,
-  Modal,
-} from "react-bootstrap";
+import { Image, Button, Form, Modal, Pagination } from "react-bootstrap";
 
 import axios from "axios";
 
+//components
+import PaginationBasic from "./PaginationBasic.jsx";
+
 const CommentModal = (props) => {
+  const numberOfImages = 3;
+  const numberOfPages = Math.ceil(props.comments.length / numberOfImages);
+
+  const [pageNumber, setPageNumber] = useState(1);
+  const currentComments =
+    pageNumber === 1
+      ? props.comments.slice(0, pageNumber * numberOfImages)
+      : props.comments.slice(
+          (pageNumber - 1) * numberOfImages,
+          pageNumber * numberOfImages
+        );
+
   const { loggedUsername } = useContext(AuthContext);
 
   // const [show, setShow] = useState(false);
@@ -84,26 +91,37 @@ const CommentModal = (props) => {
       <Modal.Header closeButton>
         <Modal.Title>{props.modalPetInfo.name}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className="d-flex flex-column align-items-center">
         {/* {console.log(props.modalPetInfo)} */}
         <div>
           <Image fluid className=" " src={props.modalPetInfo.link} alt="" />
         </div>
-        {props.comments.map((comment) => (
-          <div className="comment-container d-flex flex-column mt-3">
-            <div className="  d-flex justify-content-between align-items-center">
-              {" "}
-              <div className="comment-username fw-bolder">
+        <div className="w-100">
+          {currentComments.map((comment) => (
+            <div className="comment-container d-flex flex-column mt-3 p-3 gap-1">
+              <div className="  d-flex justify-content-between align-items-center">
                 {" "}
-                {comment.commentUsername}
-              </div>{" "}
-              <div className="comment-timestamp">
-                {timeSince(new Date(comment.createdAt))} ago
+                <div className="comment-username fw-bolder">
+                  {" "}
+                  {comment.commentUsername}
+                </div>{" "}
+                <div className="comment-timestamp">
+                  {timeSince(new Date(comment.createdAt))} ago
+                </div>
               </div>
+              <div>Comment: {comment.comment}</div>
             </div>
-            <div>Comment: {comment.comment}</div>
-          </div>
-        ))}
+          ))}
+        </div>
+        <div>
+          {props.comments.length > 3 && (
+            <PaginationBasic
+              pageNumber={pageNumber}
+              numberOfPages={numberOfPages}
+              setPageNumber={setPageNumber}
+            />
+          )}
+        </div>
       </Modal.Body>
       <Modal.Footer className="d-flex flex-row">
         <div className="comment-line d-flex w-100 justify-content-between align-items-center gap-3">

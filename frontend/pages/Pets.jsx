@@ -1,19 +1,8 @@
-import { useEffect, useState, useContext } from "react";
-import { AuthContext } from "../contexts/authContext.jsx";
+import { useState, useContext } from "react";
 import { useLoaderData } from "react-router-dom";
-import {
-  Col,
-  Row,
-  Container,
-  Image,
-  Button,
-  Form,
-  Modal,
-} from "react-bootstrap";
+import { Col, Row, Container, Image } from "react-bootstrap";
 
 import axios from "axios";
-//css
-import { PetCard } from "../components/styled/Card.jsx";
 
 //components
 import CommentModal from "../components/Modal.jsx";
@@ -94,7 +83,13 @@ const Pets = () => {
         </Row>
       </Col>
 
-      <CommentModal comments={comments} setComments={setComments} setShow={setShow} show={show}   modalPetInfo={modalPetInfo} />
+      <CommentModal
+        comments={comments}
+        setComments={setComments}
+        setShow={setShow}
+        show={show}
+        modalPetInfo={modalPetInfo}
+      />
     </Container>
   );
 };
