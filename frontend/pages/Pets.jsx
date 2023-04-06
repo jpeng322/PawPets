@@ -15,20 +15,15 @@ import axios from "axios";
 //css
 import { PetCard } from "../components/styled/Card.jsx";
 
+//components
+import CommentModal from "../components/Modal.jsx";
+
 const Pets = () => {
   const pets = useLoaderData();
 
-  const { loggedUsername } = useContext(AuthContext);
-
   const [show, setShow] = useState(false);
   const [comments, setComments] = useState([]);
-  const [commentValue, setCommentValue] = useState("");
   const [modalPetInfo, setModalPetInfo] = useState("");
-
-  // const newDate = new Date();
-  // const date = newDate.getDate();
-  // console.log(newDate);
-  const handleClose = () => setShow(false);
 
   async function displayComments(id) {
     console.log(id);
@@ -54,61 +49,6 @@ const Pets = () => {
     } catch (e) {
       console.log(e);
     }
-  }
-
-  // const handleShow = () => setShow(true);
-
-  async function submitComment(id) {
-    console.log(id, "petpostid");
-    try {
-      const response = await axios({
-        method: "post",
-        url: `http://localhost:3001/comment/`,
-        data: {
-          comment: commentValue,
-          commentUsername: loggedUsername,
-          petPostId: id,
-        },
-      });
-
-      if (response) {
-        console.log(response);
-        setCommentValue("")
-        // const comments = response.data.getAllComments;
-        setComments([...comments, response.data.newComment]);
-      } else {
-        console.log("NO RESPONSE");
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  function timeSince(date) {
-    var seconds = Math.floor((new Date() - date) / 1000);
-
-    var interval = seconds / 31536000;
-
-    if (interval > 1) {
-      return Math.floor(interval) + " years";
-    }
-    interval = seconds / 2592000;
-    if (interval > 1) {
-      return Math.floor(interval) + " months";
-    }
-    interval = seconds / 86400;
-    if (interval > 1) {
-      return Math.floor(interval) + " days";
-    }
-    interval = seconds / 3600;
-    if (interval > 1) {
-      return Math.floor(interval) + " hours";
-    }
-    interval = seconds / 60;
-    if (interval > 1) {
-      return Math.floor(interval) + " minutes";
-    }
-    return Math.floor(seconds) + " seconds";
   }
 
   return (
@@ -154,55 +94,7 @@ const Pets = () => {
         </Row>
       </Col>
 
-      <Modal
-        className="d-flex justify-content-center align-items-center"
-        show={show}
-        onHide={handleClose}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>{modalPetInfo.name}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {console.log(modalPetInfo)}
-          <div>
-            <Image fluid className=" " src={modalPetInfo.link} alt="" />
-          </div>
-          {comments.map((comment) => (
-            <div className="comment-container d-flex flex-column mt-3">
-              <div className="  d-flex justify-content-between align-items-center">
-                {" "}
-                <div className="comment-username fw-bolder">
-                  {" "}
-                  {comment.commentUsername}
-                </div>{" "}
-                <div className="comment-timestamp">
-                  {timeSince(new Date(comment.createdAt))} ago
-                </div>
-              </div>
-              <div>Comment: {comment.comment}</div>
-            </div>
-          ))}
-        </Modal.Body>
-        <Modal.Footer className="d-flex flex-row">
-          <div className="comment-line d-flex w-100 justify-content-between align-items-center gap-3">
-            <Form.Group className="" controlId="formBasicEmail">
-              <Form.Control
-                className="comment-input"
-                type="email"
-                placeholder=""
-                onChange={(e) => setCommentValue(e.target.value)}
-                value={commentValue}
-              />
-            </Form.Group>
-            <Button
-              variant="primary"
-              onClick={() => submitComment(modalPetInfo.id)}
-            >
-              Comment
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
+      <CommentModal comments={comments} setComments={setComments} setShow={setShow} show={show}   modalPetInfo={modalPetInfo} />
     </Container>
   );
 };
