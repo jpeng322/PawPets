@@ -6,35 +6,6 @@ import * as dotenv from 'dotenv'
 
 const router = express.Router()
 
-// router.get("/", async (request, response) => {
-//     try {
-//         const user = await prisma.user.findFirst({
-//             where: {
-//                 username: request.body.username
-//             }
-//         })
-
-//         if (user) {
-//             response.status(200).json({
-//                 success: true,
-//                 message: "User found",
-//                 user
-//             })
-//         } else {
-//             response.status(404).json({
-//                 success: false,
-//                 message: "User not found"
-//             })
-//         }
-//     } catch (err) {
-//         console.log(err)
-//         response.status(500).json({
-//             success: false,
-//             message: "Something went wrong"
-//         })
-//     }
-
-// })
 
 router.post("/signup", async (request, response) => {
     try {

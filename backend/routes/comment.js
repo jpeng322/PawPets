@@ -9,7 +9,7 @@ router.post("/", async (request, response) => {
       data: {
         comment: request.body.comment,
         commentUsername: request.body.commentUsername,
-        petPostId: 1,
+        petPostId: request.body.petPostId,
       },
     });
     console.log(newComment);

@@ -23,14 +23,18 @@ const Pets = () => {
   const [show, setShow] = useState(false);
   const [comments, setComments] = useState([]);
   const [commentValue, setCommentValue] = useState("");
+  const [modalPetInfo, setModalPetInfo] = useState("");
 
-  const newDate = new Date();
-  const date = newDate.getDate();
-  console.log(newDate);
+  // const newDate = new Date();
+  // const date = newDate.getDate();
+  // console.log(newDate);
   const handleClose = () => setShow(false);
 
   async function displayComments(id) {
+    console.log(id);
     setShow(true);
+    // setModalPetId(id)
+    // console.log(modalPetId)
     try {
       const response = await axios({
         method: "get",
@@ -39,8 +43,11 @@ const Pets = () => {
 
       if (response) {
         console.log(response);
+        const petInfo = pets.filter((pet) => pet.id === id)[0];
         const comments = response.data.getAllComments;
         setComments(comments);
+        setModalPetInfo(petInfo);
+        console.log(modalPetInfo);
       } else {
         console.log("NO RESPONSE");
       }
@@ -52,6 +59,7 @@ const Pets = () => {
   // const handleShow = () => setShow(true);
 
   async function submitComment(id) {
+    console.log(id, "petpostid");
     try {
       const response = await axios({
         method: "post",
@@ -65,6 +73,7 @@ const Pets = () => {
 
       if (response) {
         console.log(response);
+        setCommentValue("")
         // const comments = response.data.getAllComments;
         setComments([...comments, response.data.newComment]);
       } else {
@@ -118,7 +127,7 @@ const Pets = () => {
             >
               <div className="pet-name"> {pet.name}</div>
               <div className="img-container">
-                <Image className=" " src={`${pet.link}`} alt="" />
+                <Image className=" " src={pet.link} alt="" />
               </div>
               <div className="mt-3">Species: {pet.species}</div>
               <div>User: {pet.petUsername}</div>
@@ -140,58 +149,60 @@ const Pets = () => {
               {/* <Button variant="primary" onClick={handleShow}>
                 Launch demo modal
               </Button> */}
-
-              <Modal
-                className="d-flex justify-content-center align-items-center"
-                show={show}
-                onHide={handleClose}
-              >
-                <Modal.Header closeButton>
-                  <Modal.Title>{pet.name}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <Image fluid className=" " src={`${pet.link}`} alt="" />
-                  {comments.map((comment) => (
-                    <div className="comment-container d-flex flex-column mt-3">
-                      <div className="  d-flex justify-content-between align-items-center">
-                        {" "}
-                        {console.log(timeSince(new Date(comment.createdAt)))}
-                        <div className="comment-username fw-bolder">
-                          {" "}
-                          {comment.commentUsername}
-                        </div>{" "}
-                        <div className="comment-timestamp">
-                          {timeSince(new Date(comment.createdAt))} ago
-                        </div>
-                      </div>
-                      <div>Comment: {comment.comment}</div>
-                    </div>
-                  ))}
-                </Modal.Body>
-                <Modal.Footer className="d-flex flex-row">
-                  <div className="comment-line d-flex w-100 justify-content-between align-items-center gap-3">
-                    <Form.Group className="" controlId="formBasicEmail">
-                      <Form.Control
-                        className="comment-input"
-                        type="email"
-                        placeholder=""
-                        onChange={(e) => setCommentValue(e.target.value)}
-                        value={commentValue}
-                      />
-                    </Form.Group>
-                    <Button
-                      variant="primary"
-                      onClick={() => submitComment(pet.id)}
-                    >
-                      Comment
-                    </Button>
-                  </div>
-                </Modal.Footer>
-              </Modal>
             </Col>
           ))}
         </Row>
       </Col>
+
+      <Modal
+        className="d-flex justify-content-center align-items-center"
+        show={show}
+        onHide={handleClose}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>{modalPetInfo.name}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {console.log(modalPetInfo)}
+          <div>
+            <Image fluid className=" " src={modalPetInfo.link} alt="" />
+          </div>
+          {comments.map((comment) => (
+            <div className="comment-container d-flex flex-column mt-3">
+              <div className="  d-flex justify-content-between align-items-center">
+                {" "}
+                <div className="comment-username fw-bolder">
+                  {" "}
+                  {comment.commentUsername}
+                </div>{" "}
+                <div className="comment-timestamp">
+                  {timeSince(new Date(comment.createdAt))} ago
+                </div>
+              </div>
+              <div>Comment: {comment.comment}</div>
+            </div>
+          ))}
+        </Modal.Body>
+        <Modal.Footer className="d-flex flex-row">
+          <div className="comment-line d-flex w-100 justify-content-between align-items-center gap-3">
+            <Form.Group className="" controlId="formBasicEmail">
+              <Form.Control
+                className="comment-input"
+                type="email"
+                placeholder=""
+                onChange={(e) => setCommentValue(e.target.value)}
+                value={commentValue}
+              />
+            </Form.Group>
+            <Button
+              variant="primary"
+              onClick={() => submitComment(modalPetInfo.id)}
+            >
+              Comment
+            </Button>
+          </div>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };

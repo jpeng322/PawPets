@@ -136,7 +136,7 @@ const Dashboard = () => {
                       <div className="img-container">
                         <Image
                           className=""
-                          src={`../public/${userPet.link}`}
+                          src={userPet.link}
                           alt=""
                         />
                       </div>
