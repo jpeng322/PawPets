@@ -66,6 +66,10 @@
   height: 100%;
 }
 
+.pet-post svg {
+  width: 25px;
+}
+
 .add-form {
   position: absolute;
   background-color: #5ec4f4;

@@ -80,6 +80,7 @@ router.post(
           userId: request.user.id,
           petUsername: request.user.username || request.body.username,
           link: request.body.link,
+          likes: 0
         },
       });
 
@@ -144,6 +145,51 @@ router.put(
         response.status(400).json({
           success: false,
           message: "Pet not updated. Something failed.",
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      response.status(400).json({
+        success: false,
+        message: "Something went wrong",
+      });
+    }
+  }
+);
+
+
+//updating likes button
+router.put(
+  "/likes/:petId",
+  passport.authenticate("jwt", { session: false }),
+  async (request, response) => {
+    // console.log(request.params.id, typeof request.params.id, request.user.id, typeof request.user.id)
+    console.log(request.body)
+    try {
+      const updateLikes = await prisma.pet.updateMany({
+        where: {
+          id: parseInt(request.params.petId),
+        },
+        data: {
+          likes: request.body.likes
+        },
+      });
+
+      if (updateLikes) {
+        const updateLikesPet = await prisma.pet.findMany({
+          where: {
+            id: parseInt(request.params.petId),
+          },
+        });
+        response.status(200).json({
+          success: true,
+          message: "Likes was updated",
+          updateLikesPet,
+        });
+      } else {
+        response.status(400).json({
+          success: false,
+          message: "Likes not updated. Something failed.",
         });
       }
     } catch (err) {

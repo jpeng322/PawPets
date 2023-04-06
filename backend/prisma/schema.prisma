@@ -29,6 +29,7 @@ model Pet {
   user        User      @relation(fields: [userId, petUsername], references: [id, username])
   link        String
   Comment     Comment[]
+  likes       Int
 
   // @@id([userId, petUsername])
   @@index([userId, petUsername])
