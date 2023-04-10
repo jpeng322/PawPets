@@ -71,16 +71,16 @@ router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
   async (request, response) => {
-    console.log(request.body)
+    console.log(request.body);
     try {
       const newPet = await prisma.pet.create({
         data: {
-          name: request.body.name || "" ,
+          name: request.body.name || "",
           species: request.body.species,
           userId: request.user.id,
           petUsername: request.user.username || request.body.username,
           link: request.body.link,
-          likes: 0
+          likes: 0,
         },
       });
 
@@ -157,21 +157,20 @@ router.put(
   }
 );
 
-
 //updating likes button
 router.put(
   "/likes/:petId",
   passport.authenticate("jwt", { session: false }),
   async (request, response) => {
-    // console.log(request.params.id, typeof request.params.id, request.user.id, typeof request.user.id)
-    console.log(request.body)
+    // console.log(request.body);
+
     try {
       const updateLikes = await prisma.pet.updateMany({
         where: {
           id: parseInt(request.params.petId),
         },
         data: {
-          likes: request.body.likes
+          likes: request.body.likes,
         },
       });
 
@@ -192,11 +191,191 @@ router.put(
           message: "Likes not updated. Something failed.",
         });
       }
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
       response.status(400).json({
         success: false,
         message: "Something went wrong",
+      });
+    }
+  }
+);
+
+router.post(
+  "/likes/:petId",
+  passport.authenticate("jwt", { session: false }),
+  async (request, response) => {
+    // console.log(request.user);
+    console.log(request.body);
+    try {
+      const findLikeAlready = await prisma.likes.findMany({
+        where: {
+          // userId: request.user.id,
+          userId: request.user.id,
+          petId: parseInt(request.params.petId),
+        },
+      });
+
+      if (findLikeAlready.length > 0) {
+        if (findLikeAlready[0].liked === true) {
+          const unlikePet = await prisma.likes.updateMany({
+            where: {
+              // userId: request.user.id,
+              userId: request.user.id,
+              petId: parseInt(request.params.petId),
+              // liked: true,
+            },
+            data: {
+              liked: false,
+            },
+          });
+
+          const petUnlikedUpdate = await prisma.pet.update({
+            where: {
+              id: parseInt(request.params.petId),
+            },
+            data: {
+              likes: request.body.likes - 1,
+              // likes: {
+              //   decrement: 1,
+              // },
+            },
+          });
+
+          const petUnlikedUpdateInfo = await prisma.likes.findFirst({
+            where: {
+              // userId: request.user.id,
+              userId: request.user.id,
+              petId: parseInt(request.params.petId),
+              // liked: true,
+            },
+          });
+          console.log(petUnlikedUpdate);
+          response.status(200).json({
+            success: true,
+            liked: false,
+            data: {
+              // unlikePet,
+              petUnlikedUpdate,
+              petUnlikedUpdateInfo,
+            },
+          });
+        } else {
+          const likePet = await prisma.likes.updateMany({
+            where: {
+              // userId: request.user.id,
+              userId: request.user.id,
+              petId: parseInt(request.params.petId),
+              // liked: true,
+            },
+            data: {
+              liked: true,
+            },
+          });
+
+          const petLikedUpdate = await prisma.pet.update({
+            where: {
+              id: parseInt(request.params.petId),
+            },
+            data: {
+              likes: request.body.likes + 1,
+              // likes: {
+              //   increment: 1,
+              // },
+            },
+          });
+
+          const petLikedUpdateInfo = await prisma.likes.findFirst({
+            where: {
+              // userId: request.user.id,
+              userId: request.user.id,
+              petId: parseInt(request.params.petId),
+              // liked: true,
+            },
+          });
+          console.log(petLikedUpdate);
+
+          response.status(200).json({
+            success: true,
+            liked: true,
+            data: {
+              // likePet,
+              petLikedUpdate,
+              petLikedUpdateInfo,
+            },
+          });
+        }
+        // response.status(400).json({
+        //   success: false,
+        //   message: "Like created already"
+        // })
+      } else {
+        const initialLike = await prisma.likes.create({
+          data: {
+            // userId: request.user.id,
+            userId: request.user.id,
+            petId: parseInt(request.params.petId),
+            liked: true,
+          },
+        });
+
+        
+      const addFirstLike = await prisma.pet.update({
+        where: {
+          id: parseInt(request.params.petId),
+        },
+        data: {
+          likes: request.body.likes + 1,
+        },
+      })
+        
+        response.status(200).json({
+          success: true,
+          liked: true,
+          initialLike,
+          message: "Initial like",
+        });
+      }
+;
+    } catch (e) {
+      console.log(e);
+      response.status(400).json({
+        success: false,
+        message: "Something went wrong",
+      });
+    }
+  }
+);
+
+//Get likes of user
+router.get(
+  "/likes/list",
+  passport.authenticate("jwt", { session: false }),
+  async (request, response) => {
+    try {
+      const likedList = await prisma.likes.findMany({
+        where: {
+          userId: request.user.id,
+        },
+      });
+
+      if (likedList) {
+        response.status(200).json({
+          success: true,
+          message: "all likes fetched!",
+          likedList,
+        });
+      } else {
+        response.status(400).json({
+          success: false,
+          message: "Something went wrong!",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      response.status(400).json({
+        success: false,
+        message: "could not get any pet data!",
       });
     }
   }
@@ -283,13 +462,57 @@ router.delete(
           id: parseInt(request.params.petId),
         },
       });
-      if (deletePet) {
+
+      const deleteLikes = await prisma.likes.deleteMany({
+        where: {
+          petId: parseInt(request.params.petId),
+        },
+      });
+      if (deletePet && deleteLikes) {
         const newPets = await prisma.pet.findMany({
           where: {
             userId: request.user.id,
           },
         });
         response.status(200).json({
+          success: true,
+          message: "Pet was successfully deleted!",
+          petsList: newPets,
+        });
+      } else {
+        response.status(400),
+          json({
+            message: "Something went wrong, pet could not be deleted!",
+          });
+      }
+    } catch (error) {
+      console.log(error);
+      response.status(400).json({
+        success: false,
+        message: "Something went wrong!",
+      });
+    }
+  }
+);
+
+//users can delete their pets after logging in
+router.delete(
+  "/likes/delete/:petId",
+  passport.authenticate("jwt", { session: false }),
+  async (request, response) => {
+    try {
+      const deleteLikes = await prisma.likes.deleteMany({
+        where: {
+          petId: parseInt(request.params.petId),
+        },
+      });
+      if (deleteLikes) {
+        const newPets = await prisma.pet.findMany({
+          where: {
+            userId: request.user.id,
+          },
+        });
+        response.status(204).json({
           success: true,
           message: "Pet was successfully deleted!",
           petsList: newPets,

@@ -1,6 +1,7 @@
 import express from "express";
 import prisma from "../db/index.js";
 const router = express.Router();
+import passport from "passport";
 
 router.post("/", async (request, response) => {
   console.log(request.body);
@@ -60,7 +61,8 @@ router.get("/:petPostId", async (request, response) => {
   }
 });
 
-router.delete("/:petPostId", async (request, response) => {
+router.delete("/:petPostId",
+passport.authenticate("jwt", { session: false }),  async (request, response) => {
   try {
     const deletedComments = await prisma.comment.deleteMany({
       where: {

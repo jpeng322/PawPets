@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useLoaderData } from "react-router-dom";
 import { Col, Row, Container, Image } from "react-bootstrap";
 
@@ -19,6 +19,34 @@ const Pets = () => {
   const [comments, setComments] = useState([]);
   const [liked, setLiked] = useState(false);
   const [modalPetInfo, setModalPetInfo] = useState("");
+  const [likedList, setLikedList] = useState([]);
+
+  useEffect(() => {
+    const fetchLikesList = async () => {
+      try {
+        const getLikesList = await axios({
+          method: "get",
+          url: `http://localhost:3001/pet/likes/list`,
+          headers: {
+            // 'Content-type': "application/json; charset=utf-8",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const trueLikesList = getLikesList.data.likedList.filter(
+          (likes) => likes.liked === true
+        );
+        console.log(trueLikesList);
+        if (trueLikesList) {
+          setLikedList(trueLikesList);
+        }
+        // console.log(likesResponse);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchLikesList().catch(console.error);
+  }, []);
 
   async function displayComments(id) {
     console.log(id);
@@ -49,40 +77,129 @@ const Pets = () => {
   // console.log(pets.find(pet => pet.id === 1))
 
   async function updateLikes(id) {
-    const updatePet = pets.find((pet) => pet.id === id);
+    const updatePet = petList.find((pet) => pet.id === id);
     // console.log(updatePet)
     try {
-      const response = await axios({
-        method: "put",
+      const likesResponse = await axios({
+        method: "post",
         url: `http://localhost:3001/pet/likes/${id}`,
         headers: {
           // 'Content-type': "application/json; charset=utf-8",
           Authorization: `Bearer ${token}`,
         },
         data: {
-          likes: liked ? updatePet.likes - 1 : updatePet.likes - 1,
+          likes: updatePet.likes,
         },
       });
 
-      if (response) {
-        setLiked(!liked);
-
+      console.log(likesResponse);
+      if (likesResponse.data.liked === true) {
+        console.log("LIKED");
         setPetList(
           petList.map((pet) => {
             if (pet.id === id) {
-              return { ...pet, likes: liked ? pet.likes + 1 : pet.likes - 1 };
+              return { ...pet, likes: pet.likes + 1 };
+            } else {
+              return pet;
+            }
+          })
+        );
+      } else {
+        setPetList(
+          petList.map((pet) => {
+            if (pet.id === id) {
+              return { ...pet, likes: pet.likes - 1 };
             } else {
               return pet;
             }
           })
         );
       }
+
+      // if (likesResponse) {
+      //   setPetList(
+      //     petList.map((pet) => {
+      //       if (pet.id === id) {
+      //         return { ...pet, likes: liked ? pet.likes + 1 : pet.likes - 1 };
+      //       } else {
+      //         return pet;
+      //       }
+      //     })
+      //   );
+      // }
+
+      const getLikesList = await axios({
+        method: "get",
+        url: `http://localhost:3001/pet/likes/list`,
+        headers: {
+          // 'Content-type': "application/json; charset=utf-8",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const trueLikesList = getLikesList.data.likedList.filter(
+        (likes) => likes.liked === true
+      );
+
+      // if (trueLikesList.find((likedObj) => likedObj.petId === id)) {
+      //   setPetList(
+      //     petList.map((pet) => {
+      //       if (pet.petId === id) {
+      //         return { ...pet, likes: pet.likes + 1 };
+      //       } else {
+      //         return { ...pet, likes: pet.likes - 1 };
+      //       }
+      //     })
+      //   );
+      // }
+      // console.log(petList);
+      // console.log(trueLikesList);
+      if (trueLikesList) {
+        setLikedList(trueLikesList);
+      }
+
+      console.log(likesResponse);
     } catch (e) {
       console.log(e);
     }
+
+    // try {
+    //   const response = await axios({
+    //     method: "put",
+    //     url: `http://localhost:3001/pet/likes/${id}`,
+    //     headers: {
+    //       // 'Content-type': "application/json; charset=utf-8",
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //     data: {
+    //       // likes: liked ? updatePet.likes - 1 : updatePet.likes - 1,
+    //       likes: updatePet.likes,
+    //     },
+    //   });
+
+    //   if (response) {
+    //     setLiked(!liked);
+
+    //     // setPetList(
+    //     //   petList.map((pet) => {
+    //     //     if (pet.id === id) {
+    //     //       return { ...pet, likes: liked ? pet.likes + 1 : pet.likes - 1 };
+    //     //     } else {
+    //     //       return pet;
+    //     //     }
+    //     //   })
+    //     // );
+    //   }
+    // } catch (e) {
+    //   console.log(e);
+    // }
   }
 
-  console.log(liked);
+  // console.log(likedList);
+  // console.log(likedList.some((likes) => likes.petId === 1), "LIKESOME TRUEFALSE");
+  // ? "red"
+  // : "black"
+
   return (
     <Container fluid className="pets-container pe-0 ps-0">
       <Col className="w-100 pets-row-container d-flex justify-content-center">
@@ -107,6 +224,11 @@ const Pets = () => {
                   <div>{pet.likes}</div>
                   <div onClick={() => updateLikes(pet.id)}>
                     <svg
+                      style={{
+                        fill: likedList.some((likes) => likes.petId === pet.id)
+                          ? "red"
+                          : "black",
+                      }}
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 512 512"
                     >

@@ -16,6 +16,7 @@ model User {
   username String @unique @db.VarChar(255)
   password String
   pet      Pet[]
+  likeId      Likes[]
 
   @@id([id, username])
 }
@@ -30,6 +31,8 @@ model Pet {
   link        String
   Comment     Comment[]
   likes       Int
+  likeId      Likes[]
+  
 
   // @@id([userId, petUsername])
   @@index([userId, petUsername])
@@ -44,4 +47,17 @@ model Comment {
   createdAt DateTime @default(now())
 
   @@index([petPostId])
+}
+
+model Likes {
+  id          Int       @unique @default(autoincrement())
+  // likes   Int 
+  userId Int 
+  petId Int 
+  liked Boolean
+  user User @relation(fields: [userId], references: [id])
+  pet Pet @relation(fields: [petId], references: [id]) 
+
+  @@index([userId])
+  @@index([petId])
 }

@@ -34,14 +34,25 @@ const Dashboard = () => {
     try {
       const deleteComments = await axios({
         method: "delete",
-        url: `http://localhost:3001/pet/${petId}`,
+        url: `http://localhost:3001/comment/${petId}`,
         headers: {
           // 'Content-type': "application/json; charset=utf-8",
           Authorization: `Bearer ${token}`,
         },
       });
 
-      if (deleteComments) {
+      
+        const deleteLikes = await axios({
+          method: "delete",
+          url: `http://localhost:3001/pet/likes/delete/${petId}`,
+          headers: {
+            // 'Content-type': "application/json; charset=utf-8",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      
+
+      if ( deleteComments) {
         const response = await axios({
           method: "delete",
           url: `http://localhost:3001/pet/${petId}`,
@@ -134,11 +145,7 @@ const Dashboard = () => {
                       xxl={3}
                     >
                       <div className="img-container">
-                        <Image
-                          className=""
-                          src={userPet.link}
-                          alt=""
-                        />
+                        <Image className="" src={userPet.link} alt="" />
                       </div>
                       <div className="">
                         <label htmlFor="inputUsername" className="form-label">
