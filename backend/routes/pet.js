@@ -8,10 +8,6 @@ const router = express.Router();
 router.get("/", async (request, response) => {
   try {
     const allPets = await prisma.pet.findMany({
-      // where: {
-      //     name: request.body.name,
-      //     species: request.body.species
-      // }
     });
 
     if (allPets) {

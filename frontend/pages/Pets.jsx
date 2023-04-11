@@ -9,6 +9,8 @@ import { AuthContext } from "../contexts/authContext.jsx";
 
 //components
 import CommentModal from "../components/Modal.jsx";
+import LikeComp from "../components/LikeComp.jsx";
+import FavoritesComp from "../components/FavComp.jsx";
 
 const Pets = () => {
   const { token, userId } = useContext(AuthContext);
@@ -49,10 +51,7 @@ const Pets = () => {
   }, []);
 
   async function displayComments(id) {
-    console.log(id);
     setShow(true);
-    // setModalPetId(id)
-    // console.log(modalPetId)
     try {
       const response = await axios({
         method: "get",
@@ -65,7 +64,6 @@ const Pets = () => {
         const comments = response.data.getAllComments;
         setComments(comments);
         setModalPetInfo(petInfo);
-        console.log(modalPetInfo);
       } else {
         console.log("NO RESPONSE");
       }
@@ -116,23 +114,10 @@ const Pets = () => {
         );
       }
 
-      // if (likesResponse) {
-      //   setPetList(
-      //     petList.map((pet) => {
-      //       if (pet.id === id) {
-      //         return { ...pet, likes: liked ? pet.likes + 1 : pet.likes - 1 };
-      //       } else {
-      //         return pet;
-      //       }
-      //     })
-      //   );
-      // }
-
       const getLikesList = await axios({
         method: "get",
         url: `http://localhost:3001/pet/likes/list`,
         headers: {
-          // 'Content-type': "application/json; charset=utf-8",
           Authorization: `Bearer ${token}`,
         },
       });
@@ -141,19 +126,6 @@ const Pets = () => {
         (likes) => likes.liked === true
       );
 
-      // if (trueLikesList.find((likedObj) => likedObj.petId === id)) {
-      //   setPetList(
-      //     petList.map((pet) => {
-      //       if (pet.petId === id) {
-      //         return { ...pet, likes: pet.likes + 1 };
-      //       } else {
-      //         return { ...pet, likes: pet.likes - 1 };
-      //       }
-      //     })
-      //   );
-      // }
-      // console.log(petList);
-      // console.log(trueLikesList);
       if (trueLikesList) {
         setLikedList(trueLikesList);
       }
@@ -163,42 +135,9 @@ const Pets = () => {
       console.log(e);
     }
 
-    // try {
-    //   const response = await axios({
-    //     method: "put",
-    //     url: `http://localhost:3001/pet/likes/${id}`,
-    //     headers: {
-    //       // 'Content-type': "application/json; charset=utf-8",
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //     data: {
-    //       // likes: liked ? updatePet.likes - 1 : updatePet.likes - 1,
-    //       likes: updatePet.likes,
-    //     },
-    //   });
-
-    //   if (response) {
-    //     setLiked(!liked);
-
-    //     // setPetList(
-    //     //   petList.map((pet) => {
-    //     //     if (pet.id === id) {
-    //     //       return { ...pet, likes: liked ? pet.likes + 1 : pet.likes - 1 };
-    //     //     } else {
-    //     //       return pet;
-    //     //     }
-    //     //   })
-    //     // );
-    //   }
-    // } catch (e) {
-    //   console.log(e);
-    // }
   }
 
-  // console.log(likedList);
-  // console.log(likedList.some((likes) => likes.petId === 1), "LIKESOME TRUEFALSE");
-  // ? "red"
-  // : "black"
+
 
   return (
     <Container fluid className="pets-container pe-0 ps-0">
@@ -219,25 +158,22 @@ const Pets = () => {
                 <Image className=" " src={pet.link} alt="" />
               </div>
               <div className="d-flex mt-2 gap-2">
-                <div className="">Species: {pet.species} </div>
-                <div className="d-flex">
-                  <div>{pet.likes}</div>
-                  <div onClick={() => updateLikes(pet.id)}>
-                    <svg
-                      style={{
-                        fill: likedList.some((likes) => likes.petId === pet.id)
-                          ? "red"
-                          : "black",
-                      }}
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 512 512"
-                    >
-                      <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
-                    </svg>
-                  </div>
-                </div>
+                <FavoritesComp
+                  pet={pet}
+                  likedList={likedList}
+                  updateLikes={updateLikes}
+                />
+
+                <LikeComp
+                  pet={pet}
+                  likedList={likedList}
+                  updateLikes={updateLikes}
+                />
               </div>
-              <div>User: {pet.petUsername}</div>
+              <div className="d-flex mt-2 gap-2">
+                <div className="">Species: {pet.species} </div>
+                <div>User: {pet.petUsername}</div>
+              </div>
               <div
                 onClick={() => displayComments(pet.id)}
                 className="comment-btn"

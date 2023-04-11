@@ -22,47 +22,29 @@ router.post("/pics", (request, response) => {
 });
 
 router.post("/upload", async (req, res) => {
-  //   console.log(req.files, "THIS IS THE FILE");
-  // console.log(req.body, req.files);
+  
+  const data = req.body.data
+
   if (req.files === null) {
     return res.status(400).json({
       message: "No file uploaded.",
     });
   }
 
-  // const file = req.files.file;
-  // console.log(req.body.data.imageUrl);
 
-  // const frontendRoute = __dirname
-  //   .replace("backend", "frontend")
-  //   .replace("routes", "public");
-  // // .replace("routes", "public");
-  // await file.mv(`${frontendRoute}/${file.name}`, (err) => {
-  //   console.log(frontendRoute);
-  //   if (err) {
-  //     console.log(err);
-  //     return res.status(500).send(err);
-  //   }
-  // });
-
-  // console.log(file.name)
-
-  const cloudRes = cloudinary.uploader.upload(req.body.data.imageUrl, {
+  const cloudRes = cloudinary.uploader.upload(data.imageUrl, {
     folder: "Pawpets",
   });
 
   cloudRes
     .then((data) => {
-      console.log("THIS IS DATA");
-      // console.log(data);
-      // console.log(data.secure_url);
+      console.log("CLOUDINARY DATA");
       res.status(200).json({
         link: data.secure_url,
       });
     })
     .catch((err) => {
-      console.log("ERROROERROERER");
-      console.log(err);
+      console.log(`Error: ${err}`);
     });
 
   // res.json({ fileName: file.name, filePath: `/public/${file.name}` });

@@ -14,6 +14,7 @@ export default function jwtStrategy(passport) {
                 return done(null, { username: payload.username, id: payload.id })
             } catch (e) {
                 //first parameter is error callback, second is what returns in user object
+                console.log(e)
                 return done(e, null)
             }
         })

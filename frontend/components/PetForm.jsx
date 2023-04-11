@@ -17,6 +17,9 @@ const PetForm = (props) => {
   async function addPet(e) {
     e.preventDefault();
     try {
+      console.log(blobFile);
+
+
       const fileResponse = await axios.post(
         "http://localhost:3001/post/upload",
 
@@ -25,7 +28,8 @@ const PetForm = (props) => {
             imageUrl: blobFile,
           },
           headers: {
-            "Content-Type": "multipart/form-data",
+            // "Content-Type": "multipart/form-data",
+             Authorization: `Bearer ${props.token}`,
           },
         }
       );
@@ -69,6 +73,7 @@ const PetForm = (props) => {
     reader.onloadend = () => {
       setBlobFile(reader.result);
     };
+    console.log(blobFile)
   }
 
   return (
