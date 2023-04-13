@@ -14,7 +14,12 @@
   position: relative;
 }
 
-.dashboard-header button {
+.favorite-btn {
+  position: absolute;
+  right: 80px;
+  top: 20px;
+}
+.add-btn {
   position: absolute;
   right: 0;
   top: 20px;
@@ -90,13 +95,13 @@
 }
 
 .comment-timestamp {
-  font-size: .80rem;
+  font-size: 0.8rem;
   /* border: 1px solid red; */
 }
 .comment-container {
   /* border: 1px solid red; */
-  padding: .5rem;
-  border-radius: .5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
   background-color: #e2dede;
 }
 .comment-btn {
@@ -115,7 +120,7 @@
   width: 20px;
 }
 
-.comment-line >*:nth-child(1) {
+.comment-line > *:nth-child(1) {
   /* border: 1px solid red; */
   flex: 1;
 }

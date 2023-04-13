@@ -33,14 +33,14 @@ router.get("/", async (request, response) => {
 
 //getting pets by id
 router.get("/:petId", async (request, response) => {
-  console.log(request.params.petId);
+  // console.log(request.params.petId);
   try {
     const getPetsbyId = await prisma.pet.findFirst({
       where: {
         id: parseInt(request.params.petId),
       },
     });
-
+    console.log(getPetsbyId)
     if (getPetsbyId) {
       response.status(200).json({
         success: true,

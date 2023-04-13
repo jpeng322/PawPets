@@ -27,7 +27,6 @@ const NavComp = () => {
     toast.success("You have logged out!", {
       position: toast.POSITION.TOP_CENTER,
     });
-    // navigate("/")
   }
   return (
     <>
@@ -58,10 +57,10 @@ const NavComp = () => {
                 <span>My Pets</span>
               </NavLink>
             )}
-            {/* <NavLink to={`/dashboard/${userId}`}
-              aria-label="bring to user pet page">
-              <span>My Pets</span>
-            </NavLink> */}
+            <NavLink to={`/favorites/${userId}`}
+              aria-label="bring to user favorites page">
+              <span>Favorites</span>
+            </NavLink>
             {hasToken ? (
               <Button size="lg" variant="outline-secondary" onClick={Logout}>
                 

@@ -1,16 +1,8 @@
 import "./App.css";
 import styled, { ThemeProvider } from "styled-components";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  Link,
-  useNavigate,
-  redirect,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
-import axios from "axios";
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -26,9 +18,10 @@ import Signup from "../pages/Signup";
 import Home from "../pages/Home";
 import Dashboard from "../pages/Dashboard";
 import Pets from "../pages/Pets";
+import Favorites from "../pages/Favorites";
 
 //loaders
-import { getPets, getUserPets, getUsername } from "../loaders/index.js";
+import { getPets, getUserPets, getUsername, getFavorites } from "../loaders/index.js";
 
 function App() {
   const { hasToken } = useContext(AuthContext);
@@ -66,6 +59,14 @@ function App() {
             return getUserPets(userParam);
           },
         },
+        {
+          path: `favorites/:userId`,
+          element: <Favorites />,
+          loader: ({ params }) => {
+            const userParam = params.userId;
+            return getFavorites(userParam);
+          },
+        },
       ],
     },
   ]);
@@ -74,8 +75,8 @@ function App() {
     //background yellow
     primary: "#FFFBEB",
     //background blue
-    secondary:"#5ec4f4",
-}
+    secondary: "#5ec4f4",
+  };
 
   return (
     <>

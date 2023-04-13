@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 //context
@@ -11,6 +11,7 @@ import PetForm from "../components/PetForm";
 //css
 import "../CSS/Dashboard.css";
 import { Col, Row, Container, Image, Button } from "react-bootstrap";
+import Favorites from "./Favorites";
 
 const Dashboard = () => {
   const { token, userId, uploadFile } = useContext(AuthContext);
@@ -29,6 +30,7 @@ const Dashboard = () => {
 
   const [petEditSpecies, setPetEditSpecies] = useState();
 
+  // const [favList, setFavList] = useState([]);
   async function deletePet(petId) {
     // console.log(hasToken)
     try {
@@ -41,18 +43,16 @@ const Dashboard = () => {
         },
       });
 
-      
-        const deleteLikes = await axios({
-          method: "delete",
-          url: `http://localhost:3001/pet/likes/delete/${petId}`,
-          headers: {
-            // 'Content-type': "application/json; charset=utf-8",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-      
+      const deleteLikes = await axios({
+        method: "delete",
+        url: `http://localhost:3001/pet/likes/delete/${petId}`,
+        headers: {
+          // 'Content-type': "application/json; charset=utf-8",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      if ( deleteComments) {
+      if (deleteComments) {
         const response = await axios({
           method: "delete",
           url: `http://localhost:3001/pet/${petId}`,
@@ -111,6 +111,12 @@ const Dashboard = () => {
     }
   });
 
+  const navigate = useNavigate();
+
+  function redirectFavorite() {
+    return  navigate(`/favorites/${userId}`);
+  }
+
   return (
     <Container fluid className="dashboard-container">
       {/* <Col></Col> */}
@@ -125,7 +131,10 @@ const Dashboard = () => {
           >
             {/* <div className="border d-flex"> */}
             <div>Your pets missed you!</div>
-            <Button onClick={() => setShowForm(!showForm)}>Add Pet</Button>
+
+            <Button className="add-btn" onClick={() => setShowForm(!showForm)}>
+              Add Pet
+            </Button>
             {/* </div> */}
           </Col>
         </Row>

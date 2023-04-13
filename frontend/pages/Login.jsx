@@ -29,7 +29,6 @@ const Login = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (hasToken) {
-      // fake.logout();
       navigate(`/dashboard/${userId}`);
     }
   }, [hasToken]);
