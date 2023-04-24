@@ -1,12 +1,14 @@
-import React from 'react'
-import "../CSS/Home.css"
-
+import React from "react";
+import "../CSS/Home.css";
+import { Col, Row, Container, Image } from "react-bootstrap";
 const Home = () => {
   return (
-    <div className='home-greeting'>
-    <h1>Welcome!!</h1>
-    </div>
-  )
-}
+    <Container>
+      <div className="home-greeting">
+        <h1>Welcome!!</h1>
+      </div>
+    </Container>
+  );
+};
 
-export default Home
+export default Home;

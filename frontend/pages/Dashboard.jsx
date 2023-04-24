@@ -38,7 +38,6 @@ const Dashboard = () => {
         method: "delete",
         url: `http://localhost:3001/comment/${petId}`,
         headers: {
-          // 'Content-type': "application/json; charset=utf-8",
           Authorization: `Bearer ${token}`,
         },
       });
@@ -47,7 +46,14 @@ const Dashboard = () => {
         method: "delete",
         url: `http://localhost:3001/pet/likes/delete/${petId}`,
         headers: {
-          // 'Content-type': "application/json; charset=utf-8",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const deleteFavorites = await axios({
+        method: "delete",
+        url: `http://localhost:3001/favorites/${petId}`,
+        headers: {
           Authorization: `Bearer ${token}`,
         },
       });
@@ -57,7 +63,6 @@ const Dashboard = () => {
           method: "delete",
           url: `http://localhost:3001/pet/${petId}`,
           headers: {
-            // 'Content-type': "application/json; charset=utf-8",
             Authorization: `Bearer ${token}`,
           },
         });
@@ -77,7 +82,6 @@ const Dashboard = () => {
         method: "put",
         url: `http://localhost:3001/pet/${petId}`,
         headers: {
-          // 'Content-type': "application/json; charset=utf-8",
           Authorization: `Bearer ${token}`,
         },
         data: {
@@ -119,7 +123,6 @@ const Dashboard = () => {
 
   return (
     <Container fluid className="dashboard-container">
-      {/* <Col></Col> */}
       <Col xs={12}>
         <Row className="dashboard-header-container d-flex justify-content-center">
           <Col
@@ -129,13 +132,12 @@ const Dashboard = () => {
             md={10}
             xxl={9}
           >
-            {/* <div className="border d-flex"> */}
-            <div>Your pets missed you!</div>
-
+            {userPetData.length === 0 ? <div>Add a pet!</div> :
+              <div>Your pets missed you!</div> 
+              }
             <Button className="add-btn" onClick={() => setShowForm(!showForm)}>
               Add Pet
             </Button>
-            {/* </div> */}
           </Col>
         </Row>
         <Row>
@@ -144,7 +146,7 @@ const Dashboard = () => {
               {userPets.map((userPet) => {
                 if (userPet.id === changeId) {
                   return (
-                    <Col
+                    <Col key={userPet.id}
                       className="pet-post gap-3"
                       xs={10}
                       sm={8}
@@ -187,12 +189,12 @@ const Dashboard = () => {
                       >
                         Complete
                       </Button>
-                      {/* <button onClick={() => setShowEditForm(!(showEditForm))}>Close</button> */}
+  
                     </Col>
                   );
                 } else {
                   return (
-                    <Col
+                    <Col key={userPet.id}
                       className="pet-post gap-3"
                       xs={10}
                       sm={8}

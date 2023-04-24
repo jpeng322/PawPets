@@ -6,69 +6,6 @@ const Favorites = (props) => {
   const userPetData = useLoaderData();
 
   const [favList, setFavList] = useState([]);
-  console.log(userPetData);
-  // async function getFavorites() {
-  //   console.log("got favorites");
-  //   try {
-  //     const response = await axios({
-  //       method: "get",
-  //       url: `http://localhost:3001/favorites/1`,
-  //       // url: `http://localhost:3001/favorites/${userId}`,
-  //       headers: {
-  //         // 'Content-type': "application/json; charset=utf-8",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-
-  //     // console.log(response)
-
-  //     async function getFavPet(id) {
-  //       try {
-  //         const favoritesResponse = await axios({
-  //           method: "get",
-  //           url: `http://localhost:3001/pet/${id}`,
-  //           headers: {
-  //             // 'Content-type': "application/json; charset=utf-8",
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         });
-  //         if (favoritesResponse) {
-  //           console.log(favoritesResponse.data.pet);
-  //           // console.log(favList);
-  //           // setFavList([...favList, favoritesResponse]);
-  //           return favoritesResponse.data.pet;
-  //         }
-  //       } catch (e) {
-  //         console.log(e);
-  //       }
-  //     }
-  //     if (response) {
-  //       const data = response.data.favorite;
-  //       try {
-  //         const promises = data.map(async (pet) => {
-  //           const favoritesResponse = await axios({
-  //             method: "get",
-  //             url: `http://localhost:3001/pet/${pet.petId}`,
-  //             headers: {
-  //               // 'Content-type': "application/json; charset=utf-8",
-  //               Authorization: `Bearer ${token}`,
-  //             },
-  //           });
-
-  //           const petData = favoritesResponse.data.pet;
-  //           return petData;
-  //         });
-
-  //         const results = await Promise.all(promises);
-  //         setFavList(results)
-  //       } catch (e) {
-  //         console.log(e);
-  //       }
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
 
   return (
     // <div> Favorites</div>

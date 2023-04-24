@@ -1,13 +1,13 @@
 const LikeComp = (props) => {
   return (
-    <div className="d-flex">
-      <div>{props.pet.likes}</div>
-      <div onClick={() => props.updateLikes(props.pet.id)}>
+    <div  onClick={() => props.updateLikes(props.pet.id)} className="likes-feature d-flex gap-1">
+      <div className="likes-number">{props.pet.likes}</div>
+      <div >
         <svg
           style={{
             fill: props.likedList.some((likes) => likes.petId === props.pet.id)
-              ? "red"
-              : "black",
+              ? "#FF6969"
+              : "#c1c6cf",
           }}
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"

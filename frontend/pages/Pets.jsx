@@ -19,9 +19,10 @@ const Pets = () => {
   const [petList, setPetList] = useState(pets);
   const [show, setShow] = useState(false);
   const [comments, setComments] = useState([]);
-  const [liked, setLiked] = useState(false);
+
   const [modalPetInfo, setModalPetInfo] = useState("");
   const [likedList, setLikedList] = useState([]);
+  const [favoriteList, setFavoriteList] = useState([]);
 
   useEffect(() => {
     const fetchLikesList = async () => {
@@ -38,11 +39,21 @@ const Pets = () => {
         const trueLikesList = getLikesList.data.likedList.filter(
           (likes) => likes.liked === true
         );
-        console.log(trueLikesList);
         if (trueLikesList) {
           setLikedList(trueLikesList);
         }
         // console.log(likesResponse);
+
+        const favResponse = await axios({
+          method: "get",
+          url: `http://localhost:3001/favorites/${userId}`,
+          headers: {
+            // 'Content-type': "application/json; charset=utf-8",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const getFavoriteList = favResponse.data.favorite;
+        setFavoriteList(getFavoriteList);
       } catch (e) {
         console.log(e);
       }
@@ -90,7 +101,6 @@ const Pets = () => {
         },
       });
 
-      console.log(likesResponse);
       if (likesResponse.data.liked === true) {
         console.log("LIKED");
         setPetList(
@@ -134,10 +144,58 @@ const Pets = () => {
     } catch (e) {
       console.log(e);
     }
-
   }
 
+  const addFavorite = async (petId) => {
+    const inFavoriteList = favoriteList.some(
+      (favorite) => favorite.petId === petId
+    );
+    console.log(inFavoriteList, favoriteList)
+    if (inFavoriteList) {
+      try {
+        const deleteFavorite = await axios({
+          method: "delete",
+          url: `http://localhost:3001/favorites/${petId}`,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          data: {
+            userId: userId,
+            petId: petId,
+          },
+        });
 
+        if (deleteFavorite) {
+          console.log("unfavorited");
+          setFavoriteList(favoriteList.filter(favorite => favorite.petId !== petId))
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      try {
+        const addFavorite = await axios({
+          method: "post",
+          url: `http://localhost:3001/favorites/`,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          data: {
+            userId: userId,
+            petId: petId,
+          },
+        });
+
+        if (addFavorite) {
+          console.log(addFavorite);
+          const favoritedDetails = addFavorite.data.favorite
+          setFavoriteList([...favoriteList, favoritedDetails])
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
 
   return (
     <Container fluid className="pets-container pe-0 ps-0">
@@ -145,6 +203,7 @@ const Pets = () => {
         <Row className="w-100 d-flex justify-content-center ">
           {petList.map((pet) => (
             <Col
+              key={pet.id}
               className="pet-post pt-5 pb-5  gap-md-3 d-flex flex-column justify-content-center align-items-center"
               xs={10}
               sm={8}
@@ -160,8 +219,8 @@ const Pets = () => {
               <div className="d-flex mt-2 gap-2">
                 <FavoritesComp
                   pet={pet}
-                  likedList={likedList}
-                  updateLikes={updateLikes}
+                  favoriteList={favoriteList}
+                  addFavorite={addFavorite}
                 />
 
                 <LikeComp
@@ -189,9 +248,6 @@ const Pets = () => {
                   </svg>
                 </span>
               </div>
-              {/* <Button variant="primary" onClick={handleShow}>
-                Launch demo modal
-              </Button> */}
             </Col>
           ))}
         </Row>

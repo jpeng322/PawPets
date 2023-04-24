@@ -71,11 +71,10 @@ export const getPetUserInfo = async (userId) => {
 };
 
 export const getFavorites = async (userId) => {
-  console.log("got favorites");
   try {
     const response = await axios({
       method: "get",
-      url: `http://localhost:3001/favorites/1`,
+      url: `http://localhost:3001/favorites/${userId}`,
       // url: `http://localhost:3001/favorites/${userId}`,
       headers: {
         // 'Content-type': "application/json; charset=utf-8",
@@ -83,30 +82,9 @@ export const getFavorites = async (userId) => {
       },
     });
 
-    // console.log(response)
-
-    // async function getFavPet(id) {
-    //   try {
-    //     const favoritesResponse = await axios({
-    //       method: "get",
-    //       url: `http://localhost:3001/pet/${id}`,
-    //       headers: {
-    //         // 'Content-type': "application/json; charset=utf-8",
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     });
-    //     if (favoritesResponse) {
-    //       console.log(favoritesResponse.data.pet);
-    //       // console.log(favList);
-    //       // setFavList([...favList, favoritesResponse]);
-    //       return favoritesResponse.data.pet;
-    //     }
-    //   } catch (e) {
-    //     console.log(e);
-    //   }
-    // }
     if (response) {
       const data = response.data.favorite;
+      console.log(data)
       try {
         const promises = data.map(async (pet) => {
           const favoritesResponse = await axios({
@@ -123,6 +101,7 @@ export const getFavorites = async (userId) => {
         });
 
         const results = await Promise.all(promises);
+        console.log(results)
         //   setFavList(results)
         return results;
       } catch (e) {

@@ -57,10 +57,11 @@ const NavComp = () => {
                 <span>My Pets</span>
               </NavLink>
             )}
-            <NavLink to={`/favorites/${userId}`}
-              aria-label="bring to user favorites page">
-              <span>Favorites</span>
-            </NavLink>
+            {hasToken ?
+              <NavLink to={`/favorites/${userId}`}
+                aria-label="bring to user favorites page">
+                <span>Favorites</span>
+              </NavLink> : ""}
             {hasToken ? (
               <Button size="lg" variant="outline-secondary" onClick={Logout}>
                 

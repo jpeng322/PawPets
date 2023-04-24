@@ -141,3 +141,19 @@
     align-items: center;
   }
 }
+
+.likes-feature, .fav-feature {
+  /* padding: .5rem; */
+  border-radius: 0.25rem;
+  padding: 0.75rem;
+  box-shadow: 0 0 3px rgb(0 0 0 / 0.2);
+}
+
+
+.likes-feature:hover, .fav-feature:hover {
+  transition: 0.2s;
+  background-color: #c1b5ac;
+}
+.likes-number {
+  font-size: 1.25rem;
+}
