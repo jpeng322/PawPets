@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 import "../CSS/Signup.css";
 import { StyledButton, BlueHeader } from "../components/styled/Button";
-import DogImage from "../images/dog-image.png";
+import DogImage from "../src/images/dog-image.png";
 const Signup = () => {
   const navigate = useNavigate();
 
