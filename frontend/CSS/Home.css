@@ -1,8 +1,122 @@
-.home-greeting {
-    /* border: 1px solid red; */
-    width: 100%;
+.home-container span {
+  color: #5ec4f4;
+}
+
+.hero {
+  background-color: #c1b5ac;
+}
+
+.carousel-inner img {
+  object-fit: cover;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  opacity: 0.8;
+  background-color: black;
+}
+
+.carousel-item:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.carousel-caption {
+  z-index: 20;
+  bottom: 50% !important;
+  /* border: 1px solid red; */
+  /* width: 100%; */
+  right: 0 !important;
+  left: 0 !important;
+}
+
+.hero-header {
+  font-size: calc(2rem + 3.5vw);
+}
+.hero-subheader {
+  font-size: calc(1rem + 1.5vw);
+  letter-spacing: 3px;
+}
+
+.graphic-container {
+  margin: 10rem 8rem;
+}
+
+.info-containers {
+  display: flex;
+  /* border: 1px solid red; */
+  /* margin: 0rem 8rem; */
+  text-align: center;
+}
+
+.info-containers > * {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-containers:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.info-containers img {
+  width: 300px;
+}
+
+.description-containers,
+.image-container {
+  width: 100%;
+  padding: 3rem;
+}
+
+.description-subhead {
+    width: 80%;
+  font-size: calc(1.25rem + 0.25vw);
+  text-align: center;
+  margin-top: 0.75rem;
+}
+
+@media all and (max-width: 800px) {
+  .graphic-container {
+    margin: 4rem 0rem;
+  }
+
+  .info-containers,
+  .info-containers:nth-child(even) {
     display: flex;
-    align-items: center; 
-    justify-content: center;
+    flex-direction: column;
     text-align: center;
+  }
+
+  .info-containers img {
+    width: 240px;
+  }
+  .carousel-inner img {
+    max-height: 50vh;
+  }
+
+  .carousel-caption {
+    z-index: 20;
+    bottom: 30% !important;
+  }
+}
+
+@media all and (max-width: 1200px) {
+  .graphic-container {
+    margin: 4rem 0rem;
+  }
+
+
+}
+
+@media all and (min-width: 1600px) {
+    .description-subhead {
+        width: 60%;
+      }
 }

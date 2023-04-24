@@ -5,6 +5,7 @@ import passport from "passport";
 import * as dotenv from "dotenv";
 import cors from "cors";
 import fileUpload from "express-fileupload";
+import bodyParser from "body-parser";
 
 //routers
 import authRouter from "./routes/auth.js";
@@ -16,7 +17,14 @@ import favoriteRouter from "./routes/favorites.js";
 dotenv.config();
 
 const app = express();
-
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(
+  bodyParser.urlencoded({
+    limit: "50mb",
+    extended: true,
+    parameterLimit: 50000,
+  })
+);
 app.use(fileUpload());
 
 app.use(express.json());
