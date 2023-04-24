@@ -6,9 +6,9 @@ import { Col, Row, Container, Image, Carousel } from "react-bootstrap";
 // import HeroPic2 from "../images/pawpets_hero_photo2.png";
 // import HeroPic3 from "../images/pawpets_hero_photo3.png";
 
-import signupPic from "/images/signup.png";
-import mediaActivity from "/images/media_activity.png";
-import Meowy from "/images/meowy.png";
+// import signupPic from "/images/signup.png";
+// import mediaActivity from "/images/media_activity.png";
+// import Meowy from "/images/meowy.png";
 const Home = () => {
   const [index, setIndex] = useState(0);
 
@@ -72,7 +72,7 @@ const Home = () => {
         </Carousel.Item> */}
       </Carousel>
 
-      <div className="graphic-container ">
+      {/* <div className="graphic-container ">
         <div className="info-containers">
           <div className="description-containers d-flex flex-column">
             <h1>
@@ -119,7 +119,7 @@ const Home = () => {
             <img src={mediaActivity} />
           </div>
         </div>
-      </div>
+      </div> */}
     </Container>
   );
 };
