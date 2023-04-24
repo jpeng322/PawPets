@@ -99,7 +99,7 @@ const Home = () => {
             </div>
           </div>
           <div className="image-container">
-            <img src="/images/meowy.png" />
+            <img src="/images/meowy.PNG" />
           </div>
         </div>
         <div className="info-containers">
