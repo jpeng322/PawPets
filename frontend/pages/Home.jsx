@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import "../CSS/Home.css";
 import { Col, Row, Container, Image, Carousel } from "react-bootstrap";
 
-import HeroPic1 from "../images/pawpets_hero_photo1.png";
-import HeroPic2 from "../images/pawpets_hero_photo2.png";
-import HeroPic3 from "../images/pawpets_hero_photo3.png";
+// import HeroPic1 from "../images/pawpets_hero_photo1.png";
+// import HeroPic2 from "../images/pawpets_hero_photo2.png";
+// import HeroPic3 from "../images/pawpets_hero_photo3.png";
 
 import signupPic from "../images/signup.png";
 import mediaActivity from "../images/media_activity.png";
@@ -42,7 +42,7 @@ const Home = () => {
             </div>
           </Carousel.Caption>
         </Carousel.Item>
-        <Carousel.Item>
+        {/* <Carousel.Item>
           <img className="d-block w-100" src={HeroPic2} alt="Second slide" />
 
           <Carousel.Caption>
@@ -69,7 +69,7 @@ const Home = () => {
               Create, like, and favorite posts.
             </div>
           </Carousel.Caption>
-        </Carousel.Item>
+        </Carousel.Item> */}
       </Carousel>
 
       <div className="graphic-container ">
