@@ -26,7 +26,11 @@ const Home = () => {
         indicators={true}
       >
         <Carousel.Item>
-          <img className="d-block w-100" src={HeroPic1} alt="First slide" />
+          <img
+            className="d-block w-100"
+            src="../images/pawpets_hero_photo1.png"
+            alt="First slide"
+          />
           <Carousel.Caption>
             <h1 className="hero-header">PawPets</h1>
             <div className="hero-subheader">
