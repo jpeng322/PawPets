@@ -42,8 +42,8 @@ const Home = () => {
             </div>
           </Carousel.Caption>
         </Carousel.Item>
-        {/* <Carousel.Item>
-          <img className="d-block w-100" src={HeroPic2} alt="Second slide" />
+        <Carousel.Item>
+          <img className="d-block w-100" src="/images/hero2.PNG"alt="Second slide" />
 
           <Carousel.Caption>
             <h1 className="hero-header">PawPets</h1>
@@ -57,7 +57,7 @@ const Home = () => {
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-          <img className="d-block w-100" src={HeroPic3} alt="Third slide" />
+          <img className="d-block w-100" src="/images/hero3.PNG" alt="Third slide" />
 
           <Carousel.Caption>
             <h1 className="hero-header">PawPets</h1>
@@ -69,10 +69,10 @@ const Home = () => {
               Create, like, and favorite posts.
             </div>
           </Carousel.Caption>
-        </Carousel.Item> */}
+        </Carousel.Item>
       </Carousel>
 
-      {/* <div className="graphic-container ">
+      <div className="graphic-container ">
         <div className="info-containers">
           <div className="description-containers d-flex flex-column">
             <h1>
@@ -85,7 +85,7 @@ const Home = () => {
             </div>
           </div>
           <div className="image-container">
-            <img src={signupPic} />
+            <img src="/images/signup.png" />
           </div>
         </div>
         <div className="info-containers">
@@ -99,7 +99,7 @@ const Home = () => {
             </div>
           </div>
           <div className="image-container">
-            <img src={Meowy} />
+            <img src="/images/meowy.png" />
           </div>
         </div>
         <div className="info-containers">
@@ -116,10 +116,10 @@ const Home = () => {
             </div>
           </div>
           <div className="image-container">
-            <img src={mediaActivity} />
+            <img src="/images/media_activity.png" />
           </div>
         </div>
-      </div> */}
+      </div>
     </Container>
   );
 };
