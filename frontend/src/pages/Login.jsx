@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 //styling
 import "../CSS/Login.css";
 import { Col, Row, Container, Image, Form, Button } from "react-bootstrap";
-import CatSelfie from "../src/images/cat-selfie.png";
+import CatSelfie from "../images/cat-selfie.png";
 import { StyledButton, BlueHeader } from "../components/styled/Button";
 
 const Login = () => {

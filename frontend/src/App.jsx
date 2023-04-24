@@ -9,19 +9,19 @@ import "react-toastify/dist/ReactToastify.css";
 
 //contexts
 // import AuthContextProvider from '../contexts/authContext';
-import { AuthContext } from "../contexts/authContext";
+import { AuthContext } from "./contexts/authContext";
 
 //components
-import Main from "../layouts/Main";
-import Login from "../pages/Login";
-import Signup from "../pages/Signup";
-import Home from "../pages/Home";
-import Dashboard from "../pages/Dashboard";
-import Pets from "../pages/Pets";
-import Favorites from "../pages/Favorites";
+import Main from "./layouts/Main";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import Pets from "./pages/Pets";
+import Favorites from "./pages/Favorites";
 
 //loaders
-import { getPets, getUserPets, getUsername, getFavorites } from "../loaders/index.js";
+import { getPets, getUserPets, getUsername, getFavorites } from "./loaders/index.js";
 
 function App() {
   const { hasToken } = useContext(AuthContext);
