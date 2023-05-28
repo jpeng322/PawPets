@@ -14,6 +14,17 @@
   position: relative;
 }
 
+.dashboard-header button {
+  background-color: var(--secondary-color);
+  border: none;
+  transition: .2s;
+}
+
+.dashboard-header button:hover {
+  background-color: #4f8383;
+
+}
+
 .favorite-btn {
   position: absolute;
   right: 80px;
@@ -77,7 +88,7 @@
 
 .add-form {
   position: absolute;
-  background-color: #5ec4f4;
+  background-color: var(--secondary-color);
   padding: 1rem;
   border-radius: 0.5rem;
   top: 150px;
@@ -142,15 +153,16 @@
   }
 }
 
-.likes-feature, .fav-feature {
+.likes-feature,
+.fav-feature {
   /* padding: .5rem; */
   border-radius: 0.25rem;
   padding: 0.75rem;
   box-shadow: 0 0 3px rgb(0 0 0 / 0.2);
 }
 
-
-.likes-feature:hover, .fav-feature:hover {
+.likes-feature:hover,
+.fav-feature:hover {
   transition: 0.2s;
   background-color: #c1b5ac;
 }

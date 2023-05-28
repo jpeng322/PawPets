@@ -1,69 +1,71 @@
 nav {
-background-color: #FFFBEB;;
-display: flex;
-justify-content: space-between;
-color: #1A120B
+  background-color: var(--main-color);
+  display: flex;
+  justify-content: space-between;
+  color: #1a120b;
 }
 
-.brand-name{
-    font-size: 2rem;
+.brand-name {
+  font-size: 2rem;
 }
 nav img {
-    width: 55px;
+  width: 55px;
 }
 
 .navbar-collapse {
-    display: flex;
-    text-align: center;
-    flex-grow: 0 !important;
-    font-size: 1.25rem;
-    /* flex-basis: none; */
+  display: flex;
+  text-align: center;
+  flex-grow: 0 !important;
+  font-size: 1.25rem;
+  /* flex-basis: none; */
 }
-nav.navbar{
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem 2rem;
-    align-items: center;
+nav.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  align-items: center;
 }
 
-nav.navbar > *:nth-last-child(1) >* {
-    /* border: 1px solid red; */
-    display: flex;
-    align-items: center;
+nav.navbar > *:nth-last-child(1) > * {
+  /* border: 1px solid red; */
+  display: flex;
+  align-items: center;
 }
-nav a, .brand-name{
-    /* border: 1px solid red; */
-    text-decoration: none;
-    color: #5ec4f4;
-    font-weight: 600;
+nav a,
+.brand-name {
+  /* border: 1px solid red; */
+  text-decoration: none;
+  color: var(--secondary-color);
+  font-weight: 600;
 }
 
 .navbar-brand {
-    position: relative;
+  position: relative;
 }
 .brand-name {
- position: absolute;
-  bottom: 2px
+  position: absolute;
+  bottom: 2px;
 }
 .navbar-nav {
-    display: flex;
-    gap: 2rem;
+  display: flex;
+  gap: 2rem;
 }
 
 .navbar button {
-    border: none;
-    border-radius: none !important;
-    /* background-color: #5ec4f4; */
+  border: none;
+  border-radius: none !important;
+  /* background-color: var(--secondary-color); */
 
-    transition: background 1s;
-    background-color: #5ec4f4 ;
-    
+  transition: background .75s;
+  background-color: var(--secondary-color);
 }
 
 .navbar button:hover {
-    background: linear-gradient(90deg, #2196f3, transparent) #3f51b5;
+  background: linear-gradient(90deg, #aac9c9, transparent) #4f8383;
 }
 
+
+
 .navbar button span {
-    color: black
+  color: black;
 }

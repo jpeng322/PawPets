@@ -1,9 +1,10 @@
 .home-container span {
-  color: #5ec4f4;
+  color: var(--secondary-color);
 }
 
 .hero {
-  background-color: #c1b5ac;
+  /* background-color:var(--secondary-color); */
+  /* background-color: red; */
 }
 
 .carousel-inner img {
@@ -76,7 +77,7 @@
 }
 
 .description-subhead {
-    width: 80%;
+  width: 80%;
   font-size: calc(1.25rem + 0.25vw);
   text-align: center;
   margin-top: 0.75rem;
@@ -111,12 +112,10 @@
   .graphic-container {
     margin: 4rem 0rem;
   }
-
-
 }
 
 @media all and (min-width: 1600px) {
-    .description-subhead {
-        width: 60%;
-      }
+  .description-subhead {
+    width: 60%;
+  }
 }

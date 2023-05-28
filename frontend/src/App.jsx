@@ -21,7 +21,12 @@ import Pets from "./pages/Pets";
 import Favorites from "./pages/Favorites";
 
 //loaders
-import { getPets, getUserPets, getUsername, getFavorites } from "./loaders/index.js";
+import {
+  getPets,
+  getUserPets,
+  getUsername,
+  getFavorites,
+} from "./loaders/index.js";
 
 function App() {
   const { hasToken } = useContext(AuthContext);
@@ -75,7 +80,7 @@ function App() {
     //background yellow
     primary: "#FFFBEB",
     //background blue
-    secondary: "#5ec4f4",
+    secondary: "var(--secondary-color)",
   };
 
   return (

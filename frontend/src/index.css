@@ -1,13 +1,17 @@
-
-
-#root, body{
+#root,
+body {
   height: 100%;
   width: 100%;
-
+  --main-color: #ffffff;
+  --secondary-color: #aac9c9;
 }
 
 * {
-  font-family: 'Sniglet', cursive;
+  font-family: "Sniglet", cursive;
   letter-spacing: 1px;
 }
 
+/* :root {
+  background-color: red !important;
+  --main-color: #c4dfdf;
+} */
