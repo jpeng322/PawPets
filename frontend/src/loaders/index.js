@@ -1,9 +1,9 @@
 import axios from "axios";
-
+const BASE_URL = import.meta.env.VITE_URL
 export const getPets = async () => {
   try {
     // const loadPets = async () => {
-    const response = await axios.get(`http://localhost:3001/pet`);
+    const response = await axios.get(`${BASE_URL}/pet`);
     // console.log(response)
     const pets = response.data.pet;
     // console.log(pets);
@@ -22,7 +22,7 @@ export const getPets = async () => {
 export const getUserPets = async (userId) => {
   try {
     const response = await axios.get(
-      `http://localhost:3001/pet/user/${userId}`
+      `${BASE_URL}/pet/user/${userId}`
     );
     const userPets = response.data.getPet;
     console.log(userPets, "USERPETS GET ROUTE");
@@ -35,7 +35,7 @@ export const getUserPets = async (userId) => {
 
 export const getUsername = async (userId) => {
   try {
-    const response = await axios.get(`http://localhost:3001/user/${userId}`);
+    const response = await axios.get(`${BASE_URL}/user/${userId}`);
     const username = response.data.username;
     return username;
     // };
@@ -47,7 +47,7 @@ export const getUsername = async (userId) => {
 export const getPetUserInfo = async (userId) => {
   try {
     const petResponse = await axios.get(
-      `http://localhost:3001/pet/user/${userId}`
+      `${BASE_URL}/pet/user/${userId}`
     );
     const userPets = petResponse.data.getPet;
     // return userPets
@@ -58,7 +58,7 @@ export const getPetUserInfo = async (userId) => {
 
   try {
     const userResponse = await axios.get(
-      `http://localhost:3001/user/${userId}`
+      `${BASE_URL}/user/${userId}`
     );
     const username = userResponse.data.username;
     // return username
@@ -74,8 +74,8 @@ export const getFavorites = async (userId) => {
   try {
     const response = await axios({
       method: "get",
-      url: `http://localhost:3001/favorites/${userId}`,
-      // url: `http://localhost:3001/favorites/${userId}`,
+      url: `${BASE_URL}/favorites/${userId}`,
+      // url: `${BASE_URL}/favorites/${userId}`,
       headers: {
         // 'Content-type': "application/json; charset=utf-8",
         // Authorization: `Bearer ${token}`,
@@ -89,7 +89,7 @@ export const getFavorites = async (userId) => {
         const promises = data.map(async (pet) => {
           const favoritesResponse = await axios({
             method: "get",
-            url: `http://localhost:3001/pet/${pet.petId}`,
+            url: `${BASE_URL}/pet/${pet.petId}`,
             headers: {
               // 'Content-type': "application/json; charset=utf-8",
             //   Authorization: `Bearer ${token}`,
