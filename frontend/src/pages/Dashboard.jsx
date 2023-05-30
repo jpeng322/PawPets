@@ -14,6 +14,8 @@ import { Col, Row, Container, Image, Button } from "react-bootstrap";
 import Favorites from "./Favorites";
 
 const Dashboard = () => {
+
+  const BASE_URL = import.meta.env.VITE_URL
   const { token, userId, uploadFile } = useContext(AuthContext);
 
   const userPetData = useLoaderData();
@@ -36,7 +38,7 @@ const Dashboard = () => {
     try {
       const deleteComments = await axios({
         method: "delete",
-        url: `http://localhost:3001/comment/${petId}`,
+        url: `${BASE_URL}/comment/${petId}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -44,7 +46,7 @@ const Dashboard = () => {
 
       const deleteLikes = await axios({
         method: "delete",
-        url: `http://localhost:3001/pet/likes/delete/${petId}`,
+        url: `${BASE_URL}/pet/likes/delete/${petId}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -52,7 +54,7 @@ const Dashboard = () => {
 
       const deleteFavorites = await axios({
         method: "delete",
-        url: `http://localhost:3001/favorites/${petId}`,
+        url: `${BASE_URL}/favorites/${petId}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -61,7 +63,7 @@ const Dashboard = () => {
       if (deleteComments) {
         const response = await axios({
           method: "delete",
-          url: `http://localhost:3001/pet/${petId}`,
+          url: `${BASE_URL}/pet/${petId}`,
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -80,7 +82,7 @@ const Dashboard = () => {
     try {
       const response = await axios({
         method: "put",
-        url: `http://localhost:3001/pet/${petId}`,
+        url: `${BASE_URL}/pet/${petId}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },

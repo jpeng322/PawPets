@@ -11,6 +11,7 @@ import { Col, Row, Container, Image, Carousel } from "react-bootstrap";
 // import Meowy from "/images/meowy.png";
 const Home = () => {
   const [index, setIndex] = useState(0);
+  // console.log(import.meta.env.VITE_URL)
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);

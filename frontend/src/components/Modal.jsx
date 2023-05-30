@@ -8,6 +8,7 @@ import axios from "axios";
 import PaginationBasic from "./PaginationBasic.jsx";
 
 const CommentModal = (props) => {
+  const BASE_URL = import.meta.env.VITE_URL
   const numberOfImages = 3;
   const numberOfPages = Math.ceil(props.comments.length / numberOfImages);
 
@@ -34,7 +35,7 @@ const CommentModal = (props) => {
     try {
       const response = await axios({
         method: "post",
-        url: `http://localhost:3001/comment/`,
+        url: `${BASE_URL}/comment/`,
         data: {
           comment: commentValue,
           commentUsername: loggedUsername,

@@ -6,7 +6,8 @@ import { Col, Row, Container, Image, Form, Button } from "react-bootstrap";
 import Draggable from "react-draggable";
 const PetForm = (props) => {
   const { loggedUsername } = useContext(AuthContext);
-
+  const BASE_URL = import.meta.env.VITE_URL
+  
   const [petName, setPetName] = useState("");
   const [species, setSpecies] = useState("");
   const [blobFile, setBlobFile] = useState("");
@@ -21,7 +22,7 @@ const PetForm = (props) => {
 
 
       const fileResponse = await axios.post(
-        "http://localhost:3001/post/upload",
+        `${BASE_URL}/post/upload`,
 
         {
           data: {
@@ -39,7 +40,7 @@ const PetForm = (props) => {
         try {
           const response = await axios({
             method: "post",
-            url: `http://localhost:3001/pet`,
+            url: `${BASE_URL}/pet`,
             headers: {
               // 'Content-type': "application/json; charset=utf-8",
               Authorization: `Bearer ${props.token}`,

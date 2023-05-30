@@ -14,7 +14,7 @@ import FavoritesComp from "../components/FavComp.jsx";
 
 const Pets = () => {
   const { token, userId } = useContext(AuthContext);
-
+  const BASE_URL = import.meta.env.VITE_URL
   const pets = useLoaderData();
   const [petList, setPetList] = useState(pets);
   const [show, setShow] = useState(false);
@@ -29,7 +29,7 @@ const Pets = () => {
       try {
         const getLikesList = await axios({
           method: "get",
-          url: `http://localhost:3001/pet/likes/list`,
+          url: `${BASE_URL}/pet/likes/list`,
           headers: {
             // 'Content-type': "application/json; charset=utf-8",
             Authorization: `Bearer ${token}`,
@@ -46,7 +46,7 @@ const Pets = () => {
 
         const favResponse = await axios({
           method: "get",
-          url: `http://localhost:3001/favorites/${userId}`,
+          url: `${BASE_URL}/favorites/${userId}`,
           headers: {
             // 'Content-type': "application/json; charset=utf-8",
             Authorization: `Bearer ${token}`,
@@ -66,7 +66,7 @@ const Pets = () => {
     try {
       const response = await axios({
         method: "get",
-        url: `http://localhost:3001/comment/${id}`,
+        url: `${BASE_URL}/comment/${id}`,
       });
 
       if (response) {
@@ -91,7 +91,7 @@ const Pets = () => {
     try {
       const likesResponse = await axios({
         method: "post",
-        url: `http://localhost:3001/pet/likes/${id}`,
+        url: `${BASE_URL}/pet/likes/${id}`,
         headers: {
           // 'Content-type': "application/json; charset=utf-8",
           Authorization: `Bearer ${token}`,
@@ -126,7 +126,7 @@ const Pets = () => {
 
       const getLikesList = await axios({
         method: "get",
-        url: `http://localhost:3001/pet/likes/list`,
+        url: `${BASE_URL}/pet/likes/list`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -155,7 +155,7 @@ const Pets = () => {
       try {
         const deleteFavorite = await axios({
           method: "delete",
-          url: `http://localhost:3001/favorites/${petId}`,
+          url: `${BASE_URL}/favorites/${petId}`,
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -176,7 +176,7 @@ const Pets = () => {
       try {
         const addFavorite = await axios({
           method: "post",
-          url: `http://localhost:3001/favorites/`,
+          url:`${BASE_URL}/favorites/`,
           headers: {
             Authorization: `Bearer ${token}`,
           },

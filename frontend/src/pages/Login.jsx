@@ -14,7 +14,8 @@ import { StyledButton, BlueHeader } from "../components/styled/Button";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const BASE_URL = import.meta.env.VITE_URL
+  
   const {
     hasToken,
     setHasToken,
@@ -39,7 +40,7 @@ const Login = () => {
     try {
       const response = await axios({
         method: "post",
-        url: "http://localhost:3001/auth/login",
+        url: `${BASE_URL}/auth/login`,
         data: {
           username: username,
           password: password,

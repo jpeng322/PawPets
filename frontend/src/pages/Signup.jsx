@@ -14,13 +14,16 @@ const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const BASE_URL = import.meta.env.VITE_URL
+
+  console.log(`${BASE_URL}/auth/signup`)
   async function submitSignup(e) {
     e.preventDefault();
     console.log(username, password);
     try {
       const response = await axios({
         method: "post",
-        url: "http://localhost:3001/auth/signup",
+        url: `${BASE_URL}/auth/signup`,
         data: {
           username: username,
           password: password,

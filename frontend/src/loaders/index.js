@@ -3,7 +3,7 @@ import axios from "axios";
 export const getPets = async () => {
   try {
     // const loadPets = async () => {
-    const response = await axios.get("http://localhost:3001/pet");
+    const response = await axios.get(`http://localhost:3001/pet`);
     // console.log(response)
     const pets = response.data.pet;
     // console.log(pets);
