@@ -16,6 +16,8 @@ import commentRouter from "./routes/comment.js";
 import favoriteRouter from "./routes/favorites.js";
 dotenv.config();
 
+const PORT = process.env.PORT || 3001;
+
 const app = express();
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(
@@ -59,5 +61,5 @@ app.use("/favorites", favoriteRouter);
 // app.use("/upload", picsRouter)
 
 app.listen(process.env.PORT, function () {
-  console.log(`Server listening on ${process.env.PORT}`, process.env.DATABASE_URL);
+  console.log(`Server listening on ${PORT}`, process.env.DATABASE_URL);
 });
