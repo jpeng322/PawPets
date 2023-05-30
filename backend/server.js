@@ -59,5 +59,5 @@ app.use("/favorites", favoriteRouter);
 // app.use("/upload", picsRouter)
 
 app.listen(process.env.PORT, function () {
-  console.log(`Server listening on ${process.env.PORT}`);
+  console.log(`Server listening on ${process.env.PORT}`, process.env.DATABASE_URL);
 });
