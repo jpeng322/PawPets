@@ -1,8 +1,7 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import PawImg from "../assets/paw-solid.svg";
 import PawImg2 from "../images/pawprint.png";
-import { Container, Nav, Navbar, Image, Button } from "react-bootstrap";
+import {  Nav, Navbar, Image, Button } from "react-bootstrap";
 
 import "../CSS/NavComp.css";
 import { toast } from "react-toastify";

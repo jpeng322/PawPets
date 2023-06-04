@@ -1,19 +1,11 @@
 import React, { useState } from "react";
 import "../CSS/Home.css";
-import { Col, Row, Container, Image, Carousel } from "react-bootstrap";
+import { Container, Carousel } from "react-bootstrap";
 
-// import HeroPic1 from "../images/pawpets_hero_photo1.png";
-// import HeroPic2 from "../images/pawpets_hero_photo2.png";
-// import HeroPic3 from "../images/pawpets_hero_photo3.png";
-
-// import signupPic from "/images/signup.png";
-// import mediaActivity from "/images/media_activity.png";
-// import Meowy from "/images/meowy.png";
 const Home = () => {
   const [index, setIndex] = useState(0);
-  // console.log(import.meta.env.VITE_URL)
 
-  const handleSelect = (selectedIndex, e) => {
+  const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
   };
   return (
@@ -44,7 +36,11 @@ const Home = () => {
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-          <img className="d-block w-100" src="/images/hero2.PNG"alt="Second slide" />
+          <img
+            className="d-block w-100"
+            src="/images/hero2.PNG"
+            alt="Second slide"
+          />
 
           <Carousel.Caption>
             <h1 className="hero-header">PawPets</h1>
@@ -58,7 +54,11 @@ const Home = () => {
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-          <img className="d-block w-100" src="/images/hero3.PNG" alt="Third slide" />
+          <img
+            className="d-block w-100"
+            src="/images/hero3.PNG"
+            alt="Third slide"
+          />
 
           <Carousel.Caption>
             <h1 className="hero-header">PawPets</h1>

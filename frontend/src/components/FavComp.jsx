@@ -1,13 +1,17 @@
 const FavoritesComp = (props) => {
   return (
-    <div onClick={() => props.addFavorite(props.pet.id)} className="d-flex fav-feature">
-
-      <div >
+    <div
+      onClick={() => props.addFavorite(props.pet.id)}
+      className="d-flex fav-feature"
+    >
+      <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 576 512"
           style={{
-            fill: props.favoriteList.some((likes) => likes.petId === props.pet.id)
+            fill: props.favoriteList.some(
+              (likes) => likes.petId === props.pet.id
+            )
               ? "#d6b419"
               : "#c1c6cf",
           }}

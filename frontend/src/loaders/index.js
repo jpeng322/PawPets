@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = import.meta.env.VITE_URL
+const BASE_URL = import.meta.env.VITE_URL;
 export const getPets = async () => {
   try {
     // const loadPets = async () => {
@@ -21,11 +21,8 @@ export const getPets = async () => {
 
 export const getUserPets = async (userId) => {
   try {
-    const response = await axios.get(
-      `${BASE_URL}/pet/user/${userId}`
-    );
+    const response = await axios.get(`${BASE_URL}/pet/user/${userId}`);
     const userPets = response.data.getPet;
-    console.log(userPets, "USERPETS GET ROUTE");
     return userPets;
     // };
   } catch (e) {
@@ -44,32 +41,6 @@ export const getUsername = async (userId) => {
   }
 };
 
-export const getPetUserInfo = async (userId) => {
-  try {
-    const petResponse = await axios.get(
-      `${BASE_URL}/pet/user/${userId}`
-    );
-    const userPets = petResponse.data.getPet;
-    // return userPets
-    // };
-  } catch (e) {
-    console.log(e);
-  }
-
-  try {
-    const userResponse = await axios.get(
-      `${BASE_URL}/user/${userId}`
-    );
-    const username = userResponse.data.username;
-    // return username
-    // };
-  } catch (e) {
-    console.log(e);
-  }
-
-  return { userPets, username };
-};
-
 export const getFavorites = async (userId) => {
   try {
     const response = await axios({
@@ -84,7 +55,7 @@ export const getFavorites = async (userId) => {
 
     if (response) {
       const data = response.data.favorite;
-      console.log(data)
+      console.log(data);
       try {
         const promises = data.map(async (pet) => {
           const favoritesResponse = await axios({
@@ -92,7 +63,7 @@ export const getFavorites = async (userId) => {
             url: `${BASE_URL}/pet/${pet.petId}`,
             headers: {
               // 'Content-type': "application/json; charset=utf-8",
-            //   Authorization: `Bearer ${token}`,
+              //   Authorization: `Bearer ${token}`,
             },
           });
 
@@ -101,7 +72,7 @@ export const getFavorites = async (userId) => {
         });
 
         const results = await Promise.all(promises);
-        console.log(results)
+        console.log(results);
         //   setFavList(results)
         return results;
       } catch (e) {

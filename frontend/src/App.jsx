@@ -1,15 +1,15 @@
 import "./App.css";
-import styled, { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
-import { useContext } from "react";
+
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 //contexts
 // import AuthContextProvider from '../contexts/authContext';
-import { AuthContext } from "./contexts/authContext";
+
 
 //components
 import Main from "./layouts/Main";
@@ -24,12 +24,11 @@ import Favorites from "./pages/Favorites";
 import {
   getPets,
   getUserPets,
-  getUsername,
   getFavorites,
 } from "./loaders/index.js";
 
 function App() {
-  const { hasToken } = useContext(AuthContext);
+ 
 
   const router = createBrowserRouter([
     {

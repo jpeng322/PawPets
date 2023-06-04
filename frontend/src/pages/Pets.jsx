@@ -14,7 +14,7 @@ import FavoritesComp from "../components/FavComp.jsx";
 
 const Pets = () => {
   const { token, userId } = useContext(AuthContext);
-  const BASE_URL = import.meta.env.VITE_URL
+  const BASE_URL = import.meta.env.VITE_URL;
   const pets = useLoaderData();
   const [petList, setPetList] = useState(pets);
   const [show, setShow] = useState(false);
@@ -67,6 +67,10 @@ const Pets = () => {
       const response = await axios({
         method: "get",
         url: `${BASE_URL}/comment/${id}`,
+        headers: {
+          // 'Content-type': "application/json; charset=utf-8",
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (response) {
@@ -150,7 +154,7 @@ const Pets = () => {
     const inFavoriteList = favoriteList.some(
       (favorite) => favorite.petId === petId
     );
-    console.log(inFavoriteList, favoriteList)
+    console.log(inFavoriteList, favoriteList);
     if (inFavoriteList) {
       try {
         const deleteFavorite = await axios({
@@ -167,7 +171,9 @@ const Pets = () => {
 
         if (deleteFavorite) {
           console.log("unfavorited");
-          setFavoriteList(favoriteList.filter(favorite => favorite.petId !== petId))
+          setFavoriteList(
+            favoriteList.filter((favorite) => favorite.petId !== petId)
+          );
         }
       } catch (e) {
         console.log(e);
@@ -176,7 +182,7 @@ const Pets = () => {
       try {
         const addFavorite = await axios({
           method: "post",
-          url:`${BASE_URL}/favorites/`,
+          url: `${BASE_URL}/favorites/`,
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -188,8 +194,8 @@ const Pets = () => {
 
         if (addFavorite) {
           console.log(addFavorite);
-          const favoritedDetails = addFavorite.data.favorite
-          setFavoriteList([...favoriteList, favoritedDetails])
+          const favoritedDetails = addFavorite.data.favorite;
+          setFavoriteList([...favoriteList, favoritedDetails]);
         }
       } catch (e) {
         console.log(e);

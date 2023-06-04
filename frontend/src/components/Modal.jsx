@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../contexts/authContext.jsx";
-import { Image, Button, Form, Modal, Pagination } from "react-bootstrap";
+import { Image, Button, Form, Modal } from "react-bootstrap";
 
 import axios from "axios";
 
@@ -8,7 +8,7 @@ import axios from "axios";
 import PaginationBasic from "./PaginationBasic.jsx";
 
 const CommentModal = (props) => {
-  const BASE_URL = import.meta.env.VITE_URL
+  const BASE_URL = import.meta.env.VITE_URL;
   const numberOfImages = 3;
   const numberOfPages = Math.ceil(props.comments.length / numberOfImages);
 
@@ -21,8 +21,7 @@ const CommentModal = (props) => {
           pageNumber * numberOfImages
         );
 
-  const { loggedUsername } = useContext(AuthContext);
-
+  const { loggedUsername, token } = useContext(AuthContext);
   // const [show, setShow] = useState(false);
   const [commentValue, setCommentValue] = useState("");
 
@@ -31,7 +30,6 @@ const CommentModal = (props) => {
   // const handleShow = () => setShow(true);
 
   async function submitComment(id) {
-    console.log(id, "petpostid");
     try {
       const response = await axios({
         method: "post",
@@ -40,6 +38,9 @@ const CommentModal = (props) => {
           comment: commentValue,
           commentUsername: loggedUsername,
           petPostId: id,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -99,7 +100,10 @@ const CommentModal = (props) => {
         </div>
         <div className="w-100">
           {currentComments.map((comment) => (
-            <div className="comment-container d-flex flex-column mt-3 p-3 gap-1">
+            <div
+              key={comment.id}
+              className="comment-container d-flex flex-column mt-3 p-3 gap-1"
+            >
               <div className="  d-flex justify-content-between align-items-center">
                 {" "}
                 <div className="comment-username fw-bolder">
